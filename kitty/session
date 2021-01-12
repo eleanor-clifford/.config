@@ -1,0 +1,4 @@
+layout tall:bias=55
+# splits:split_axis=vertical
+cd ~
+launch fish
