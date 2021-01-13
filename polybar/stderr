@@ -1,5 +1,0 @@
-polybar|notice:  Parsing config file: /home/tim/.config/polybar/config
-polybar|notice:  Loaded font "NotoSans-Regular:size=10" (name=Noto Sans, offset=0, file=/usr/share/fonts/TTF/NotoSans-Regular.ttf)
-polybar|notice:  Loaded font "FontAwesome:size=18" (name=FontAwesome, offset=3, file=/usr/share/fonts/TTF/fontawesome-webfont.ttf)
-polybar|notice:  Loaded font "Font Awesome 5 Free:style=Regular:pixelsize=18" (name=Font Awesome 5 Free, offset=3, file=/usr/share/fonts/TTF/fa-regular-400.ttf)
-polybar|notice:  Loaded font "Font Awesome 5 Free:style=Solid:pixelsize=18" (name=Font Awesome 5 Free, offset=3, file=/usr/share/fonts/TTF/fa-solid-900.ttf)

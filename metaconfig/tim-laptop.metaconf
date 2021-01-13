@@ -1,0 +1,5 @@
+# Prefix to eliminate accidental overwrites
+PREFIX = _METACONF_REPLACE_
+
+# Populate per-system values here
+
