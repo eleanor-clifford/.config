@@ -9,7 +9,6 @@
 /flameshot
 /gtkrc-2.0.kde
 /gtkrc.kde
-/kicad
 /lpass
 /matplotlib
 /nautilus
@@ -29,3 +28,7 @@
 /spotify
 /teams
 /polybar/stderr
+/.xournalpp/autosave
+/.xournalpp/errorlogs
+/.xournalpp/metadata
+/onedrive*

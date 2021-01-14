@@ -1,0 +1,43 @@
+lspci -nnks 01:00.0 | grep "Kernel driver in use: nvidia" >/dev/null 2>&1
+if [ $? -eq 0 ]; then
+        #xrandr --addmode VIRTUAL1 1920x1080
+	xrandr \
+		--output DP-2 \
+			--primary \
+			--mode 3840x2160 \
+			--panning 3840x2160+0+0  \
+			--scale 0.9999x0.9999 \
+			--pos 0x0 \
+			--gamma 1.05:1.05:1.05 \
+		--output HDMI-0 \
+			--mode 1920x1080 \
+			--scale-from 2944x1656 \
+			--pos 3840x504 \
+			--panning 2944x1656+3840+504 \
+			--gamma 1:1:1 \
+#		--output DP2 \
+#			--mode 1920x1080 \
+#			--rotate right \
+#			--pos 0x0
+else
+	# check if we should disable the primary display
+#	pgrep qemu-system-x86
+#	if [ $? -ne 0 ]; then
+        	xrandr \
+			--output HDMI3 \
+				--primary \
+				--mode 3840x2160 \
+				--scale 0.9999x0.9999 \
+				--pos 0x0 \
+			--output DP5 \
+				--mode 1920x1080 \
+				--scale-from 2944x1656 \
+				--pos 3840x504
+#	else
+#		xrandr \
+#			--output HDMI3 --off \
+#			--output DP5 \
+#				--mode 1920x1080 \
+#				--scale-from 2944x1656
+#	fi
+fi

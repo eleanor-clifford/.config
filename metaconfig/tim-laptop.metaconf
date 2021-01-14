@@ -1,5 +1,48 @@
-# Prefix to eliminate accidental overwrites
+# Prefix for parameters to replace, common across metaconfs
 PREFIX = _METACONF_REPLACE_
 
-# Populate per-system values here
+# Prefix in files to append them to existing files
+# e.g. keymaps to add to the end of a config
+# There is logic to prevent duplicate appends on a rerun
 
+POSTFIX_FILE_APPEND   = .METACONF_FILE_APPEND_LAPTOP # unique to metaconf
+POSTFIX_FILE_APPENDED = .METACONF_FILE_APPENDED # common across metaconfs
+
+# Populate per-system values here
+STARTX_ON_TTY1 = 1
+
+# i3
+PRI_DISP = DP-2 HDMI3
+SEC_DISP = DP5  HDMI-0
+
+# These are optional comments in front of the relevant lines
+
+LOAD_CACHE_FILESYSTEMS =      # onedrive, dropbox
+LOAD_NETWORK_FILESYSTEMS = \# # google drive
+
+LOAD_TOUCHSCREEN_TOOLS =      # My regex isn't very good, for these
+                              # to work they can't end on whitespace
+VOLUME_TICK_UP   = +5%
+VOLUME_TICK_DOWN = -5%
+
+# picom
+PICOM_CORNER_RADIUS = 15.0
+
+#polybar
+POLYBAR_TOP_LINE_SIZE           = 14
+POLYBAR_TOP_NOTOSANS_SIZE       = 10;0
+POLYBAR_TOP_FONTAWESOME4_SIZE   = 18;3
+POLYBAR_TOP_FONTAWESOME5_SIZE   = 18;3
+POLYBAR_TOP_MODULES_LEFT        = oblogout spotify-back spotify-pause spotify-next spotify-title
+POLYBAR_TOP_MODULES_CENTER      = i3-touch closewindow touchrotate touchportrait touchlandscape touchvoldown touchvolup touchbrightdown touchbrightup touchkeyboard
+POLYBAR_TOP_MODULES_RIGHT       = network battery power
+
+POLYBAR_BOTTOM_HEIGHT           = 27
+
+POLYBAR_BOTTOM_LINE_SIZE        = 2
+POLYBAR_BOTTOM_NOTOSANS_SIZE    = 10;2
+POLYBAR_BOTTOM_FONTAWESOME_SIZE = 10;2
+POLYBAR_BOTTOM_MODULES_LEFT     = i3 firstempty
+POLYBAR_BOTTOM_MODULES_CENTER   = #
+POLYBAR_BOTTOM_MODULES_RIGHT    = date
+POLYBAR_BOTTOM_TRAY_OFFSET      = -122

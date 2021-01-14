@@ -1,4 +1,5 @@
-
+; vim:ft=dosini
+;
 ; Bar configurations
 ; --------------------------------------
 ;
@@ -72,77 +73,52 @@ clickareas = 35
 
 background = #00222222
 foreground = #ffffff
-;foreground = #9f0cff
-;foreground = #ff1ee5
-;foreground = #ff80b4
-;foreground = #ff20e4
-
 line-color = ${bar/top.background}
 
-;separator = |
-
 spacing = 0
-line-size = 14
+line-size = _METACONF_REPLACE_POLYBAR_TOP_LINE_SIZE
 ;padding-left = 5
 padding-right = 2
 module-margin-left = 0
 module-margin-right = 0
 
-font-0 = NotoSans-Regular:size=10;0
-font-1 = FontAwesome:size=18;3
+font-0 = NotoSans-Regular:size=_METACONF_REPLACE_POLYBAR_TOP_NOTOSANS_SIZE
+font-1 = FontAwesome:size=_METACONF_REPLACE_POLYBAR_TOP_FONTAWESOME4_SIZE
 
-font-2 = "Font Awesome 5 Free:style=Regular:pixelsize=18;3"
-font-3 = "Font Awesome 5 Free:style=Solid:pixelsize=18;3"
-;font-3 = "Font Awesome 5 Brands:pixelsize=18;3"
-;font-1 = "Font Awesome 5 Free Regular:style=Regular:antialias=true:size=15"
-;font-2 = "Font Awesome 5 Brands Regular:style=Regular:antialias=true:size=15"
-;font-3 = FontAwesome5Free:style=Solid:pixelsize=18:antialias=false;3
-;font-4 = FontAwesome5Brands:style=Solid:pixelsize=18:antialias=false;3
-;font-3 = Material Icons:style=regular;size=10;0
-;font-4 = Termsynu:size=8;-1
-;font-5 = unifont:size=8;0
-
-modules-left = oblogout spotify-back spotify-pause spotify-next spotify-title
-modules-center = i3-touch closewindow touchrotate touchportrait touchlandscape touchvoldown touchvolup touchbrightdown touchbrightup touchkeyboard
-modules-right = network battery power
+font-2 = "Font Awesome 5 Free:style=Regular:pixelsize=_METACONF_REPLACE_POLYBAR_TOP_FONTAWESOME5_SIZE"
+font-3 = "Font Awesome 5 Free:style=Solid:pixelsize=_METACONF_REPLACE_POLYBAR_TOP_FONTAWESOME5_SIZE"
+modules-left = _METACONF_REPLACE_POLYBAR_TOP_MODULES_LEFT
+modules-center = _METACONF_REPLACE_POLYBAR_TOP_MODULES_CENTER
+modules-right = _METACONF_REPLACE_POLYBAR_TOP_MODULES_RIGHT
 fixed-center = true
 
 [bar/bottom]
 monitor = ${env:MONITOR:}
 bottom = true
 width = 100%
-height = 27
-;clickareas = 25
+height = _METACONF_REPLACE_POLYBAR_BOTTOM_HEIGHT
 
 background = #00111111
 foreground = #ccffffff
 line-color = ${bar/bottom.background}
 
 spacing = 0
-line-size = 2
+line-size = _METACONF_REPLACE_POLYBAR_BOTTOM_LINE_SIZE
 ;padding-left = 0
 padding-right = 0
 module-margin-left = 0
 module-margin-right = 0
 
+font-0 = NotoSans-Regular:size=_METACONF_REPLACE_POLYBAR_BOTTOM_NOTOSANS_SIZE
+font-1 = FontAwesome:size=_METACONF_REPLACE_POLYBAR_BOTTOM_FONTAWESOME_SIZÉ
 
-; font-idx = font:size=N;offsetY
-font-0 = NotoSans-Regular:size=10;2
-;font-1 = "Font Awesome 5 Free:style=Regular:pixelsize=18;3"
-;font-2 = "Font Awesome 5 Free:style=Solid:pixelsize=18;3"
-;font-3 = "Font Awesome 5 Brands:pixelsize=18;3"
-;font-1 = Termsynu:size=8;-1
-font-1 = FontAwesome:size=10;2
-;font-2 = Unifont:size=6;-3
-;font-3 = MaterialIcons:style=Regular:size=10;-1
-
-modules-left = i3 firstempty
-; modules-right = rtorrent cpu memory
-modules-right = date
+modules-left = _METACONF_REPLACE_POLYBAR_BOTTOM_MODULES_LEFT
+modules-center = _METACONF_REPLACE_POLYBAR_BOTTOM_MODULES_CENTER
+modules-right = _METACONF_REPLACE_POLYBAR_BOTTOM_RIGHT
 tray = true
 tray-position = right
 tray-padding = 0
-tray-offset-x = -122
+tray-offset-x = _METACONF_REPLACE_POLYBAR_BOTTOM_TRAY_OFFSET
 tray-detached = true
 ;tray-background = #111111
 
@@ -165,18 +141,10 @@ module-margin-left = 0
 module-margin-right = 0
 
 
-; font-idx = font:size=N;offsetY
 font-0 = NotoSans-Regular:size=10;2
-;font-1 = "Font Awesome 5 Free:style=Regular:pixelsize=18;3"
-;font-2 = "Font Awesome 5 Free:style=Solid:pixelsize=18;3"
-;font-3 = "Font Awesome 5 Brands:pixelsize=18;3"
-;font-1 = Termsynu:size=8;-1
 font-1 = FontAwesome:size=10;2
-;font-2 = Unifont:size=6;-3
-;font-3 = MaterialIcons:style=Regular:size=10;-1
 
 modules-left = i3 firstempty
-; modules-right = rtorrent cpu memory
 modules-right = date
 tray = false
 
@@ -406,6 +374,7 @@ ws-icon-9 = 10;10
 
 ws-icon-default = 0
 
+index-sort = true
 ; Available tags:
 ;   <label-state> (default) - gets replaced with <label-(focused|unfocused|visible|urgent)>
 ;format = <label-state>
@@ -604,7 +573,7 @@ bar-used-empty-foreground = #444444
 [module/spotify-title]
 type = custom/script
 exec = $HOME/.config/polybar/spotify/title.sh
-format = "    <label>          "
+format = "    <label>    "
 exec-if = [ "$(playerctl status)" = "Playing" ] || [ "$(playerctl status)" = "Paused" ] && /home/tim/scripts/islandscape.sh
 interval = 0.5
 [module/spotify-back]
@@ -921,10 +890,10 @@ type = custom/menu
 ;   <menu> (default)
 format = <label-toggle> <menu>
 format-background = #111111
-format-padding = 3
+format-padding = 1
 
-label-open = 
-label-close = 
+label-open = "   "
+label-close = "   "
 
 ; "menu-LEVEL-N" has the same properties as "label-NAME" with
 ; the additional "exec" property
@@ -940,7 +909,7 @@ menu-0-0-exec = i3-msg exit
 menu-0-1 = "Reboot    "
 menu-0-1-foreground = #fba922
 menu-0-1-exec = systemctl reboot
-menu-0-2 = "Power off"
+menu-0-2 = "Power off    "
 menu-0-2-foreground = #fba922
 menu-0-2-exec = shutdown now
 
@@ -1015,7 +984,6 @@ type = internal/date
 interval = 5
 date = %%{F#999}%Y-%m-%d%%{F-}  %%{F#fff}%H:%M%%{F-}
 
-; vim:ft=dosini
 
 [module/i3touchmenu]
 type = custom/menu
@@ -1315,4 +1283,3 @@ format = <label>
 exec = /home/tim/.config/polybar/power/text.sh
 exec-if = /home/tim/scripts/islandscape.sh && [[ $(cat /sys/class/power_supply/BAT1/status) == "Discharging" ]]
 interval = 2
-; vim:ft=dosini

@@ -1,4 +1,4 @@
 for SINK in `pacmd list-sinks | grep 'index:' | cut -b12-`
 do
-	pactl set-sink-volume $SINK +5%
+	pactl set-sink-volume $SINK _METACONF_REPLACE_VOLUME_TICK_UP
 done
