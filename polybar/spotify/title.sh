@@ -45,10 +45,14 @@ do
         artist=$artist_error
     fi
 
-	# Just trust in the black magic please
-	url=$(lz4jsoncat $HOME/.mozilla/firefox/*.default-release/sessionstore-backups/recovery.jsonlz4 \
-			| jq "$(echo '.windows[] | .tabs[] | .entries[] | select(.title | contains("'"$(playerctl -p $player metadata title)"'")) | .url')" \
-			| sed 's/^"//;s/"$//')
+	if [ -f $HOME/.mozilla/firefox/*.default-release/sessionstore-backups/recovery.jsonlz4 ]; then
+		# Just trust in the black magic please
+		url=$(lz4jsoncat $HOME/.mozilla/firefox/*.default-release/sessionstore-backups/recovery.jsonlz4 \
+				| jq "$(echo '.windows[] | .tabs[] | .entries[] | select(.title | contains("'"$(playerctl -p $player metadata title)"'")) | .url')" \
+				| sed 's/^"//;s/"$//')
+	else
+		url=''
+	fi
 	
     if [ "$title" = "$title_error" ] && [ "$artist" = "$artist_error" ]; then
         continue
