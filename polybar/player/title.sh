@@ -4,7 +4,7 @@
 
 title_error="Unknown Title"
 artist_error="Unknown Artist"
-    
+
 # substring regex matches
 
 # dash has no arrays but i NEEED SPEEED
@@ -26,24 +26,44 @@ regex_title_mappings="
 #.* - Twitchs/ - Twitch//
 
 regex_player_mappings="
-spotify 
+spotify
 firefox
 chromiumBrave
 vlcVLC
 "
 
-for player in $(playerctl -l)
+found_currently_playing='0'
+
+if [ -f /tmp/polybar-player-current ]; then
+	current_player=$(cat /tmp/polybar-player-current)
+else
+	current_player=''
+fi
+
+# we want to process the current player last for a smooth experience
+# sadly -z is a GNUism but oh well
+players=$(playerctl -l | sed -z "s/\(.*\)\($current_player\n\)\(.*\)/\1\3\2/")
+
+for player in $players
 do
+	if [ $(playerctl -p $player status) = 'Playing' ]; then
+		found_currently_playing='1'
+	else
+		if [ $found_currently_playing = '1' ]; then
+			# We'd prefer a currently playing player
+			continue
+		fi
+	fi
 
-    title=$( { playerctl -p $player metadata title; } 2>/dev/null ) 
-    if [ $? -ne 0 ]; then
-        title=$title_error
-    fi
+	title=$( { playerctl -p $player metadata title; } 2>/dev/null )
+	if [ $? -ne 0 ]; then
+	    title=$title_error
+	fi
 
-    artist=$( { playerctl -p $player metadata artist; } 2>/dev/null )
-    if [ $? -ne 0 ]; then
-        artist=$artist_error
-    fi
+	artist=$( { playerctl -p $player metadata artist; } 2>/dev/null )
+	if [ $? -ne 0 ]; then
+	    artist=$artist_error
+	fi
 
 	if [ -f $HOME/.mozilla/firefox/*.default-release/sessionstore-backups/recovery.jsonlz4 ]; then
 		# Just trust in the black magic please
@@ -53,13 +73,15 @@ do
 	else
 		url=''
 	fi
-	
-    if [ "$title" = "$title_error" ] && [ "$artist" = "$artist_error" ]; then
-        continue
-    fi
-	
+
+	if [ "$title" = "$title_error" ] && [ "$artist" = "$artist_error" ]; then
+	    continue
+	fi
+
+	current_player=$player
+
 	suffix="${player} (Unknown)" # Default
-	
+
 	# Set separator to a newline character
 	# for our fucked up data structure
 
@@ -102,18 +124,21 @@ do
 			break
 		fi
 	done
-
-	# Only output the suffix if there's not much space
-	# don't force this check to happen if this script doesn't exist
-	if [ -f $HOME/.config/scripts/islandscape.sh ] && ! $HOME/.config/scripts/islandscape.sh; then
-		echo "   $suffix"
-	else
-		# Don't introduce a trailing - if there's no artist
-		if echo $artist | egrep -q '^[ \t]*$'; then
-			echo "  $title     $suffix" 
-		else 
-			echo "  $title  -  $artist     $suffix"
-		fi
-	fi
-    break
 done
+# write the player to a temp file for the play-pause script
+# logic for if current_player = '' is on the other side
+echo -n $current_player > /tmp/polybar-player-current
+
+# Only output the suffix if there's not much space
+# don't force this check to happen if this script doesn't exist
+if [ -f $HOME/.config/scripts/islandscape.sh ] \
+   && ! $HOME/.config/scripts/islandscape.sh; then
+	echo "   $suffix"
+else
+	# Don't introduce a trailing - if there's no artist
+	if echo $artist | egrep -q '^[ \t]*$'; then
+		echo "  $title     $suffix"
+	else
+		echo "  $title  -  $artist     $suffix"
+	fi
+fi

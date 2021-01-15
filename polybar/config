@@ -574,26 +574,26 @@ bar-used-empty-foreground = #444444
 type = custom/script
 exec = $HOME/.config/polybar/player/title.sh
 format = "    <label>    "
-exec-if = [ "$(playerctl status)" = "Playing" ] || [ "$(playerctl status)" = "Paused" ] && /home/tim/scripts/islandscape.sh
+exec-if = playerctl -l 2>&1 | egrep -vq 'No players'
 interval = 0.5
 [module/player-back]
 type = custom/script
 exec = $HOME/.config/polybar/player/null.sh
-exec-if = [ "$(playerctl status)" = "Playing" ] || [ "$(playerctl status)" = "Paused" ]
+exec-if = playerctl -l 2>&1 | egrep -vq 'No players'
 click-left = playerctl previous
 format = "        "
 interval = 0.5
 [module/player-pause]
 type = custom/script
-exec = $HOME/.config/polybar/player/toggle.sh
-exec-if = [ "$(playerctl status)" = "Playing" ] || [ "$(playerctl status)" = "Paused" ]
-click-left = playerctl play-pause
+exec = $HOME/.config/polybar/player/get_playpause.sh
+exec-if = playerctl -l 2>&1 | egrep -vq 'No players'
+click-left = $HOME/.config/polybar/player/toggle.sh
 format = "    <label>    "
 interval = 0.5
 [module/player-next]
 type = custom/script
 exec = $HOME/.config/polybar/player/null.sh
-exec-if = [ "$(playerctl status)" = "Playing" ] || [ "$(playerctl status)" = "Paused" ]
+exec-if = playerctl -l 2>&1 | egrep -vq 'No players'
 click-left = playerctl next
 format = "        "
 interval = 0.5

@@ -5,4 +5,12 @@ if [ -f /tmp/polybar-player-current ]; then
 else
 	args=""
 fi
-playerctl $args play-pause
+
+case "$(playerctl $args status)" in
+"Playing")
+	echo "    "
+	;;
+"Paused") 
+	echo "    "
+	;;
+esac
