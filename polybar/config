@@ -570,29 +570,29 @@ bar-used-empty-foreground = #444444
 ;bar-free-empty-font = 2
 ;bar-free-empty-foreground = #444444
 
-[module/spotify-title]
+[module/player-title]
 type = custom/script
-exec = $HOME/.config/polybar/spotify/title.sh
+exec = $HOME/.config/polybar/player/title.sh
 format = "    <label>    "
 exec-if = [ "$(playerctl status)" = "Playing" ] || [ "$(playerctl status)" = "Paused" ] && /home/tim/scripts/islandscape.sh
 interval = 0.5
-[module/spotify-back]
+[module/player-back]
 type = custom/script
-exec = $HOME/.config/polybar/spotify/null.sh
+exec = $HOME/.config/polybar/player/null.sh
 exec-if = [ "$(playerctl status)" = "Playing" ] || [ "$(playerctl status)" = "Paused" ]
 click-left = playerctl previous
 format = "        "
 interval = 0.5
-[module/spotify-pause]
+[module/player-pause]
 type = custom/script
-exec = $HOME/.config/polybar/spotify/toggle.sh
+exec = $HOME/.config/polybar/player/toggle.sh
 exec-if = [ "$(playerctl status)" = "Playing" ] || [ "$(playerctl status)" = "Paused" ]
 click-left = playerctl play-pause
 format = "    <label>    "
 interval = 0.5
-[module/spotify-next]
+[module/player-next]
 type = custom/script
-exec = $HOME/.config/polybar/spotify/null.sh
+exec = $HOME/.config/polybar/player/null.sh
 exec-if = [ "$(playerctl status)" = "Playing" ] || [ "$(playerctl status)" = "Paused" ]
 click-left = playerctl next
 format = "        "

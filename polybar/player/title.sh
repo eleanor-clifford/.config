@@ -48,8 +48,8 @@ do
 	if [ -f $HOME/.mozilla/firefox/*.default-release/sessionstore-backups/recovery.jsonlz4 ]; then
 		# Just trust in the black magic please
 		url=$(lz4jsoncat $HOME/.mozilla/firefox/*.default-release/sessionstore-backups/recovery.jsonlz4 \
-				| jq "$(echo '.windows[] | .tabs[] | .entries[] | select(.title | contains("'"$(playerctl -p $player metadata title)"'")) | .url')" \
-				| sed 's/^"//;s/"$//')
+			| jq "$(echo '.windows[] | .tabs[] | .entries[] | select(.title != null) | select(.title | contains("'"$(playerctl -p $player metadata title)"'")) | .url')" \
+			| sed 's/^"//;s/"$//')
 	else
 		url=''
 	fi
@@ -103,11 +103,17 @@ do
 		fi
 	done
 
-	# Don't introduce a trailing - if there's no artist
-	if echo $artist | egrep -q '^[ \t]*$'; then
-		echo "  $title     $suffix" 
-	else 
-		echo "  $title  -  $artist     $suffix"
+	# Only output the suffix if there's not much space
+	# don't force this check to happen if this script doesn't exist
+	if [ -f $HOME/.config/scripts/islandscape.sh ] && ! $HOME/.config/scripts/islandscape.sh; then
+		echo "   $suffix"
+	else
+		# Don't introduce a trailing - if there's no artist
+		if echo $artist | egrep -q '^[ \t]*$'; then
+			echo "  $title     $suffix" 
+		else 
+			echo "  $title  -  $artist     $suffix"
+		fi
 	fi
     break
 done
