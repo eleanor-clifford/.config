@@ -1,6 +1,6 @@
 # display setup
 
-exec_always --no-startup-id /home/tim/.config/i3/display-setup.sh
+exec_always --no-startup-id $HOME/.config/i3/display-setup.sh
 
 workspace 1  output _METACONF_REPLACE_PRI_DISP
 workspace 2  output _METACONF_REPLACE_PRI_DISP
@@ -21,10 +21,10 @@ exec --no-startup-id $HOME/.config/i3/lock.sh -u $HOME/Pictures/Wallpaper/curren
 exec --no-startup-id numlockx on
 
 # change mouse horizontal scroll acceleration
-exec --no-startup-id /home/tim/scripts/setup_mouse.sh
+exec --no-startup-id $HOME/scripts/setup_mouse.sh
 
 # background
-exec_always --no-startup-id "sleep 2; feh --bg-scale /home/tim/.i3/lock-cache/resized.png"
+exec_always --no-startup-id "sleep 2; feh --bg-scale $HOME/.i3/lock-cache/resized.png"
 
 # beep
 exec --no-startup-id xset b off
@@ -56,16 +56,16 @@ gaps inner 10
 for_window [class="^Fullscreen*"] fullscreen enable
 
 # startup apps
-_METACONF_REPLACE_LOAD_CACHE_FILESYSTEMS exec --no-startup-id "/usr/bin/onedrive -m --confdir /home/tim/.config/onedrive --syncdir /home/tim/OneDrive-Cam"
-_METACONF_REPLACE_LOAD_CACHE_FILESYSTEMS exec --no-startup-id "/usr/bin/onedrive -m --confdir /home/tim/.config/onedrive-personal --syncdir /home/tim/OneDrive-Personal"
+_METACONF_REPLACE_LOAD_CACHE_FILESYSTEMS exec --no-startup-id "/usr/bin/onedrive -m --confdir $HOME/.config/onedrive --syncdir $HOME/OneDrive-Cam"
+_METACONF_REPLACE_LOAD_CACHE_FILESYSTEMS exec --no-startup-id "/usr/bin/onedrive -m --confdir $HOME/.config/onedrive-personal --syncdir $HOME/OneDrive-Personal"
 _METACONF_REPLACE_LOAD_CACHE_FILESYSTEMS exec --no-startup-id "/usr/bin/dropbox"
 
-_METACONF_REPLACE_LOAD_NETWORK_FILESYSTEMS exec --no-startup-id "/usr/bin/google-drive-ocamlfuse /home/tim/GoogleDrive-Work -label default"
-_METACONF_REPLACE_LOAD_NETWORK_FILESYSTEMS exec --no-startup-id "/usr/bin/google-drive-ocamlfuse /home/tim/GoogleDrive-Cam -label cam"
-_METACONF_REPLACE_LOAD_NETWORK_FILESYSTEMS exec --no-startup-id "/usr/bin/google-drive-ocamlfuse /home/tim/GoogleDrive-Personal -label personal"
+_METACONF_REPLACE_LOAD_NETWORK_FILESYSTEMS exec --no-startup-id "/usr/bin/google-drive-ocamlfuse $HOME/GoogleDrive-Work -label default"
+_METACONF_REPLACE_LOAD_NETWORK_FILESYSTEMS exec --no-startup-id "/usr/bin/google-drive-ocamlfuse $HOME/GoogleDrive-Cam -label cam"
+_METACONF_REPLACE_LOAD_NETWORK_FILESYSTEMS exec --no-startup-id "/usr/bin/google-drive-ocamlfuse $HOME/GoogleDrive-Personal -label personal"
 
 _METACONF_REPLACE_LOAD_TOUCHSCREEN_TOOLS exec --no-startup-id flameshot &
-exec --no-startup-id "/home/tim/.i3/titlebar.rb"
+exec --no-startup-id "$HOME/.i3/titlebar.rb"
 
 # composite manager
 exec_always --no-startup-id picom -b --experimental-backends
@@ -211,8 +211,8 @@ bindsym $mod+Shift+asterisk move container to workspace 10
 # bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +1% #increase sound volume
 # bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -1% #decrease sound volume
 
-bindsym XF86AudioRaiseVolume exec --no-startup-id /home/tim/.config/i3/raise-volume.sh
-bindsym XF86AudioLowerVolume exec --no-startup-id /home/tim/.config/i3/lower-volume.sh
+bindsym XF86AudioRaiseVolume exec --no-startup-id $HOME/.config/i3/raise-volume.sh
+bindsym XF86AudioLowerVolume exec --no-startup-id $HOME/.config/i3/lower-volume.sh
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle # mute sound
 
 # Media Player controls

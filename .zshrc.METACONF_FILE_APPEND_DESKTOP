@@ -1,5 +1,5 @@
 alias update-wallpapers="systemctl --user restart wallpapers"
-alias vm-monitor='sudo socat -,echo=0,icanon=0 unix-connect:/home/tim/vm/qemu-monitor.socket'
+alias vm-monitor="sudo socat -,echo=0,icanon=0 unix-connect:$HOME/vm/qemu-monitor.socket"
 alias fbi='sudo fbi --readahead -a -vt 3 -d /dev/fb0'
 alias set-primary-dp='sudo ddcutil setvcp 60 15 -b 8 --force-slave-address'
 alias set-primary-hdmi='sudo ddcutil setvcp 60 18 -b 8 --force-slave-address'

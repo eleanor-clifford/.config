@@ -43,5 +43,5 @@ case $session in
 	vm              ) exec /usr/bin/win-vm;;
 	rfx             ) exec /usr/bin/win-rfx;;
 	remote          ) exec ssh -X tim-manjaro-desktop i3;;
-	desktop-vnc     ) /home/tim/scripts/setup-vncviewer.sh && exec vncviewer 192.168.1.75 -FullScreen -ViewOnly;;
+	desktop-vnc     ) $HOME/scripts/setup-vncviewer.sh && exec vncviewer 192.168.1.75 -FullScreen -ViewOnly;;
 esac

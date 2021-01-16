@@ -1213,19 +1213,19 @@ click-left= dbus-send --type=method_call --print-reply --dest=org.onboard.Onboar
 type=custom/text
 content = "         "
 ;content-foreground=#fff
-click-left = /home/tim/scripts/rotate.sh
+click-left = $HOME/scripts/rotate.sh
 [module/touchportrait]
 ;; Portrait mode
 type=custom/text
 content = "         "
 ;content-foreground=#fff
-click-left = /home/tim/scripts/rotateleft.sh
+click-left = $HOME/scripts/rotateleft.sh
 [module/touchlandscape]
 ;; Portrait mode
 type=custom/text
 content = "         "
 ;content-foreground=#fff
-click-left = /home/tim/scripts/rotatenormal.sh
+click-left = $HOME/scripts/rotatenormal.sh
 [module/touchvolmute]
 ;; Mute
 type=custom/text
@@ -1251,7 +1251,7 @@ click-left=pactl set-sink-volume @DEFAULT_SINK@ +5%
 type=custom/text
 content="        "
 ;content-foreground=#fff
-click-left=/home/tim/.config/jgmenu/i3-touch/launch-jgmenu-right
+click-left=$HOME/.config/jgmenu/i3-touch/launch-jgmenu-right
 
 [module/oblogout]
 type=custom/text
@@ -1264,22 +1264,22 @@ type = custom/text
 content="        "
 ;content-foreground=#fff
 content-background=#00000000
-click-left=/home/tim/scripts/goto_first_empty_workspace.sh
+click-left=$HOME/scripts/goto_first_empty_workspace.sh
 
 [module/closewindow]
 type = custom/text
 content="        "
-click-left=/home/tim/scripts/kill-not-plank.sh
+click-left=$HOME/scripts/kill-not-plank.sh
 
 [module/network]
 type = custom/script
 format = <label>
-exec = /home/tim/.config/polybar/network/text.sh
+exec = $HOME/.config/polybar/network/text.sh
 interval=2
 
 [module/power]
 type = custom/script
 format = <label>
-exec = /home/tim/.config/polybar/power/text.sh
-exec-if = /home/tim/scripts/islandscape.sh && [[ $(cat /sys/class/power_supply/BAT1/status) == "Discharging" ]]
+exec = $HOME/.config/polybar/power/text.sh
+exec-if = $HOME/scripts/islandscape.sh && [[ $(cat /sys/class/power_supply/BAT1/status) == "Discharging" ]]
 interval = 2

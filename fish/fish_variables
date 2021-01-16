@@ -1,7 +1,7 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
 SETUVAR __fish_initialized:3100
-SETUVAR _fisher_dracula_2F_fish_files:/home/tim/\x2econfig/fish/conf\x2ed/dracula\x2efish
+SETUVAR _fisher_dracula_2F_fish_files:$HOME/\x2econfig/fish/conf\x2ed/dracula\x2efish
 SETUVAR _fisher_plugins:dracula/fish
 SETUVAR fish_color_autosuggestion:BD93F9
 SETUVAR fish_color_cancel:\x2dr
