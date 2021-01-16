@@ -11,6 +11,9 @@ POSTFIX_FILE_APPENDED = .METACONF_FILE_APPENDED # common across metaconfs
 # Populate per-system values here
 STARTX_ON_TTY1 = 1
 
+# X
+DPI = 168
+
 # i3
 PRI_DISP = eDP
 SEC_DISP = DisplayPort-0 eDP
