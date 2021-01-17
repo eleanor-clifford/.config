@@ -1,2 +1,2 @@
 [PlankDockItemPreferences]
-Launcher=file:///home/tim/.local/share/applications/firefox.desktop
+Launcher=file://$HOME/.local/share/applications/firefox.desktop

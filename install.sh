@@ -119,20 +119,37 @@ for i in $(find . -maxdepth 1 -name '.*'); do
 	ln -s "$fullpath" $HOME
 done
 
-if ! [ "$1" = "--no-install-vimrc" ]; then
+if [ "$1" = "--vimrc-minimal" ]; then
 	wd=$(pwd)
 	mkdir -p "$HOME/.vim"
 	cd "$HOME/.vim"
 	if [ -d git ]; then
 		cd git
 		git pull origin master
-		./install.sh
 	else
 		git clone git@github.com:tim-clifford/vimrc
 		mv vimrc git
 		cd git
-		./install.sh
 	fi
+
+	./make_minimal.sh
+	ln -s $(pwd)/.vimrc-minimal $HOME/.vimrc
+	cd $wd
+
+elif ! [ "$1" = "--no-install-vimrc" ]; then
+	wd=$(pwd)
+	mkdir -p "$HOME/.vim"
+	cd "$HOME/.vim"
+	if [ -d git ]; then
+		cd git
+		git pull origin master
+	else
+		git clone git@github.com:tim-clifford/vimrc
+		mv vimrc git
+		cd git
+	fi
+
+	./install.sh
 	cd $wd
 fi
 

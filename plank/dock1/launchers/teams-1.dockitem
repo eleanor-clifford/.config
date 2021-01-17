@@ -1,2 +1,2 @@
 [PlankDockItemPreferences]
-Launcher=file:///home/tim/.local/share/applications/teams.desktop
+Launcher=file://$HOME/.local/share/applications/teams.desktop
