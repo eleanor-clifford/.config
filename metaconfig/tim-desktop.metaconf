@@ -37,8 +37,8 @@ POLYBAR_TOP_NOTOSANS_SIZE       = 14;8
 POLYBAR_TOP_FONTAWESOME4_SIZE   = 20;8
 POLYBAR_TOP_FONTAWESOME5_SIZE   = 18;8
 POLYBAR_TOP_MODULES_LEFT        = oblogout spotify-back spotify-pause spotify-next spotify-title
-POLYBAR_TOP_MODULES_CENTER      = 
-POLYBAR_TOP_MODULES_RIGHT       = volume network 
+POLYBAR_TOP_MODULES_CENTER      = #
+POLYBAR_TOP_MODULES_RIGHT       = volume network
 
 POLYBAR_BOTTOM_HEIGHT           = 40
 
