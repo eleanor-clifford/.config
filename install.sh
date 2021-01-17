@@ -18,6 +18,19 @@ else
 	fi
 fi
 
+# default arguments
+link_to_home=true
+vim=full
+for i in "$@"; do
+	case "$i" in
+		--no-link)	     link_to_home=false;;
+		--vimrc-minimal) vim=minimal;;
+		--vimrc-none)    vim=none;;
+		--no-firefox)    firefox=false;;
+		--no-fish)       fish=false;;
+	esac
+done
+
 # Apply metaconfig
 if [ ! -f metaconfig/$(hostname).metaconf ]; then
 	echo "No metaconfig defined for this hostname"
@@ -123,7 +136,7 @@ for i in $(find . -type f -name "*$POSTFIX_FILE_APPEND"); do
 	echo "===== appended $i to $orig_file ====="
 done
 
-if ! [ "$1" = "--no-external" ]; then
+if $link_to_home; then
 	# Install dotfiles to $HOME
 	for i in $(find . -maxdepth 1 -name '.*'); do
 		fullpath=$(eval echo $(echo $i | sed 's|^\.|$(pwd)|'))
@@ -139,7 +152,7 @@ if ! [ "$1" = "--no-external" ]; then
 	done
 fi
 
-if [ "$1" = "--vimrc-minimal" ]; then
+if [ "$vim" = "minimal" ]; then
 	wd=$(pwd)
 	mkdir -p "$HOME/.vim"
 	cd "$HOME/.vim"
@@ -156,7 +169,7 @@ if [ "$1" = "--vimrc-minimal" ]; then
 	ln -s $(pwd)/.vimrc-minimal $HOME/.vimrc
 	cd $wd
 
-elif ! [ "$1" = "--no-install-vimrc" ]; then
+elif [ "$vim" = "full" ]; then
 	wd=$(pwd)
 	mkdir -p "$HOME/.vim"
 	cd "$HOME/.vim"
@@ -173,25 +186,29 @@ elif ! [ "$1" = "--no-install-vimrc" ]; then
 	cd $wd
 fi
 
-## Firefox
-git clone https://github.com/tim-clifford/minimal-functional-fox-dracula
-firefox_dir=$(find $HOME -type d -regex ".*\.mozilla/firefox/.*\.default-release")
-mv minimal-functional-fox-dracula "$firefox_dir/chrome"
+if $firefox; then
+	## Firefox
+	git clone https://github.com/tim-clifford/minimal-functional-fox-dracula
+	firefox_dir=$(find $HOME -type d -regex ".*\.mozilla/firefox/.*\.default-release")
+	mv minimal-functional-fox-dracula "$firefox_dir/chrome"
+fi
 
 ## Less
 lesskey lessrc
 
-## Shell
-read -p "Change shell to fish?: " yn
-case $yn in
-	[Yy]* ) chsh -s /usr/bin/fish;;
-	[Nn]* ) ;;
-	*)      echo "No response, exiting..."; exit 1;
-esac
+if $fish; then
+	## Shell
+	read -p "Change shell to fish?: " yn
+	case $yn in
+		[Yy]* ) chsh -s /usr/bin/fish;;
+		[Nn]* ) ;;
+		*)      echo "No response, exiting..."; exit 1;
+	esac
+fi
 
 echo "===== Commiting host-specific configuration... ====="
 git add .
 git commit -m "METACONF_APPLIED at $(date -u +"%Y-%m-%d %H:%M:%S")"
 if ! [ -f ".git/hooks/pre-push" ]; then
-	ln -s "$(pwd)/pre-push $(pwd)/.git/hooks"
+	ln -s "$(pwd)/pre-push" "$(pwd)/.git/hooks"
 fi
