@@ -110,11 +110,11 @@ module-margin-left = 0
 module-margin-right = 0
 
 font-0 = NotoSans-Regular:size=_METACONF_REPLACE_POLYBAR_BOTTOM_NOTOSANS_SIZE
-font-1 = FontAwesome:size=_METACONF_REPLACE_POLYBAR_BOTTOM_FONTAWESOME_SIZÉ
+font-1 = FontAwesome:size=_METACONF_REPLACE_POLYBAR_BOTTOM_FONTAWESOME_SIZE
 
 modules-left = _METACONF_REPLACE_POLYBAR_BOTTOM_MODULES_LEFT
 modules-center = _METACONF_REPLACE_POLYBAR_BOTTOM_MODULES_CENTER
-modules-right = _METACONF_REPLACE_POLYBAR_BOTTOM_RIGHT
+modules-right = _METACONF_REPLACE_POLYBAR_BOTTOM_MODULES_RIGHT
 tray = true
 tray-position = right
 tray-padding = 0
