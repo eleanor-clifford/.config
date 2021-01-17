@@ -1,5 +1,23 @@
 #!/bin/dash
 
+# Check that there are not unstaged changes
+if ! [ "$(git diff)" = "" ]; then
+	if [ "$(git log --oneline -1 --no-decorate | awk '{print $2}')" \
+			= "METACONF_APPLIED" ]; then
+		echo "ERROR: revert host specific configuration and commit first"
+		exit 1
+	else
+		echo "ERROR: please commit changes first"
+		exit 1
+	fi
+else
+	if git log --oneline --no-decorate | awk '{print $2}' \
+			| grep -q METACONF_APPLIED; then
+		echo "ERROR: host specific configurations not properly reverted"
+		exit 1
+	fi
+fi
+
 # Apply metaconfig
 if [ ! -f metaconfig/$(hostname).metaconf ]; then
 	echo "No metaconfig defined for this hostname"
@@ -105,19 +123,21 @@ for i in $(find . -type f -name "*$POSTFIX_FILE_APPEND"); do
 	echo "===== appended $i to $orig_file ====="
 done
 
-# Install dotfiles to $HOME
-for i in $(find . -maxdepth 1 -name '.*'); do
-	fullpath=$(eval echo $(echo $i | sed 's|^\.|$(pwd)|'))
-	homepath=$(eval echo $(echo $i | sed 's|.*/\(.*\)$|$HOME/\1|'))
-	echo $i $fullpath $homepath
-	if [ -L "$homepath" ]; then
-		rm "$homepath"
-	fi
-	if [ -f "$homepath" ]; then
-		mv "$homepath" "$homepath.orig"
-	fi
-	ln -s "$fullpath" $HOME
-done
+if ! [ "$1" = "--no-external" ]; then
+	# Install dotfiles to $HOME
+	for i in $(find . -maxdepth 1 -name '.*'); do
+		fullpath=$(eval echo $(echo $i | sed 's|^\.|$(pwd)|'))
+		homepath=$(eval echo $(echo $i | sed 's|.*/\(.*\)$|$HOME/\1|'))
+		echo $i $fullpath $homepath
+		if [ -L "$homepath" ]; then
+			rm "$homepath"
+		fi
+		if [ -f "$homepath" ]; then
+			mv "$homepath" "$homepath.orig"
+		fi
+		ln -s "$fullpath" $HOME
+	done
+fi
 
 if [ "$1" = "--vimrc-minimal" ]; then
 	wd=$(pwd)
@@ -169,3 +189,9 @@ case $yn in
 	*)      echo "No response, exiting..."; exit 1;
 esac
 
+echo "===== Commiting host-specific configuration... ====="
+git add .
+git commit -m "METACONF_APPLIED at $(date -u +"%Y-%m-%d %H:%M:%S")"
+if ! [ -f ".git/hooks/pre-push" ]; then
+	ln -s "$(pwd)/pre-push $(pwd)/.git/hooks"
+fi
