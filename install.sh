@@ -52,9 +52,11 @@ for line in $(cat "metaconfig/$(hostname).metaconf"); do
 	fi
 
 	KEY=$(echo $line | sed -n 's/^\([^ ]\+\) *= *\([^ ].*\)/\1/p')
-	VAL=$(echo $line | sed -n 's/^\([^ ]\+\) *= *\([^ ].*\)/\2/;
-	                           s/\([^\\]\)#.*/\1/; s/^#.*//;
-                               s/\\#/#/g; s/\s*$//gp')
+	VAL=$(echo $line | sed -n '
+		s/^\([^ ]\+\) *= *\([^ ].*\)/\2/;
+		s/\([^\\]\)#.*/\1/; s/^#.*//;
+		s/\\#/#/g; s/\s*$//gp
+	')
 
 	if [ "$KEY" = '' ]; then
 		echo "Syntax Error: $line"
@@ -104,7 +106,8 @@ for i in $(find . -type f -name "*$POSTFIX_FILE_APPEND"); do
 		continue
 	fi
 
-	last_append=$(echo "$i" | sed "s/$POSTFIX_FILE_APPEND/$POSTFIX_FILE_APPENDED/")
+	last_append=$(echo "$i" | \
+		sed "s/$POSTFIX_FILE_APPEND/$POSTFIX_FILE_APPENDED/")
 	echo $last_append
 	if [ -f $last_append ]; then
 		if diff $i $last_append > /dev/null; then
@@ -115,7 +118,8 @@ for i in $(find . -type f -name "*$POSTFIX_FILE_APPEND"); do
 		echo "===== found existing append for $orig_file, removing... ====="
 		cp $orig_file "$orig_file.orig"
 
-		# fuck it i would need a gnuism anyway to deal with newlines so may as well use vim
+		# fuck it i would need a gnuism anyway to deal with newlines so may as
+		# well use vim
 		if ! which vim; then
 			echo "===== You need vim for this ====="
 			exit 1
@@ -189,7 +193,8 @@ fi
 if $firefox; then
 	## Firefox
 	git clone https://github.com/tim-clifford/minimal-functional-fox-dracula
-	firefox_dir=$(find $HOME -type d -regex ".*\.mozilla/firefox/.*\.default-release")
+	firefox_dir=$(find $HOME -type d \
+		-regex ".*\.mozilla/firefox/.*\.default-release")
 	mv minimal-functional-fox-dracula "$firefox_dir/chrome"
 fi
 
