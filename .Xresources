@@ -1,4 +1,4 @@
-Xft.dpi:       _METACONFIG_REPLACE_DPI
+Xft.dpi:       _METACONF_REPLACE_DPI
 Xft.antialias: true
 Xft.hinting:   true
 Xft.rgba:      rgb
