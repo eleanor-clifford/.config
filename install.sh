@@ -160,3 +160,12 @@ mv minimal-functional-fox-dracula "$firefox_dir/chrome"
 
 ## Less
 lesskey lessrc
+
+## Shell
+read -p "Change shell to fish?: " yn
+case $yn in
+	[Yy]* ) chsh -s /usr/bin/fish;;
+	[Nn]* ) ;;
+	*)      echo "No response, exiting..."; exit 1;
+esac
+
