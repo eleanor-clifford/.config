@@ -160,8 +160,3 @@ mv minimal-functional-fox-dracula "$firefox_dir/chrome"
 
 ## Less
 lesskey lessrc
-
-## Wallpaper
-if ! [ -d $HOME/.config/i3/lock-cache ]; then
-	$HOME/.config/i3/lock.sh -u default_wallpaper.jpg
-fi
