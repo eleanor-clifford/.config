@@ -7,7 +7,7 @@ if [ $? -eq 0 ]; then
 		addr=$(hostname -i | awk '{print $1}')
 		pre="    $(iwgetid -r)"
 	fi
-	if $HOME/scripts/islandscape.sh; then
+	if $HOME/.config/scripts/islandscape.sh; then
 		echo -n "$pre   |   $addr   |   $pubaddr    "
 	else
 		echo -n "$pre    "

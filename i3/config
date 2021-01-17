@@ -21,7 +21,7 @@ exec --no-startup-id $HOME/.config/i3/lock.sh -u $HOME/Pictures/Wallpaper/curren
 exec --no-startup-id numlockx on
 
 # change mouse horizontal scroll acceleration
-exec --no-startup-id $HOME/scripts/setup_mouse.sh
+exec --no-startup-id $HOME/.config/scripts/setup_mouse.sh
 
 # background
 exec_always --no-startup-id "sleep 2; feh --bg-scale $HOME/.i3/lock-cache/resized.png"
@@ -117,7 +117,7 @@ bindsym $mod+Shift+k exec nautilus
 bindsym $mod+Shift+c exec freecad
 
 # kill focused window
-bindsym $mod+Shift+q exec $HOME/scripts/kill-not-plank.sh
+bindsym $mod+Shift+q exec $HOME/.config/scripts/kill-not-plank.sh
 
 # start dmenu (a program launcher)
 bindsym $mod+s exec QT_STYLE_OVERRIDE=kvantum dmenu_run

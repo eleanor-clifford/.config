@@ -3,7 +3,7 @@ if [ (tty) = "/dev/tty1" ]
 end
 
 if tty | grep -q "/dev/tty"
-	$HOME/scripts/set_tty_colors.sh
+	$HOME/.config/scripts/set_tty_colors.sh
 end
 
 #if ! pgrep -u "$USER" ssh-agent > /dev/null; then
@@ -24,7 +24,7 @@ alias only-hdmi="xrandr --output eDP-1-1 --off --output HDMI-1-1 --auto"
 alias update-wallpapers="sudo systemctl restart wallpapers"
 alias vectorise-notebooks="./OneDrive/ExamplePapers/process.sh"
 alias start-vm='qemu-system-x86_64 -drive file=win_img,format=raw,cache=none,if=virtio -m 4G -net nic -net user,smb=/ -cpu host,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time -smp 3 -enable-kvm'
-alias start-rfx='$HOME/scripts/rfx.sh'
+alias start-rfx='$HOME/.config/scripts/rfx.sh'
 #alias start-remote='ssh raspberryfry "wakeonlan -p 9 -i 192.168.1.255 d0:17:c2:d3:26:9d"'
 #alias shutdown-remote='
 #	echo -n "[sudo] password for tim: "
@@ -34,10 +34,10 @@ alias start-rfx='$HOME/scripts/rfx.sh'
 #'
 alias remote-power='ssh raspberryfry "python3 remote-powerbutton/pressquick.py"'
 alias remote-powerlong='ssh raspberryfry "python3 remote-powerbutton/presslong.py"'
-alias start-remote='$HOME/scripts/start-remote.sh'
-alias mount-all='$HOME/scripts/mount-all.sh'
-alias unmount-all='$HOME/scripts/unmount-all.sh'
-alias umount-all='$HOME/scripts/unmount-all.sh'
+alias start-remote='$HOME/.config/scripts/start-remote.sh'
+alias mount-all='$HOME/.config/scripts/mount-all.sh'
+alias unmount-all='$HOME/.config/scripts/unmount-all.sh'
+alias umount-all='$HOME/.config/scripts/unmount-all.sh'
 alias aur-remove='repo-remove /var/cache/pacman/custom/custom.db.tar'
 alias nano=vim
 alias duplicate-screen='xrandr --output eDP --auto --output $OUTPUT --mode 1920x1080 --same-as eDP --panning 1920x1080+0+0'

@@ -1213,19 +1213,19 @@ click-left= dbus-send --type=method_call --print-reply --dest=org.onboard.Onboar
 type=custom/text
 content = "         "
 ;content-foreground=#fff
-click-left = $HOME/scripts/rotate.sh
+click-left = $HOME/.config/scripts/rotate.sh
 [module/touchportrait]
 ;; Portrait mode
 type=custom/text
 content = "         "
 ;content-foreground=#fff
-click-left = $HOME/scripts/rotateleft.sh
+click-left = $HOME/.config/scripts/rotateleft.sh
 [module/touchlandscape]
 ;; Portrait mode
 type=custom/text
 content = "         "
 ;content-foreground=#fff
-click-left = $HOME/scripts/rotatenormal.sh
+click-left = $HOME/.config/scripts/rotatenormal.sh
 [module/touchvolmute]
 ;; Mute
 type=custom/text
@@ -1264,12 +1264,12 @@ type = custom/text
 content="        "
 ;content-foreground=#fff
 content-background=#00000000
-click-left=$HOME/scripts/goto_first_empty_workspace.sh
+click-left=$HOME/.config/scripts/goto_first_empty_workspace.sh
 
 [module/closewindow]
 type = custom/text
 content="        "
-click-left=$HOME/scripts/kill-not-plank.sh
+click-left=$HOME/.config/scripts/kill-not-plank.sh
 
 [module/network]
 type = custom/script
@@ -1281,5 +1281,5 @@ interval=2
 type = custom/script
 format = <label>
 exec = $HOME/.config/polybar/power/text.sh
-exec-if = $HOME/scripts/islandscape.sh && [[ $(cat /sys/class/power_supply/BAT1/status) == "Discharging" ]]
+exec-if = $HOME/.config/scripts/islandscape.sh && [[ $(cat /sys/class/power_supply/BAT1/status) == "Discharging" ]]
 interval = 2

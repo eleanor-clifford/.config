@@ -10,7 +10,7 @@
 ,i3-msg split h,$HOME/.config/jgmenu/i3-touch/icons-dark/split-horizontal.svg
 ,i3-msg split v,$HOME/.config/jgmenu/i3-touch/icons-dark/split-vertical.svg
 #,^checkout(system),$HOME/.config/jgmenu/i3-touch/icons-dark/system-shutdown.svg
-,$HOME/scripts/restart-touchscreen.sh,$HOME/.config/jgmenu/i3-touch/icons-dark/display-rotate.svg
+,$HOME/.config/scripts/restart-touchscreen.sh,$HOME/.config/jgmenu/i3-touch/icons-dark/display-rotate.svg
 
 
 #,^checkout(rotate),$HOME/.config/jgmenu/i3-touch/icons-dark/display-rotate.svg
@@ -60,7 +60,7 @@
 ,i3-msg resize shrink width 10 px or 10 ppt,$HOME/.config/jgmenu/i3-touch/icons-dark/window-resize-shrink-width.svg
 
 ,^tag(window-close),$HOME/.config/jgmenu/i3-touch/icons-dark/window-close.svg
-,$HOME/scripts/kill-not-plank.sh,$HOME/.config/jgmenu/i3-touch/icons-dark/window-close.svg
+,$HOME/.config/scripts/kill-not-plank.sh,$HOME/.config/jgmenu/i3-touch/icons-dark/window-close.svg
 
 ,^tag(rotate),$HOME/.config/jgmenu/i3-touch/icons-dark/display-rotate.svg
 ,$HOME/.config/jgmenu/i3-touch/screen-rotation/screen-rotate-clockwise.sh,$HOME/.config/jgmenu/i3-touch/icons-dark/display-rotate-clockwise.svg

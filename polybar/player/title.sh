@@ -131,8 +131,8 @@ echo -n $current_player > /tmp/polybar-player-current
 
 # Only output the suffix if there's not much space
 # don't force this check to happen if this script doesn't exist
-if [ -f $HOME/.config/scripts/islandscape.sh ] \
-   && ! $HOME/.config/scripts/islandscape.sh; then
+if [ -f $HOME/.config/.config/scripts/islandscape.sh ] \
+   && ! $HOME/.config/.config/scripts/islandscape.sh; then
 	echo "   $suffix"
 else
 	# Don't introduce a trailing - if there's no artist
