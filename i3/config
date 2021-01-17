@@ -15,7 +15,7 @@ workspace 9  output _METACONF_REPLACE_SEC_DISP
 workspace 10 output _METACONF_REPLACE_SEC_DISP
 
 # lock screen
-exec --no-startup-id $HOME/.config/i3/lock.sh -u $HOME/Pictures/Wallpaper/current.jpg
+exec --no-startup-id $HOME/.config/i3/lock.sh -u $HOME/Pictures/Wallpapers/current.jpg
 
 # Numlock
 exec --no-startup-id numlockx on
@@ -24,7 +24,7 @@ exec --no-startup-id numlockx on
 exec --no-startup-id $HOME/.config/scripts/setup_mouse.sh
 
 # background
-exec_always --no-startup-id "sleep 2; feh --bg-scale $HOME/.i3/lock-cache/resized.png"
+exec_always --no-startup-id "sleep 2; feh --bg-scale $HOME/.config/i3/lock-cache/resized.png"
 
 # beep
 exec --no-startup-id xset b off
