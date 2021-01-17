@@ -1,75 +1,75 @@
 #this is the root menu:
 
-#,^checkout(switch-to-workspace),$HOME/.config/jgmenu/i3-touch/icons-dark/switch-to-workspace.svg,
-,^checkout(move-to-workspace),$HOME/.config/jgmenu/i3-touch/icons-dark/window-to-workspace.svg
-,^checkout(move),$HOME/.config/jgmenu/i3-touch/icons-dark/move-window.svg,
-,^checkout(resize),$HOME/.config/jgmenu/i3-touch/icons-dark/window-resize.svg
-#,i3-msg fullscreen toggle,$HOME/.config/jgmenu/i3-touch/icons-dark/window-fullscreen.svg
-#,i3-msg floating toggle,$HOME/.config/jgmenu/i3-touch/icons-dark/window-duplicate.svg
-#,i3-msg focus parent,$HOME/.config/jgmenu/i3-touch/icons-dark/focus-parent.svg
-,i3-msg split h,$HOME/.config/jgmenu/i3-touch/icons-dark/split-horizontal.svg
-,i3-msg split v,$HOME/.config/jgmenu/i3-touch/icons-dark/split-vertical.svg
-#,^checkout(system),$HOME/.config/jgmenu/i3-touch/icons-dark/system-shutdown.svg
-,$HOME/.config/scripts/restart-touchscreen.sh,$HOME/.config/jgmenu/i3-touch/icons-dark/display-rotate.svg
+#,^checkout(switch-to-workspace),.config/jgmenu/i3-touch/icons-dark/switch-to-workspace.svg,
+,^checkout(move-to-workspace),.config/jgmenu/i3-touch/icons-dark/window-to-workspace.svg
+,^checkout(move),.config/jgmenu/i3-touch/icons-dark/move-window.svg,
+,^checkout(resize),.config/jgmenu/i3-touch/icons-dark/window-resize.svg
+#,i3-msg fullscreen toggle,.config/jgmenu/i3-touch/icons-dark/window-fullscreen.svg
+#,i3-msg floating toggle,.config/jgmenu/i3-touch/icons-dark/window-duplicate.svg
+#,i3-msg focus parent,.config/jgmenu/i3-touch/icons-dark/focus-parent.svg
+,i3-msg split h,.config/jgmenu/i3-touch/icons-dark/split-horizontal.svg
+,i3-msg split v,.config/jgmenu/i3-touch/icons-dark/split-vertical.svg
+#,^checkout(system),.config/jgmenu/i3-touch/icons-dark/system-shutdown.svg
+,.config/scripts/restart-touchscreen.sh,.config/jgmenu/i3-touch/icons-dark/display-rotate.svg
 
 
-#,^checkout(rotate),$HOME/.config/jgmenu/i3-touch/icons-dark/display-rotate.svg
-#,^checkout(more),$HOME/.config/jgmenu/i3-touch/icons-dark/more.svg
-#,^checkout(window-close),$HOME/.config/jgmenu/i3-touch/icons-dark/window-close.svg
-#,nautilus,$HOME/.config/jgmenu/i3-touch/icons-dark/file-manager.svg
-#,env MOZ_USE_XINPUT2=1 firefox,$HOME/.config/jgmenu/i3-touch/icons-dark/web-browser.svg
-#,dbus-send --type=method_call --print-reply --dest=org.onboard.Onboard /org/onboard/Onboard/Keyboard org.onboard.Onboard.Keyboard.ToggleVisible,$HOME/.config/jgmenu/i3-touch/icons-dark/onscreen-keyboard-alt-4.svg
-#,qalculate-gtk,$HOME/.config/jgmenu/i3-touch/icons-dark/calculator-alt-3.svg
-#,alacritty,$HOME/.config/jgmenu/i3-touch/icons-dark/amarok_scripts.svg
-#,alacritty -e htop -t "htop",$HOME/.config/jgmenu/i3-touch/icons-dark/system-monitor.svg
-#,panther_launcher,$HOME/.config/jgmenu/i3-touch/icons-dark/app-launcher.svg
+#,^checkout(rotate),.config/jgmenu/i3-touch/icons-dark/display-rotate.svg
+#,^checkout(more),.config/jgmenu/i3-touch/icons-dark/more.svg
+#,^checkout(window-close),.config/jgmenu/i3-touch/icons-dark/window-close.svg
+#,nautilus,.config/jgmenu/i3-touch/icons-dark/file-manager.svg
+#,env MOZ_USE_XINPUT2=1 firefox,.config/jgmenu/i3-touch/icons-dark/web-browser.svg
+#,dbus-send --type=method_call --print-reply --dest=org.onboard.Onboard /org/onboard/Onboard/Keyboard org.onboard.Onboard.Keyboard.ToggleVisible,.config/jgmenu/i3-touch/icons-dark/onscreen-keyboard-alt-4.svg
+#,qalculate-gtk,.config/jgmenu/i3-touch/icons-dark/calculator-alt-3.svg
+#,alacritty,.config/jgmenu/i3-touch/icons-dark/amarok_scripts.svg
+#,alacritty -e htop -t "htop",.config/jgmenu/i3-touch/icons-dark/system-monitor.svg
+#,panther_launcher,.config/jgmenu/i3-touch/icons-dark/app-launcher.svg
 
 
 #this is the content of submenus:
 
-,^tag(switch-to-workspace),$HOME/.config/jgmenu/i3-touch/icons-dark/switch-to-workspace.svg
-,i3-msg workspace 1,$HOME/.config/jgmenu/i3-touch/icons-dark/switch-to-workspace-1-no-box.svg
-,i3-msg workspace 2,$HOME/.config/jgmenu/i3-touch/icons-dark/switch-to-workspace-2-no-box.svg
-,i3-msg workspace 3,$HOME/.config/jgmenu/i3-touch/icons-dark/switch-to-workspace-3-no-box.svg
-,i3-msg workspace 4,$HOME/.config/jgmenu/i3-touch/icons-dark/switch-to-workspace-4-no-box.svg
-,i3-msg workspace 5,$HOME/.config/jgmenu/i3-touch/icons-dark/switch-to-workspace-5-no-box.svg
-,i3-msg workspace 6,$HOME/.config/jgmenu/i3-touch/icons-dark/switch-to-workspace-6-no-box.svg
-,i3-msg workspace 7,$HOME/.config/jgmenu/i3-touch/icons-dark/switch-to-workspace-7-no-box.svg
-,i3-msg workspace 8,$HOME/.config/jgmenu/i3-touch/icons-dark/switch-to-workspace-8-no-box.svg
+,^tag(switch-to-workspace),.config/jgmenu/i3-touch/icons-dark/switch-to-workspace.svg
+,i3-msg workspace 1,.config/jgmenu/i3-touch/icons-dark/switch-to-workspace-1-no-box.svg
+,i3-msg workspace 2,.config/jgmenu/i3-touch/icons-dark/switch-to-workspace-2-no-box.svg
+,i3-msg workspace 3,.config/jgmenu/i3-touch/icons-dark/switch-to-workspace-3-no-box.svg
+,i3-msg workspace 4,.config/jgmenu/i3-touch/icons-dark/switch-to-workspace-4-no-box.svg
+,i3-msg workspace 5,.config/jgmenu/i3-touch/icons-dark/switch-to-workspace-5-no-box.svg
+,i3-msg workspace 6,.config/jgmenu/i3-touch/icons-dark/switch-to-workspace-6-no-box.svg
+,i3-msg workspace 7,.config/jgmenu/i3-touch/icons-dark/switch-to-workspace-7-no-box.svg
+,i3-msg workspace 8,.config/jgmenu/i3-touch/icons-dark/switch-to-workspace-8-no-box.svg
 
-,^tag(move-to-workspace),$HOME/.config/jgmenu/i3-touch/icons-dark/window-to-workspace.svg
-,i3-msg "move container to workspace number 1; workspace 1",$HOME/.config/jgmenu/i3-touch/icons-dark/switch-to-workspace-1-no-box.svg
-,i3-msg "move container to workspace number 2; workspace 2",$HOME/.config/jgmenu/i3-touch/icons-dark/switch-to-workspace-2-no-box.svg
-,i3-msg "move container to workspace number 3; workspace 3",$HOME/.config/jgmenu/i3-touch/icons-dark/switch-to-workspace-3-no-box.svg
-,i3-msg "move container to workspace number 4; workspace 4",$HOME/.config/jgmenu/i3-touch/icons-dark/switch-to-workspace-4-no-box.svg
-,i3-msg "move container to workspace number 5; workspace 5",$HOME/.config/jgmenu/i3-touch/icons-dark/switch-to-workspace-5-no-box.svg
-,i3-msg "move container to workspace number 6; workspace 6",$HOME/.config/jgmenu/i3-touch/icons-dark/switch-to-workspace-6-no-box.svg
-,i3-msg "move container to workspace number 7; workspace 7",$HOME/.config/jgmenu/i3-touch/icons-dark/switch-to-workspace-7-no-box.svg
-,i3-msg "move container to workspace number 8; workspace 8",$HOME/.config/jgmenu/i3-touch/icons-dark/switch-to-workspace-8-no-box.svg
+,^tag(move-to-workspace),.config/jgmenu/i3-touch/icons-dark/window-to-workspace.svg
+,i3-msg "move container to workspace number 1; workspace 1",.config/jgmenu/i3-touch/icons-dark/switch-to-workspace-1-no-box.svg
+,i3-msg "move container to workspace number 2; workspace 2",.config/jgmenu/i3-touch/icons-dark/switch-to-workspace-2-no-box.svg
+,i3-msg "move container to workspace number 3; workspace 3",.config/jgmenu/i3-touch/icons-dark/switch-to-workspace-3-no-box.svg
+,i3-msg "move container to workspace number 4; workspace 4",.config/jgmenu/i3-touch/icons-dark/switch-to-workspace-4-no-box.svg
+,i3-msg "move container to workspace number 5; workspace 5",.config/jgmenu/i3-touch/icons-dark/switch-to-workspace-5-no-box.svg
+,i3-msg "move container to workspace number 6; workspace 6",.config/jgmenu/i3-touch/icons-dark/switch-to-workspace-6-no-box.svg
+,i3-msg "move container to workspace number 7; workspace 7",.config/jgmenu/i3-touch/icons-dark/switch-to-workspace-7-no-box.svg
+,i3-msg "move container to workspace number 8; workspace 8",.config/jgmenu/i3-touch/icons-dark/switch-to-workspace-8-no-box.svg
 
-,^tag(move),$HOME/.config/jgmenu/i3-touch/icons-dark/move-window.svg
-,i3-msg move up,$HOME/.config/jgmenu/i3-touch/icons-dark/go-up.svg
-,i3-msg move down,$HOME/.config/jgmenu/i3-touch/icons-dark/go-down.svg
-,i3-msg move left,$HOME/.config/jgmenu/i3-touch/icons-dark/go-previous.svg
-,i3-msg move right,$HOME/.config/jgmenu/i3-touch/icons-dark/go-next.svg
+,^tag(move),.config/jgmenu/i3-touch/icons-dark/move-window.svg
+,i3-msg move up,.config/jgmenu/i3-touch/icons-dark/go-up.svg
+,i3-msg move down,.config/jgmenu/i3-touch/icons-dark/go-down.svg
+,i3-msg move left,.config/jgmenu/i3-touch/icons-dark/go-previous.svg
+,i3-msg move right,.config/jgmenu/i3-touch/icons-dark/go-next.svg
 
-,^tag(resize),$HOME/.config/jgmenu/i3-touch/icons-dark/window-resize.svg
-,i3-msg resize grow height 10 px or 10 ppt,$HOME/.config/jgmenu/i3-touch/icons-dark/window-resize-grow-height.svg
-,i3-msg resize shrink height 10 px or 10 ppt,$HOME/.config/jgmenu/i3-touch/icons-dark/window-resize-shrink-height.svg
-,i3-msg resize grow width 10 px or 10 ppt,$HOME/.config/jgmenu/i3-touch/icons-dark/window-resize-grow-width.svg
-,i3-msg resize shrink width 10 px or 10 ppt,$HOME/.config/jgmenu/i3-touch/icons-dark/window-resize-shrink-width.svg
+,^tag(resize),.config/jgmenu/i3-touch/icons-dark/window-resize.svg
+,i3-msg resize grow height 10 px or 10 ppt,.config/jgmenu/i3-touch/icons-dark/window-resize-grow-height.svg
+,i3-msg resize shrink height 10 px or 10 ppt,.config/jgmenu/i3-touch/icons-dark/window-resize-shrink-height.svg
+,i3-msg resize grow width 10 px or 10 ppt,.config/jgmenu/i3-touch/icons-dark/window-resize-grow-width.svg
+,i3-msg resize shrink width 10 px or 10 ppt,.config/jgmenu/i3-touch/icons-dark/window-resize-shrink-width.svg
 
-,^tag(window-close),$HOME/.config/jgmenu/i3-touch/icons-dark/window-close.svg
-,$HOME/.config/scripts/kill-not-plank.sh,$HOME/.config/jgmenu/i3-touch/icons-dark/window-close.svg
+,^tag(window-close),.config/jgmenu/i3-touch/icons-dark/window-close.svg
+,.config/scripts/kill-not-plank.sh,.config/jgmenu/i3-touch/icons-dark/window-close.svg
 
-,^tag(rotate),$HOME/.config/jgmenu/i3-touch/icons-dark/display-rotate.svg
-,$HOME/.config/jgmenu/i3-touch/screen-rotation/screen-rotate-clockwise.sh,$HOME/.config/jgmenu/i3-touch/icons-dark/display-rotate-clockwise.svg
-,$HOME/.config/jgmenu/i3-touch/screen-rotation/screen-rotate-counter-clockwise.sh,$HOME/.config/jgmenu/i3-touch/icons-dark/display-rotate-counter-clockwise.svg
+,^tag(rotate),.config/jgmenu/i3-touch/icons-dark/display-rotate.svg
+,.config/jgmenu/i3-touch/screen-rotation/screen-rotate-clockwise.sh,.config/jgmenu/i3-touch/icons-dark/display-rotate-clockwise.svg
+,.config/jgmenu/i3-touch/screen-rotation/screen-rotate-counter-clockwise.sh,.config/jgmenu/i3-touch/icons-dark/display-rotate-counter-clockwise.svg
 
-,^tag(system),$HOME/.config/jgmenu/i3-touch/icons-dark/system-shutdown.svg
-,i3lock,$HOME/.config/jgmenu/i3-touch/icons-dark/system-lock-screen.svg
-,i3exit suspend,$HOME/.config/jgmenu/i3-touch/icons-dark/system-suspend.svg
-,i3exit hibernate,$HOME/.config/jgmenu/i3-touch/icons-dark/system-suspend-hibernate.svg
-,i3exit reboot,$HOME/.config/jgmenu/i3-touch/icons-dark/view-refresh.svg
-,i3exit shutdown,$HOME/.config/jgmenu/i3-touch/icons-dark/system-shutdown.svg
+,^tag(system),.config/jgmenu/i3-touch/icons-dark/system-shutdown.svg
+,i3lock,.config/jgmenu/i3-touch/icons-dark/system-lock-screen.svg
+,i3exit suspend,.config/jgmenu/i3-touch/icons-dark/system-suspend.svg
+,i3exit hibernate,.config/jgmenu/i3-touch/icons-dark/system-suspend-hibernate.svg
+,i3exit reboot,.config/jgmenu/i3-touch/icons-dark/view-refresh.svg
+,i3exit shutdown,.config/jgmenu/i3-touch/icons-dark/system-shutdown.svg
 
