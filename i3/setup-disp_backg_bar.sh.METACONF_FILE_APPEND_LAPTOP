@@ -1,0 +1,4 @@
+MONITOR=eDP $HOME/.config/polybar/launch $HOME/.config/polybar/config top
+MONITOR=eDP $HOME/.config/polybar/launch $HOME/.config/polybar/config bottom
+MONITOR=DisplayPort-0 $HOME/.config/polybar/launch $HOME/.config/polybar/config top
+MONITOR=DisplayPort-0 $HOME/.config/polybar/launch $HOME/.config/polybar/config external_bottom

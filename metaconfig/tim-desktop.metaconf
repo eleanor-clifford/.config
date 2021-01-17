@@ -15,8 +15,8 @@ STARTX_ON_TTY1 = 1
 DPI = 168
 
 # i3
-PRI_DISP = eDP
-SEC_DISP = DisplayPort-0 eDP
+PRI_DISP = DP-2 HDMI3
+SEC_DISP = DP5  HDMI-0
 
 # These are optional comments in front of the relevant lines
 

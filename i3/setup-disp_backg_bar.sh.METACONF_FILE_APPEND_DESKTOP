@@ -1,0 +1,4 @@
+MONITOR=DP-2    $HOME/.config/polybar/launch $HOME/.config/polybar/config top
+MONITOR=DP-2    $HOME/.config/polybar/launch $HOME/.config/polybar/config bottom
+MONITOR=HDMI-0  $HOME/.config/polybar/launch $HOME/.config/polybar/config top
+MONITOR=HDMI-0  $HOME/.config/polybar/launch $HOME/.config/polybar/config external_bottom
