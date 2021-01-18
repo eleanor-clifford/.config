@@ -15,6 +15,8 @@ end
 #fi
 
 export BROWSER=/usr/bin/firefox
+export EDITOR=/usr/bin/vim
+export VISUAL=/usr/bin/vim
 export AUR_PAGER=ranger
 
 alias extend-hdmi="xrandr --output eDP-1-1 --auto --output HDMI-1-1 --auto --right-of eDP-1-1"
