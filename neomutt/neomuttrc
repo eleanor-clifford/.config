@@ -42,7 +42,7 @@ bind attach       J  search-opposite
 # Macros {{{
 macro index,pager \cb "|urlview\n"
 macro index,pager v   "|vim -\n"
-macro index,pager V   "|cat /dev/stdin > /tmp/mutt-vimexternal; kitty '/usr/bin/vim /tmp/mutt-vimexternal' &\n"
+macro index,pager V   "|cat /dev/stdin > /tmp/mutt-vimexternal; kitty vim +'set ft=mail' /tmp/mutt-vimexternal &\n"
 # }}}
 # Sidebar {{{
 set sidebar_visible
