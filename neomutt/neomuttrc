@@ -1,0 +1,146 @@
+# Mappings {{{
+bind index,pager  E sidebar-next
+bind index,pager  I sidebar-prev
+bind index,pager  O sidebar-open
+
+bind index        e  next-entry
+bind index        i  previous-entry
+bind index        o  display-message
+bind index        j  search-next
+bind index        J  search-opposite
+bind index        g  first-entry
+bind index        G  last-entry
+
+bind browser      n  exit
+bind browser      e  next-entry
+bind browser      i  previous-entry
+bind browser      o  select-entry
+bind browser      j  search-next
+bind browser      J  search-opposite
+
+bind pager        n  exit
+bind pager        e  next-line
+bind pager        i  previous-line
+bind pager        o  view-attachments
+bind pager        j  search-next
+bind pager        J  search-opposite
+bind pager        g  top
+bind pager        G  bottom
+
+
+bind attach       n  exit
+bind attach       e  next-entry
+bind attach       i  previous-entry
+bind attach       o  view-attach
+bind attach       j  search-next
+bind attach       J  search-opposite
+
+#bind browser n goto-parent
+#bind pager,browser gg top-page
+#bind pager,browser G bottom-page
+# }}}
+# Macros {{{
+macro index,pager \cb "|urlview\n"
+macro index,pager v   "|vim -\n"
+macro index,pager V   "|cat /dev/stdin > /tmp/mutt-vimexternal; kitty '/usr/bin/vim /tmp/mutt-vimexternal' &\n"
+# }}}
+# Sidebar {{{
+set sidebar_visible
+set sidebar_format = "%B%?F? [%F]?%* %?N?%N/?%S"
+set mail_check_stats
+# }}}
+# Pager {{{
+# I want to preserve wrapping done on a 78/80 basis even with > indenting
+set wrap = 90
+# }}}
+# Editor {{{
+# Delete fields I don't want in vim
+set editor          = vim
+set edit_headers    = yes
+set autoedit        = yes
+# }}}
+# IMAP {{{
+set folder       = imaps://outlook.office365.com:993/
+set imap_user    = tc565@cam.ac.uk
+set imap_pass    = `/home/tim/.config/scripts/get_password.sh cam.ac.uk`
+set spoolfile    = +INBOX
+mailboxes        = +INBOX +'Sent Items' +Archive
+
+# Store message headers locally to speed things up.
+# If hcache is a folder, Mutt will create sub cache folders for each account
+# which may speeds things up even more.
+set header_cache = ~/.cache/neomutt/headers
+
+# Store messages locally to speed things up, like searching message bodies.
+# Can be the same folder as header_cache.
+# This will cost important disk usage according to your e-mail amount.
+set message_cachedir = ~/.cache/neomutt/messages
+
+# Allow Mutt to open a new IMAP connection automatically.
+unset imap_passive
+
+# Keep the IMAP connection alive by polling intermittently (time in seconds).
+set imap_keepalive = 300
+
+# How often to check for new mail (time in seconds).
+set mail_check = 60
+# }}}
+# SMTP {{{
+set realname        = 'Tim Clifford'
+set from            = tc565@cam.ac.uk
+set use_from        = yes
+unset record
+
+set smtp_url        = smtp://tc565@cam.ac.uk@smtp.office365.com:587
+set smtp_pass       = $imap_pass
+set ssl_starttls    = yes
+
+# }}}
+# {{{ Dracula
+###############################################################################
+# Dracula Theme for Mutt: https://draculatheme.com/
+#
+# @author Paul Townsend <paul@caprica.org>
+# modified by Tim Clifford to use kitty's dracula 16-color codes
+
+# general ------------ foreground ---- background -----------------------------
+color error            color007        color005
+color indicator        color007        color241
+color markers          color210        default
+color message          default         default
+color normal           default         default
+color prompt           default         default
+color search           color002        default
+color status           color004        color236
+color tilde            color007        default
+color tree             color004        default
+
+# message index ------ foreground ---- background -----------------------------
+color index            color002        default    ~F # flagged messages
+color index            color006        default    ~N # new messages
+color index            color005        default    ~Q # messages which have been replied to
+color index            color215        default    ~T # tagged messages
+color index            color004        default    ~v # messages part of a collapsed thread
+color index            color210        default    ~D # deleted messages
+
+# message headers ---- foreground ---- background -----------------------------
+color hdrdefault       color006        default
+color header           color007        default    ^Subject:.*
+
+# message body ------- foreground ---- background -----------------------------
+color attachment       color003        default
+color body             color007        default    [\-\.+_a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+              # email addresses
+color body             color003        default    (https?|ftp)://[\-\.,/%~_:?&=\#a-zA-Z0-9]+       # URLs
+color body             color007        default    (^|[[:space:]])\\*[^[:space:]]+\\*([[:space:]]|$) # *bold* text
+color body             color007        default    (^|[[:space:]])_[^[:space:]]+_([[:space:]]|$)    # _underlined_ text
+color body             color007        default    (^|[[:space:]])/[^[:space:]]+/([[:space:]]|$)    # /italic/ text
+color quoted           color008        default
+color quoted1          color006        default
+color quoted2          color002        default
+color quoted3          color215        default
+color quoted4          color005        default
+color signature        color005        default
+
+# sidebar ------------ foreground ---- background -----------------------------
+color sidebar_divider  color236        default
+# }}}
