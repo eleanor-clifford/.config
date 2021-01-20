@@ -3,15 +3,15 @@
 <settings>
   <property name="pressureSensitivity" value="true"/>
   <property name="zoomGesturesEnabled" value="true"/>
-  <property name="selectedToolbar" value="Portrait"/>
-  <property name="lastSavePath" value=""/>
-  <property name="lastOpenPath" value="$HOME/OneDrive-Cam/ExamplePapers/Mathematics"/>
-  <property name="lastImagePath" value=""/>
+  <property name="selectedToolbar" value="Dracula"/>
+  <property name="lastSavePath" value="/home/tim/OneDrive-Cam/Example_Papers/2P7"/>
+  <property name="lastOpenPath" value="/home/tim/OneDrive-Cam/Example_Papers/2P7"/>
+  <property name="lastImagePath" value="file:///home/tim"/>
   <property name="zoomStep" value="10.00000000"/>
   <property name="zoomStepScroll" value="2.00000000"/>
   <property name="displayDpi" value="72"/>
-  <property name="mainWndWidth" value="1412"/>
-  <property name="mainWndHeight" value="1485"/>
+  <property name="mainWndWidth" value="1050"/>
+  <property name="mainWndHeight" value="1828"/>
   <property name="maximized" value="false"/>
   <property name="showSidebar" value="false"/>
   <property name="sidebarWidth" value="50"/>
@@ -30,12 +30,12 @@
   <!--Which gui elements are hidden if you are in Fullscreen mode, separated by a colon (,)-->
   <property name="fullscreenHideElements" value="mainMenubar"/>
   <!--Which gui elements are hidden if you are in Presentation mode, separated by a colon (,)-->
-  <property name="presentationHideElements" value="mainMenubar,sidebarContents"/>
+  <property name="presentationHideElements" value=""/>
   <property name="showBigCursor" value="false"/>
   <property name="highlightPosition" value="false"/>
-  <property name="darkTheme" value="false"/>
+  <property name="darkTheme" value="true"/>
   <property name="disableScrollbarFadeout" value="false"/>
-  <property name="scrollbarHideType" value="none"/>
+  <property name="scrollbarHideType" value="both"/>
   <!--Hides scroolbars in the main window, allowed values: "none", "horizontal", "vertical", "both"-->
   <property name="autoloadPdfXoj" value="true"/>
   <property name="defaultSaveName" value="%F-Note-%H-%M"/>
@@ -47,18 +47,18 @@
   <property name="addVerticalSpaceAmount" value="150"/>
   <property name="drawDirModsEnabled" value="false"/>
   <property name="drawDirModsRadius" value="50"/>
-  <property name="snapRotation" value="true"/>
+  <property name="snapRotation" value="false"/>
   <property name="snapRotationTolerance" value="0.20000000"/>
-  <property name="snapGrid" value="true"/>
+  <property name="snapGrid" value="false"/>
   <property name="snapGridTolerance" value="0.25000000"/>
   <property name="touchWorkaround" value="false"/>
-  <property name="selectionBorderColor" value="16711680"/>
-  <property name="backgroundColor" value="14473941"/>
-  <property name="selectionMarkerColor" value="7512015"/>
+  <property name="selectionBorderColor" value="-10325340"/>
+  <property name="backgroundColor" value="-12302502"/>
+  <property name="selectionMarkerColor" value="-7607811"/>
   <!--The count of rendered PDF pages which will be cached.-->
   <!--Config for new pages-->
   <property name="pdfPageCacheSize" value="10"/>
-  <property name="pageTemplate" value="xoj/template&#10;copyLastPageSettings=true&#10;size=595.275591x841.889764&#10;backgroundType=lined&#10;backgroundColor=#ffffff&#10;"/>
+  <property name="pageTemplate" value="xoj/template&#10;copyLastPageSize=false&#10;copyLastPageSettings=false&#10;size=595.275591x841.889764&#10;backgroundType=plain&#10;backgroundColor=#ff282a36&#10;"/>
   <property name="sizeUnit" value=""/>
   <property name="audioFolder" value=""/>
   <property name="audioInputDevice" value="-1"/>
@@ -73,30 +73,30 @@
   <property name="strokeFilterEnabled" value="false"/>
   <property name="doActionOnStrokeFiltered" value="false"/>
   <property name="trySelectOnStrokeFiltered" value="false"/>
-  <property name="experimentalInputSystemEnabled" value="false"/>
+  <property name="experimentalInputSystemEnabled" value="true"/>
   <property name="inputSystemTPCButton" value="false"/>
   <property name="inputSystemDrawOutsideWindow" value="true"/>
   <property name="font" font="Sans" size="12.00000000"/>
   <data name="buttonConfig">
     <data name="default">
-      <attribute name="color" type="hex" value="000000"/>
+      <attribute name="color" type="hex" value="ff000000"/>
       <attribute name="drawingType" type="string" value="default"/>
       <attribute name="size" type="string" value="thin"/>
       <attribute name="tool" type="string" value="pen"/>
     </data>
     <data name="eraser">
-      <attribute name="tool" type="string" value="none"/>
-    </data>
-    <data name="middle">
       <attribute name="eraserMode" type="string" value="none"/>
       <attribute name="size" type="string" value="none"/>
       <attribute name="tool" type="string" value="eraser"/>
+    </data>
+    <data name="middle">
+      <attribute name="tool" type="string" value="none"/>
     </data>
     <data name="right">
       <attribute name="tool" type="string" value="none"/>
     </data>
     <data name="stylus">
-      <attribute name="tool" type="string" value="none"/>
+      <attribute name="tool" type="string" value="selectRegion"/>
     </data>
     <data name="stylus2">
       <attribute name="tool" type="string" value="none"/>
@@ -107,7 +107,29 @@
       <attribute name="tool" type="string" value="none"/>
     </data>
   </data>
-  <data name="deviceClasses"/>
+  <data name="deviceClasses">
+    <data name="ELAN2514:00 04F3:2AF0">
+      <attribute name="deviceClass" type="int" value="4"/>
+      <attribute name="deviceSource" type="int" value="5"/>
+    </data>
+    <data name="ELAN2514:00 04F3:2AF0 Eraser (0)">
+      <attribute name="deviceClass" type="int" value="3"/>
+      <attribute name="deviceSource" type="int" value="2"/>
+    </data>
+    <data name="ELAN2514:00 04F3:2AF0 Pen (0)">
+      <attribute name="deviceClass" type="int" value="2"/>
+      <attribute name="deviceSource" type="int" value="1"/>
+    </data>
+    <data name="SYNA32A0:00 06CB:CE14 Mouse">
+      <attribute name="deviceClass" type="int" value="1"/>
+      <attribute name="deviceSource" type="int" value="0"/>
+    </data>
+    <data name="SYNA32A0:00 06CB:CE14 Touchpad">
+      <attribute name="deviceClass" type="int" value="1"/>
+      <attribute name="deviceSource" type="int" value="0"/>
+    </data>
+  </data>
+  <data name="lastUsedPageBgColor"/>
   <data name="tools">
     <attribute name="current" type="string" value="pen"/>
     <data name="drawArrow">
@@ -125,7 +147,7 @@
     <data name="eraser">
       <attribute name="drawingType" type="string" value="default"/>
       <attribute name="size" type="string" value="MEDIUM"/>
-      <attribute name="type" type="string" value="default"/>
+      <attribute name="type" type="string" value="deleteStroke"/>
     </data>
     <data name="hand">
       <attribute name="drawingType" type="string" value="default"/>
@@ -141,10 +163,10 @@
       <attribute name="drawingType" type="string" value="default"/>
     </data>
     <data name="pen">
-      <attribute name="color" type="hex" value="3333cc"/>
+      <attribute name="color" type="hex" value="f1fa8c"/>
       <attribute name="drawingType" type="string" value="default"/>
-      <attribute name="fill" type="int" value="0"/>
-      <attribute name="fillAlpha" type="int" value="128"/>
+      <attribute name="fill" type="int" value="1"/>
+      <attribute name="fillAlpha" type="int" value="255"/>
       <attribute name="size" type="string" value="MEDIUM"/>
       <attribute name="style" type="string" value="plain"/>
     </data>
@@ -171,5 +193,11 @@
       <attribute name="drawingType" type="string" value="default"/>
     </data>
   </data>
-  <data name="touch"/>
+  <data name="touch">
+    <attribute name="cmdDisable" type="string" value=""/>
+    <attribute name="cmdEnable" type="string" value=""/>
+    <attribute name="disableTouch" type="boolean" value="false"/>
+    <attribute name="method" type="string" value="auto"/>
+    <attribute name="timeout" type="int" value="1000"/>
+  </data>
 </settings>
