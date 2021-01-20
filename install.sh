@@ -192,10 +192,29 @@ fi
 
 if $firefox; then
 	## Firefox
-	git clone https://github.com/tim-clifford/minimal-functional-fox-dracula
 	firefox_dir=$(find $HOME -type d \
 		-regex ".*\.mozilla/firefox/.*\.default-release")
-	mv minimal-functional-fox-dracula "$firefox_dir/chrome"
+	if [ "$firefox_dir" = "" ]; then
+		echo "Firefox not installed, skipping..."
+	elif ! [ "$(echo "$firefox_dir" | wc -l)" = "1" ]; then
+		echo "Multiple firefox installs located, skipping..."
+	else
+		if [ -d "$firefox_dir/chrome" ]; then
+			cd "$firefox_dir/chrome"
+			if git config --get remote.origin.url | grep -q "tim-clifford"; then
+				git pull
+				cd -
+			else
+				cd -
+				rm -r "$firefox_dir/chrome"
+				git clone https://github.com/tim-clifford/minimal-functional-fox-dracula
+				mv minimal-functional-fox-dracula "$firefox_dir/chrome"
+			fi
+		else
+			git clone https://github.com/tim-clifford/minimal-functional-fox-dracula
+			mv minimal-functional-fox-dracula "$firefox_dir/chrome"
+		fi
+	fi
 fi
 
 ## Less
