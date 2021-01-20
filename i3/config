@@ -37,17 +37,16 @@ exec --no-startup-id nm-applet
 exec --no-startup-id blueman-applet
 
 # gaps
-for_window [class="^.*"] border pixel 2
+for_window [class="^.*"] border pixel 5
 for_window [class="^Plank"] border pixel 0
 
 # class                 border  backgr. text    indicator child_border
-client.focused          #4c7899 #285577 #ffffff #2e9ef4   #285577
-#client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
-client.focused_inactive #333333 #222222 #888888 #292d2e   #222222
-client.unfocused        #333333 #222222 #888888 #292d2e   #222222
-client.urgent           #2f343a #900000 #ffffff #900000   #900000
-client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
-client.background       #ffffff
+client.focused          #6d29a9 #6d29a9 #f8f8f2 #2e9ef4   #6d29a9
+client.focused_inactive #313652 #282a36 #888888 #292d2e   #282a36
+client.unfocused        #313652 #282a36 #888888 #292d2e   #282a36
+client.urgent           #2f343a #903333 #f8f8f2 #903333   #903333
+client.placeholder      #000000 #0c0c0c #f8f8f2 #000000   #0c0c0c
+client.background       #f8f8f2
 
 gaps inner 10
 #gaps outer 5
