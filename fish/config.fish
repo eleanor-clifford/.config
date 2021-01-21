@@ -46,3 +46,6 @@ alias emerge='sudo strat -r gentoo emerge'
 
 # I'm bad at typing
 alias claer='clear'
+
+alias pmutt='neomutt -F ~/.config/neomutt/neomuttrc-personal'
+alias cmutt='neomutt -F ~/.config/neomutt/neomuttrc-cam'
