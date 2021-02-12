@@ -2,3 +2,10 @@ metadata:
   author: Tim Clifford
   keywords:
     - 'dracula_theme'
+variables:
+  linkcolor: draculapink
+  filecolor: draculagreen
+  citecolor: draculapurple
+  urlcolor:  draculacyan
+  toccolor:  draculaorange
+  monofont:  NotoSansMono-Regular

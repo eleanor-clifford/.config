@@ -38,7 +38,7 @@ alias start-remote='/home/tim/scripts/start-remote.sh'
 alias mount-all='/home/tim/scripts/mount-all.sh'
 alias unmount-all='/home/tim/scripts/unmount-all.sh'
 alias umount-all='/home/tim/scripts/unmount-all.sh'
-alias aur-remove='repo-remove /var/cache/pacman/custom/custom.db.tar'
+alias aur-remove='repo-remove /home/custompkgs/custom.db.tar'
 alias nano=vim
 alias duplicate-screen='xrandr --output eDP --auto --output $OUTPUT --mode 1920x1080 --same-as eDP --panning 1920x1080+0+0'
 alias icat='kitty +kitten icat'
@@ -47,5 +47,5 @@ alias emerge='sudo strat -r gentoo emerge'
 # I'm bad at typing
 alias claer='clear'
 
-alias pmutt='neomutt -F ~/.config/neomutt/neomuttrc-personal'
-alias cmutt='neomutt -F ~/.config/neomutt/neomuttrc-cam'
+alias muttp='neomutt -F ~/.config/neomutt/neomuttrc-personal'
+alias muttc='neomutt -F ~/.config/neomutt/neomuttrc-cam'

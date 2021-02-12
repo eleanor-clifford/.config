@@ -31,14 +31,39 @@ for i in "$@"; do
 	esac
 done
 
+# Install packages
+INSTALL='sudo pacman -S'
+INSTALL_AUR='aur sync'
+IFS="#" # Split on the package section comment, don't care that it's hacky
+for pkgs in $(cat pkglist.conf); do
+	if [ "$pkgs" = "" ]; then continue; fi
+	while true; do
+	read -p "Install $(echo "$pkgs" | head -n1 | sed 's/^ *//')? " yn
+		case $yn in
+			[Yy]* )
+				# remove comment
+				pkgs=$(echo "$pkgs" | tail -n +2)
+				if echo "$pkgs" | egrep '^aur/'; then
+					eval "$INSTALL_AUR $(echo "$pkgs" | sed -n 's|^aur/||p' | tr '\n' ' ')"
+				fi
+				eval "$INSTALL $(echo "$pkgs" | sed 's|^aur/||' | tr '\n' ' ')"
+				break;;
+			[Nn]* )
+				break;;
+			*)
+				echo "Please respond";;
+		esac
+	done
+done
+IFS="
+"
+
 # Apply metaconfig
 if [ ! -f metaconfig/$(hostname).metaconf ]; then
 	echo "No metaconfig defined for this hostname"
 	exit 1
 fi
 
-IFS="
-"
 PREFIX=''
 POSTFIX_FILE_APPEND=''
 POSTFIX_FILE_APPENDED=''

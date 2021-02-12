@@ -17,7 +17,7 @@ artist_error="Unknown Artist"
 # basically to remove bits you don't want
 
 regex_url_mappings="
-.*youtube.*
+.*youtube.*%{F#ff5555}%{F-}
 .*twitch.*s/ - Twitch//
 "
 
@@ -26,7 +26,7 @@ regex_title_mappings="
 #.* - Twitchs/ - Twitch//
 
 regex_player_mappings="
-spotify
+spotify%{F#50fa7b}%{F-}
 firefox
 chromiumBrave
 vlcVLC
@@ -131,8 +131,8 @@ echo -n $current_player > /tmp/polybar-player-current
 
 # Only output the suffix if there's not much space
 # don't force this check to happen if this script doesn't exist
-if [ -f $HOME/.config/.config/scripts/islandscape.sh ] \
-   && ! $HOME/.config/.config/scripts/islandscape.sh; then
+if [ -f $HOME/.config/scripts/islandscape.sh ] \
+   && ! $HOME/.config/scripts/islandscape.sh; then
 	echo "   $suffix"
 else
 	# Don't introduce a trailing - if there's no artist

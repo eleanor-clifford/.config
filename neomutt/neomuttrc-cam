@@ -53,6 +53,11 @@ set mail_check_stats
 # Pager {{{
 # I want to preserve wrapping done on a 78/80 basis even with > indenting
 set wrap = 90
+
+# view
+auto_view text/html                                      # view html automatically
+alternative_order text/plain text/enriched text/html     # save html for last
+
 # }}}
 # Editor {{{
 # Delete fields I don't want in vim
@@ -63,7 +68,7 @@ set autoedit        = yes
 # IMAP {{{
 set folder       = imaps://outlook.office365.com:993/
 set imap_user    = tc565@cam.ac.uk
-set imap_pass    = `/home/tim/.config/scripts/get_password.sh cam.ac.uk`
+set imap_pass    = `$HOME/.config/scripts/get_password.sh cam.ac.uk`
 set spoolfile    = +INBOX
 mailboxes        = +INBOX +'Sent Items' +Archive
 
