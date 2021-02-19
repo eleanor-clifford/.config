@@ -1,6 +1,8 @@
 if [ (tty) = "/dev/tty1" ]
 	sleep 1 && startx
-elif tty | grep -q "/dev/tty"
+end
+
+if tty | grep -q "/dev/tty"
 	$HOME/.config/scripts/set_tty_colors.sh
 end
 

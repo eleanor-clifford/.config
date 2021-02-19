@@ -19,8 +19,11 @@ else
 fi
 
 # default arguments
-link_to_home=true
 vim=full
+link_to_home=true
+firefox=true
+fish=true
+install=true
 for i in "$@"; do
 	case "$i" in
 		--no-link)	     link_to_home=false;;
@@ -28,57 +31,40 @@ for i in "$@"; do
 		--vimrc-none)    vim=none;;
 		--no-firefox)    firefox=false;;
 		--no-fish)       fish=false;;
+		--no-install)    install=false;;
+		--update)
+			vim=update
+			firefox=false
+			fish=false
+			keyboard=false
+			install=false
+			;;
 	esac
 done
 
-# Install AUR helper
-while true; do
-	read -p "Install aurutils? " yn
-	case $yn in
-		[Yy]* )
-			git clone https://aur.archlinux.org/aurutils.git
-			cd aurutils
-			if makepkg -si; then
-				cd -
-				rm -rf aurutils
-
-				# Stop telling me my shell is disgusting, it's just shell ok?
-				echo "
-[custom]
-SigLevel = Optional TrustAll
-Server = file:///home/custompkgs" | sudo tee -a /etc/pacman.conf >/dev/null
-				sudo install -d /home/custompkgs -o $USER
-				repo-add /home/custompkgs/custom.db.tar.gz
-				sudo pacman -Syu
-			else
-				exit 1
-			fi
-			break;;
-		[Nn]* )
-			break;;
-		*)
-			echo "Please respond";;
-	esac
-done
-
-# Install packages
-INSTALL='sudo pacman -S'
-INSTALL_AUR="aur sync"
-export AUR_PAGER='ls -alF' # just for now so aurutils doesn't fail
-
-IFS="#" # Split on the package section comment, don't care that it's hacky
-for pkgs in $(cat pkglist.conf); do
-	if [ "$pkgs" = "" ]; then continue; fi
+if $install; then
+	# Install AUR helper
 	while true; do
-	read -p "Install $(echo "$pkgs" | head -n1 | sed 's/^ *//')? " yn
+		read -p "Install aurutils? " yn
 		case $yn in
 			[Yy]* )
-				# remove comment
-				pkgs=$(echo "$pkgs" | tail -n +2)
-				if echo "$pkgs" | egrep '^aur/'; then
-					eval "$INSTALL_AUR $(echo "$pkgs" | sed -n 's|^aur/||p' | tr '\n' ' ')"
+				git clone https://aur.archlinux.org/aurutils.git
+				cd aurutils
+				if makepkg -si; then
+					cd -
+					rm -rf aurutils
+
+					# Stop telling me my shell is disgusting, it's just shell ok?
+					echo "
+	[custom]
+	SigLevel = Optional TrustAll
+	Server = file:///home/custompkgs" | sudo tee -a /etc/pacman.conf >/dev/null
+					sudo install -d /home/custompkgs -o $USER
+					repo-add /home/custompkgs/custom.db.tar.gz
+					sudo pacman -Syu
+				else
+					exit 1
 				fi
-				eval "$INSTALL $(echo "$pkgs" | sed 's|^aur/||' | tr '\n' ' ')"
 				break;;
 			[Nn]* )
 				break;;
@@ -86,7 +72,34 @@ for pkgs in $(cat pkglist.conf); do
 				echo "Please respond";;
 		esac
 	done
-done
+
+	# Install packages
+	INSTALL='sudo pacman -S'
+	INSTALL_AUR="aur sync"
+	export AUR_PAGER='ls -alF' # just for now so aurutils doesn't fail
+
+	IFS="#" # Split on the package section comment, don't care that it's hacky
+	for pkgs in $(cat pkglist.conf); do
+		if [ "$pkgs" = "" ]; then continue; fi
+		while true; do
+		read -p "Install $(echo "$pkgs" | head -n1 | sed 's/^ *//')? " yn
+			case $yn in
+				[Yy]* )
+					# remove comment
+					pkgs=$(echo "$pkgs" | tail -n +2)
+					if echo "$pkgs" | egrep '^aur/'; then
+						eval "$INSTALL_AUR $(echo "$pkgs" | sed -n 's|^aur/||p' | tr '\n' ' ')"
+					fi
+					eval "$INSTALL $(echo "$pkgs" | sed 's|^aur/||' | tr '\n' ' ')"
+					break;;
+				[Nn]* )
+					break;;
+				*)
+					echo "Please respond";;
+			esac
+		done
+	done
+fi
 IFS="
 "
 
@@ -245,6 +258,12 @@ elif [ "$vim" = "full" ]; then
 
 	./install.sh
 	cd $wd
+
+elif [ "$vim" = "update" ]; then
+	cd "$HOME/.vim"
+	git pull origin master
+	#./install.sh --update
+	cd -
 fi
 
 if $firefox; then
@@ -281,23 +300,31 @@ fi
 lesskey lessrc
 
 if $fish; then
-	## Shell
-	read -p "Change shell to fish? " yn
-	case $yn in
-		[Yy]* ) chsh -s /usr/bin/fish;;
-		[Nn]* ) ;;
-		*)      echo "No response, exiting..."; exit 1;
-	esac
+	while true; do
+		read -p "Change shell to fish? " yn
+		case $yn in
+			[Yy]* )
+				chsh -s /usr/bin/fish
+				break;;
+			[Nn]* ) break;;
+			*)      echo "Please respond"; exit 1;
+		esac
+	done
 fi
 
-read -p "Install keyboard layout? " yn
-case $yn in
-	[Yy]* )
-		sudo cp ./colemak-custom/colemak-custom /usr/share/X11/xkb/symbols/
-		sudo cp ./colemak-custom/colemak-custom.map.gz /usr/share/kbd/keymaps/i386/colemak/ ;;
-	[Nn]* ) ;;
-	*)      echo "No response, exiting..."; exit 1;
-esac
+if $keyboard; then
+	while true; do
+		read -p "Install keyboard layout? " yn
+		case $yn in
+			[Yy]* )
+				sudo cp ./colemak-custom/colemak-custom /usr/share/X11/xkb/symbols/
+				sudo cp ./colemak-custom/colemak-custom.map.gz /usr/share/kbd/keymaps/i386/colemak/
+				break;;
+			[Nn]* ) break;;
+			*)      echo "Please respond"; exit 1;
+		esac
+	done
+fi
 
 echo "===== Commiting host-specific configuration... ====="
 git add .
