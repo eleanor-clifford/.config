@@ -197,6 +197,9 @@ done
 if $link_to_home; then
 	# Install dotfiles to $HOME
 	for i in $(find . -maxdepth 1 -name '.*'); do
+		if echo "$i" | egrep -q ".git|$POSTFIX_FILE_APPEND|$POSTFIX_FILE_APPENDED"; then
+			continue
+		fi
 		fullpath=$(eval echo $(echo $i | sed 's|^\.|$(pwd)|'))
 		homepath=$(eval echo $(echo $i | sed 's|.*/\(.*\)$|$HOME/\1|'))
 		echo "linking $fullpath -> $homepath"
