@@ -252,10 +252,11 @@ if $firefox; then
 	firefox_dir=$(find $HOME -type d \
 		-regex ".*\.mozilla/firefox/.*\.default-release")
 	if [ "$firefox_dir" = "" ]; then
-		echo "Firefox not installed, skipping..."
+		echo "Firefox must be run once before the config can be made, skipping..."
 	elif ! [ "$(echo "$firefox_dir" | wc -l)" = "1" ]; then
 		echo "Multiple firefox installs located, skipping..."
 	else
+		echo "Installing firefox theme..."
 		if [ -d "$firefox_dir/chrome" ]; then
 			cd "$firefox_dir/chrome"
 			if git config --get remote.origin.url | grep -q "tim-clifford"; then
@@ -271,6 +272,8 @@ if $firefox; then
 			git clone https://github.com/tim-clifford/minimal-functional-fox-dracula
 			mv minimal-functional-fox-dracula "$firefox_dir/chrome"
 		fi
+		echo -n "You must enable toolkit.legacyUserProfileCustomizations.stylesheets "
+		echo "to use the custom firefox theme"
 	fi
 fi
 
