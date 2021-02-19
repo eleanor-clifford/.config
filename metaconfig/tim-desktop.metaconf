@@ -5,8 +5,9 @@ PREFIX = _METACONF_REPLACE_
 # e.g. keymaps to add to the end of a config
 # There is logic to prevent duplicate appends on a rerun
 
-POSTFIX_FILE_APPEND   = .METACONF_FILE_APPEND_DESKTOP # unique to metaconf
-POSTFIX_FILE_APPENDED = .METACONF_FILE_APPENDED # common across metaconfs
+# postfix to the file, prefix to the hostname
+POSTFIX_FILE_APPEND_PREFIX   = .METACONF_FILE_APPEND_ # common across metaconfs
+POSTFIX_FILE_APPENDED = .METACONF_FILE_APPENDED       # common across metaconfs
 
 # Populate per-system values here
 STARTX_ON_TTY1 = 1
@@ -31,6 +32,7 @@ VOLUME_TICK_DOWN = -1%
 # picom
 DISABLE_PICOM = \#            # My regex isn't very good, for these
                               # to work they can't end on whitespace
+# picom
 PICOM_CORNER_RADIUS = 30.0
 
 #polybar

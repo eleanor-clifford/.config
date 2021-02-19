@@ -110,7 +110,7 @@ if [ ! -f metaconfig/$(cat /etc/hostname).metaconf ]; then
 fi
 
 PREFIX=''
-POSTFIX_FILE_APPEND=''
+POSTFIX_FILE_APPEND_PREFIX=''
 POSTFIX_FILE_APPENDED=''
 
 echo "===== applying metaconfig variables... ====="
@@ -138,8 +138,8 @@ for line in $(cat "metaconfig/$(cat /etc/hostname).metaconf"); do
 		continue
 	fi
 
-	if [ "$KEY" = 'POSTFIX_FILE_APPEND' ]; then
-		POSTFIX_FILE_APPEND=$VAL
+	if [ "$KEY" = 'POSTFIX_FILE_APPEND_PREFIX' ]; then
+		POSTFIX_FILE_APPEND_PREFIX=$VAL
 		continue
 	fi
 
@@ -159,10 +159,11 @@ for line in $(cat "metaconfig/$(cat /etc/hostname).metaconf"); do
 done
 
 # Apply file appends
-if [ "$POSTFIX_FILE_APPEND" = '' ] | [ "$POSTFIX_FILE_APPENDED" = '' ]; then
+if [ "$POSTFIX_FILE_APPEND_PREFIX" = '' ] | [ "$POSTFIX_FILE_APPENDED" = '' ]; then
 	echo "file append prefixes must be defined"
 	exit 1
 fi
+POSTFIX_FILE_APPEND="$POSTFIX_FILE_APPEND_PREFIX$(cat /etc/hostname)"
 
 echo "===== applying append files... ====="
 for i in $(find . -type f -name "*$POSTFIX_FILE_APPEND"); do
@@ -187,7 +188,7 @@ for i in $(find . -type f -name "*$POSTFIX_FILE_APPEND"); do
 
 		# fuck it i would need a gnuism anyway to deal with newlines so may as
 		# well use vim
-		if ! which vim; then
+		if ! which vim >/dev/null; then
 			echo "===== You need vim for this ====="
 			exit 1
 		fi
@@ -210,7 +211,7 @@ done
 if $link_to_home; then
 	# Install dotfiles to $HOME
 	for i in $(find . -maxdepth 1 -regex '\.\/\..+'); do
-		if echo "$i" | egrep -q ".git|$POSTFIX_FILE_APPEND|$POSTFIX_FILE_APPENDED"; then
+		if echo "$i" | egrep -q ".git|$POSTFIX_FILE_APPENDED|$POSTFIX_FILE_APPEND_PREFIX"; then
 			continue
 		fi
 		fullpath=$(eval echo $(echo $i | sed 's|^\.|$(pwd)|'))
