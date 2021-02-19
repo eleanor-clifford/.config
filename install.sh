@@ -279,13 +279,22 @@ lesskey lessrc
 
 if $fish; then
 	## Shell
-	read -p "Change shell to fish?: " yn
+	read -p "Change shell to fish? " yn
 	case $yn in
 		[Yy]* ) chsh -s /usr/bin/fish;;
 		[Nn]* ) ;;
 		*)      echo "No response, exiting..."; exit 1;
 	esac
 fi
+
+read -p "Install keyboard layout? " yn
+case $yn in
+	[Yy]* )
+		sudo cp ./colemak-custom/colemak-custom /usr/share/X11/xkb/symbols/
+		sudo cp ./colemak-custom/colemak-custom.map.gz /usr/share/kbd/keymaps/i386/colemak/ ;;
+	[Nn]* ) ;;
+	*)      echo "No response, exiting..."; exit 1;
+esac
 
 echo "===== Commiting host-specific configuration... ====="
 git add .
