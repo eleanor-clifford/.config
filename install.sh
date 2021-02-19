@@ -31,9 +31,41 @@ for i in "$@"; do
 	esac
 done
 
+# Install AUR helper
+while true; do
+	read -p "Install aurutils? " yn
+	case $yn in
+		[Yy]* )
+			git clone https://aur.archlinux.org/aurutils.git
+			cd aurutils
+			if makepkg -si; then
+				cd -
+				rm -rf aurutils
+
+				# Stop telling me my shell is disgusting, it's just shell ok?
+				echo "
+[custom]
+SigLevel = Optional TrustAll
+Server = file:///home/custompkgs" | sudo tee -a /etc/pacman.conf >/dev/null
+				sudo install -d /home/custompkgs -o $USER
+				repo-add /home/custompkgs/custom.db.tar.gz
+				sudo pacman -Syu
+			else
+				exit 1
+			fi
+			break;;
+		[Nn]* )
+			break;;
+		*)
+			echo "Please respond";;
+	esac
+done
+
 # Install packages
 INSTALL='sudo pacman -S'
-INSTALL_AUR='aur sync'
+INSTALL_AUR="aur sync"
+export AUR_PAGER='ls -alF' # just for now so aurutils doesn't fail
+
 IFS="#" # Split on the package section comment, don't care that it's hacky
 for pkgs in $(cat pkglist.conf); do
 	if [ "$pkgs" = "" ]; then continue; fi
