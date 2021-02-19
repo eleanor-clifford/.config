@@ -29,6 +29,8 @@ VOLUME_TICK_UP   = +1%
 VOLUME_TICK_DOWN = -1%
 
 # picom
+DISABLE_PICOM = \#            # My regex isn't very good, for these
+                              # to work they can't end on whitespace
 PICOM_CORNER_RADIUS = 30.0
 
 #polybar
