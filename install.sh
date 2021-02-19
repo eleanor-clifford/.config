@@ -91,7 +91,7 @@ IFS="
 "
 
 # Apply metaconfig
-if [ ! -f metaconfig/$(hostname).metaconf ]; then
+if [ ! -f metaconfig/$(cat /etc/hostname).metaconf ]; then
 	echo "No metaconfig defined for this hostname"
 	exit 1
 fi
@@ -101,7 +101,7 @@ POSTFIX_FILE_APPEND=''
 POSTFIX_FILE_APPENDED=''
 
 echo "===== applying metaconfig variables... ====="
-for line in $(cat "metaconfig/$(hostname).metaconf"); do
+for line in $(cat "metaconfig/$(cat /etc/hostname).metaconf"); do
 
 	# Parse config
 	if echo $line | egrep -q "^\s*#"; then
