@@ -76,7 +76,7 @@ if $install; then
 	# Install packages
 	INSTALL='sudo pacman -S'
 	INSTALL_AUR="aur sync"
-	export AUR_PAGER='ls -alF' # just for now so aurutils doesn't fail
+	export AUR_PAGER=/home/tim/.config/scripts/rangerp.sh
 
 	IFS="#" # Split on the package section comment, don't care that it's hacky
 	for pkgs in $(cat pkglist.conf); do
