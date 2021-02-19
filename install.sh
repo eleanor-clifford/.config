@@ -221,7 +221,7 @@ if [ "$vim" = "minimal" ]; then
 		cd git
 		git pull origin master
 	else
-		git clone git@github.com:tim-clifford/vimrc
+		git clone https://github.com/tim-clifford/vimrc
 		mv vimrc git
 		cd git
 	fi
@@ -238,7 +238,7 @@ elif [ "$vim" = "full" ]; then
 		cd git
 		git pull origin master
 	else
-		git clone git@github.com:tim-clifford/vimrc
+		git clone https://github.com/tim-clifford/vimrc
 		mv vimrc git
 		cd git
 	fi
