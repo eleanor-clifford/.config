@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/bin/sh
 
 # Check that there are not unstaged changes
 if ! [ "$(git diff)" = "" ]; then
