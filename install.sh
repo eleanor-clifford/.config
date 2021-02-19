@@ -261,7 +261,7 @@ elif [ "$vim" = "full" ]; then
 	cd $wd
 
 elif [ "$vim" = "update" ]; then
-	cd "$HOME/.vim"
+	cd "$HOME/.vim/git"
 	git pull origin master
 	#./install.sh --update
 	cd - >/dev/null
