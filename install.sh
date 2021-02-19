@@ -153,10 +153,8 @@ fi
 
 echo "===== applying append files... ====="
 for i in $(find . -type f -name "*$POSTFIX_FILE_APPEND"); do
-	echo $i
 
 	orig_file=$(echo "$i" | sed "s/$POSTFIX_FILE_APPEND//")
-	echo $orig_file
 
 	if ! [ -f $orig_file ]; then
 		echo "===== WARNING: no file to append $i to ====="
@@ -165,7 +163,6 @@ for i in $(find . -type f -name "*$POSTFIX_FILE_APPEND"); do
 
 	last_append=$(echo "$i" | \
 		sed "s/$POSTFIX_FILE_APPEND/$POSTFIX_FILE_APPENDED/")
-	echo $last_append
 	if [ -f $last_append ]; then
 		if diff $i $last_append > /dev/null; then
 			echo "===== skipping $i ====="
@@ -202,7 +199,7 @@ if $link_to_home; then
 	for i in $(find . -maxdepth 1 -name '.*'); do
 		fullpath=$(eval echo $(echo $i | sed 's|^\.|$(pwd)|'))
 		homepath=$(eval echo $(echo $i | sed 's|.*/\(.*\)$|$HOME/\1|'))
-		echo $i $fullpath $homepath
+		echo "linking $fullpath -> $homepath"
 		if [ -L "$homepath" ]; then
 			rm "$homepath"
 		fi
