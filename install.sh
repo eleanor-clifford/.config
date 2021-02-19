@@ -51,7 +51,7 @@ if $install; then
 				git clone https://aur.archlinux.org/aurutils.git
 				cd aurutils
 				if makepkg -si; then
-					cd -
+					cd - >/dev/null
 					rm -rf aurutils
 
 					# Stop telling me my shell is disgusting, it's just shell ok?
@@ -113,7 +113,7 @@ PREFIX=''
 POSTFIX_FILE_APPEND_PREFIX=''
 POSTFIX_FILE_APPENDED=''
 
-echo "===== applying metaconfig variables... ====="
+echo "====> applying metaconfig variables..."
 for line in $(cat "metaconfig/$(cat /etc/hostname).metaconf"); do
 
 	# Parse config
@@ -165,13 +165,13 @@ if [ "$POSTFIX_FILE_APPEND_PREFIX" = '' ] | [ "$POSTFIX_FILE_APPENDED" = '' ]; t
 fi
 POSTFIX_FILE_APPEND="$POSTFIX_FILE_APPEND_PREFIX$(cat /etc/hostname)"
 
-echo "===== applying append files... ====="
+echo "====> applying append files..."
 for i in $(find . -type f -name "*$POSTFIX_FILE_APPEND"); do
 
 	orig_file=$(echo "$i" | sed "s/$POSTFIX_FILE_APPEND//")
 
 	if ! [ -f $orig_file ]; then
-		echo "===== WARNING: no file to append $i to ====="
+		echo "====> WARNING: no file to append $i to"
 		continue
 	fi
 
@@ -179,24 +179,24 @@ for i in $(find . -type f -name "*$POSTFIX_FILE_APPEND"); do
 		sed "s/$POSTFIX_FILE_APPEND/$POSTFIX_FILE_APPENDED/")
 	if [ -f $last_append ]; then
 		if diff $i $last_append > /dev/null; then
-			echo "===== skipping $i ====="
+			echo "====> skipping $i"
 			continue
 		fi
 
-		echo "===== found existing append for $orig_file, removing... ====="
+		echo "====> found existing append for $orig_file, removing..."
 		cp $orig_file "$orig_file.orig"
 
 		# fuck it i would need a gnuism anyway to deal with newlines so may as
 		# well use vim
 		if ! which vim >/dev/null; then
-			echo "===== You need vim for this ====="
+			echo "====> You need vim for this"
 			exit 1
 		fi
 
 		vim -u NONE +"s/\n$(cat $last_append)\%$//" +wq $orig_file
 		#sed -iz "s/$(cat $last_append)$//" $orig_file
 		if diff "$orig_file" "$orig_file.orig" > /dev/null; then
-			echo "===== ERROR: failed to remove append from file $orig_file ====="
+			echo "====> ERROR: failed to remove append from file $orig_file"
 			continue
 		fi
 
@@ -205,7 +205,7 @@ for i in $(find . -type f -name "*$POSTFIX_FILE_APPEND"); do
 	cat $i >> $orig_file
 	cp $i $last_append
 
-	echo "===== appended $i to $orig_file ====="
+	echo "====> appended $i to $orig_file"
 done
 
 if $link_to_home; then
@@ -216,7 +216,7 @@ if $link_to_home; then
 		fi
 		fullpath=$(eval echo $(echo $i | sed 's|^\.|$(pwd)|'))
 		homepath=$(eval echo $(echo $i | sed 's|.*/\(.*\)$|$HOME/\1|'))
-		echo "linking $homepath -> $fullpath"
+		echo "====> linking $homepath -> $fullpath"
 		if [ -L "$homepath" ]; then
 			rm "$homepath"
 		fi
@@ -264,7 +264,7 @@ elif [ "$vim" = "update" ]; then
 	cd "$HOME/.vim"
 	git pull origin master
 	#./install.sh --update
-	cd -
+	cd - >/dev/null
 fi
 
 if $firefox; then
@@ -281,9 +281,9 @@ if $firefox; then
 			cd "$firefox_dir/chrome"
 			if git config --get remote.origin.url | grep -q "tim-clifford"; then
 				git pull
-				cd -
+				cd - >/dev/null
 			else
-				cd -
+				cd - >/dev/null
 				rm -r "$firefox_dir/chrome"
 				git clone https://github.com/tim-clifford/minimal-functional-fox-dracula
 				mv minimal-functional-fox-dracula "$firefox_dir/chrome"
@@ -327,7 +327,7 @@ if $keyboard; then
 	done
 fi
 
-echo "===== Commiting host-specific configuration... ====="
+echo "====> Commiting host-specific configuration..."
 git add .
 git commit -m "METACONF_APPLIED at $(date -u +"%Y-%m-%d %H:%M:%S")"
 if ! [ -f ".git/hooks/pre-push" ]; then
