@@ -6,14 +6,16 @@ link_to_home=true
 firefox=true
 fish=true
 install=true
+help=false
 for i in "$@"; do
 	case "$i" in
-		--no-link)	     link_to_home=false;;
-		--vimrc-minimal) vim=minimal;;
-		--vimrc-none)    vim=none;;
-		--no-firefox)    firefox=false;;
-		--no-fish)       fish=false;;
+		--help)          help=true;;
 		--no-install)    install=false;;
+		--no-link)	     link_to_home=false;;
+		--no-firefox)    firefox=false;;
+		--no-vimrc)      vim=none;;
+		--minimal-vimrc) vim=minimal;;
+		--no-fish)       fish=false;;
 		--update)
 			vim=update
 			firefox=false
@@ -23,6 +25,26 @@ for i in "$@"; do
 			;;
 	esac
 done
+if $help; then
+	echo \
+"Usage: ./install.sh [OPTION]...
+Install or update configurations
+
+When the installation is finished, a new commit will be made to distinguish
+between the application of metaconfigurations and any further changes.
+
+  --help                display this help and exit
+  --no-install          don't install any packages
+  --no-link             don't symlink dotfiles into $HOME
+  --no-firefox          don't install firefox theme
+  --no-vimrc            don't install vimrc
+  --minimal-vimrc       install minimal vim (no plugins)
+  --no-fish             don't set fish as the default config
+  --update              update configurations without installing or symlinking
+                        anything. Can also be used without reverting to before
+                        the last use."
+	exit 0
+fi
 
 # Check that there are not unstaged changes
 if ! [ "$(git diff)" = "" ]; then
