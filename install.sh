@@ -384,8 +384,13 @@ else
 				# I'm not sure I fully understand links tbh
 				cd wallpapers
 				rm -f current.png
+				cd nonfree-wallpapers
+				git lfs install
+				git lfs fetch
+				git lfs checkout
+				cd ..
 				ln -s nonfree-wallpapers/current.png current.png
-				cd - >/dev/null
+				cd ..
 				break;;
 			[Nn]* )
 				cd wallpapers
