@@ -368,3 +368,8 @@ git commit -m "METACONF_APPLIED at $(date -u +"%Y-%m-%d %H:%M:%S")"
 if ! [ -f ".git/hooks/pre-push" ]; then
 	ln -s "$(pwd)/pre-push" "$(pwd)/.git/hooks"
 fi
+
+# Reload i3 if we're doing this on the fly
+if pgrep i3 >/dev/null; then
+	i3-msg restart
+fi
