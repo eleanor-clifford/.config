@@ -21,7 +21,7 @@ Execute common git workflows for this repository
 		if [ "$(echo "$log" | head -n1)" = "METACONF_APPLIED" ] &&
 				! echo "$log" | tail -n +2 | grep -q "METACONF_APPLIED"; then
 			# Last commit metaconf, no previous metaconf commits
-			if [ "$(git diff)" = "" ]; then
+			if [ "$(git diff HEAD)" = "" ]; then
 				# Clean working tree
 				git checkout HEAD~
 				git push origin HEAD:master -f
@@ -47,7 +47,7 @@ Execute common git workflows for this repository
 		if [ "$(echo "$log" | head -n1)" = "METACONF_APPLIED" ] &&
 				! echo "$log" | tail -n +2 | grep -q "METACONF_APPLIED"; then
 			# Last commit metaconf, no previous metaconf commits
-			if [ "$(git diff)" = "" ]; then
+			if [ "$(git diff HEAD)" = "" ]; then
 				# Clean working tree
 				git reset --hard HEAD~
 				git pull
@@ -73,7 +73,7 @@ Execute common git workflows for this repository
 		if [ "$(echo "$log" | head -n1)" = "METACONF_APPLIED" ] &&
 				! echo "$log" | tail -n +2 | grep -q "METACONF_APPLIED"; then
 			# Last commit metaconf, no previous metaconf commits
-			if [ "$(git diff)" = "" ]; then
+			if [ "$(git diff HEAD)" = "" ]; then
 				# Clean working tree
 				git reset --hard HEAD~
 			else

@@ -46,8 +46,8 @@ between the application of metaconfigurations and any further changes.
 	exit 0
 fi
 
-# Check that there are not unstaged changes
-if ! [ "$(git diff)" = "" ]; then
+# Check that there are not uncommited changes
+if ! [ "$(git diff HEAD)" = "" ]; then
 	if [ "$(git log --oneline -1 --no-decorate | awk '{print $2}')" \
 			= "METACONF_APPLIED" ]; then
 		echo "ERROR: revert host specific configuration and commit first"

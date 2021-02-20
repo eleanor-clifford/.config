@@ -46,11 +46,13 @@ between the application of metaconfigurations and any further changes.
   --update              update configurations without installing or symlinking
                         anything. Can also be used without reverting to before
                         the last use.
-
+```
+```
 Usage: ./gith.sh [OPTION]
 Execute common git workflows for this repository
 
   --help                display this help and exit
   --push                push the last commit before the metaconf was applied
+  --pull                pull the latest config, automatically handling metaconf
   --reset               revert to before the metaconf, keeping any changes
 ```
