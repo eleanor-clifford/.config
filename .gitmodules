@@ -1,0 +1,3 @@
+[submodule "wallpapers/nonfree-wallpapers"]
+	path = wallpapers/nonfree-wallpapers
+	url = git@github.com:tim-clifford/nonfree-wallpapers.git

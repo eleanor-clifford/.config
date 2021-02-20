@@ -6,6 +6,7 @@ link_to_home=true
 firefox=true
 fish=true
 install=true
+wallpapers=false
 help=false
 for i in "$@"; do
 	case "$i" in
@@ -16,12 +17,14 @@ for i in "$@"; do
 		--no-vimrc)      vim=none;;
 		--minimal-vimrc) vim=minimal;;
 		--no-fish)       fish=false;;
+		--wallpapers)    wallpapers=true;;
 		--update)
 			vim=update
 			firefox=false
 			fish=false
 			keyboard=false
 			install=false
+			wallpapers=true
 			;;
 	esac
 done
@@ -39,7 +42,8 @@ between the application of metaconfigurations and any further changes.
   --no-firefox          don't install firefox theme
   --no-vimrc            don't install vimrc
   --minimal-vimrc       install minimal vim (no plugins)
-  --no-fish             don't set fish as the default config
+  --no-fish             don't set fish as the default config (default is to ask)
+  --wallpapers          install nonfree wallpapers (default is to ask)
   --update              update configurations without installing or symlinking
                         anything. Can also be used without reverting to before
                         the last use."
@@ -358,6 +362,38 @@ if $keyboard; then
 				break;;
 			[Nn]* ) break;;
 			*)      echo "Please respond"; exit 1;
+		esac
+	done
+fi
+
+if $wallpapers; then
+	git submodule update --init
+	git submodule update --remote
+	# I'm not sure I fully understand links tbh
+	cd wallpapers
+	rm -f current.png
+	ln -s nonfree-wallpapers/current.png current.png
+	cd - >/dev/null
+else
+	while true; do
+		read -p "Get nonfree wallpapers? (you must have access) " yn
+		case $yn in
+			[Yy]* )
+				git submodule update --init
+				git submodule update --remote
+				# I'm not sure I fully understand links tbh
+				cd wallpapers
+				rm -f current.png
+				ln -s nonfree-wallpapers/current.png current.png
+				cd - >/dev/null
+				break;;
+			[Nn]* )
+				cd wallpapers
+				rm -f current.png
+				ln -s default_wallpaper.png current.png
+				cd - >/dev/null
+				break;;
+			*)  echo "Please respond"; exit 1;
 		esac
 	done
 fi
