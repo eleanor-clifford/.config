@@ -1,23 +1,5 @@
 #!/bin/sh
 
-# Check that there are not unstaged changes
-if ! [ "$(git diff)" = "" ]; then
-	if [ "$(git log --oneline -1 --no-decorate | awk '{print $2}')" \
-			= "METACONF_APPLIED" ]; then
-		echo "ERROR: revert host specific configuration and commit first"
-		exit 1
-	else
-		echo "ERROR: please commit changes first"
-		exit 1
-	fi
-else
-	if git log --oneline --no-decorate | awk '{print $2}' \
-			| grep -q METACONF_APPLIED; then
-		echo "ERROR: host specific configurations not properly reverted"
-		exit 1
-	fi
-fi
-
 # default arguments
 vim=full
 link_to_home=true
@@ -41,6 +23,37 @@ for i in "$@"; do
 			;;
 	esac
 done
+
+# Check that there are not unstaged changes
+if ! [ "$(git diff)" = "" ]; then
+	if [ "$(git log --oneline -1 --no-decorate | awk '{print $2}')" \
+			= "METACONF_APPLIED" ]; then
+		echo "ERROR: revert host specific configuration and commit first"
+		exit 1
+	else
+		echo "ERROR: please commit changes first"
+		exit 1
+	fi
+else
+	if git log --oneline --no-decorate | awk '{print $2}' \
+			| grep -q METACONF_APPLIED; then
+		if $update; then
+			# check that only the last commit was automatic
+			if git log --oneline --no-decorate | tail -n +2 | awk '{print $2}' \
+					| grep -q METACONF_APPLIED; then
+				echo "ERROR: host specific configurations not properly reverted"
+				exit 1
+			else
+				git reset --hard HEAD~
+				git pull
+			fi
+		else
+			echo "ERROR: host specific configurations not properly reverted"
+			exit 1
+		fi
+
+	fi
+fi
 
 if $install; then
 	# Install AUR helper
