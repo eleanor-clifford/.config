@@ -1,3 +1,4 @@
+#!/bin/sh
 set -x
 sleep 0.1
 # tell xorg it will restart soon

@@ -1,3 +1,4 @@
+#!/bin/sh
 env XDG_SESSION_TYPE=x11 DESKTOP_SESSION=i3 plank &
 xwininfo -root -tree | grep plank | grep 00003
 while [ $? -ne 0 ]; do

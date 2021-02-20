@@ -1,3 +1,4 @@
+#!/bin/bash
 ws=$(i3-msg -t get_workspaces | jq ".[].num")
 for i in {1..10}; do
 	echo $i
@@ -6,4 +7,4 @@ for i in {1..10}; do
 		exit 0
 	fi
 done
-	
+

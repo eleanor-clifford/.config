@@ -1,3 +1,4 @@
+#!/bin/sh
 pubaddr=$(wget http://ipecho.net/plain -O - -q)
 if [ $? -eq 0 ]; then
 	if ip addr | grep -E "enp.|eno.|eth." | grep "state UP" -q; then
@@ -12,6 +13,6 @@ if [ $? -eq 0 ]; then
 	else
 		echo -n "$pre    "
 	fi
-else 
+else
 	echo "No Connection    "
 fi

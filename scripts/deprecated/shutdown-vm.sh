@@ -1,3 +1,4 @@
+#!/bin/sh
 echo "system_powerdown" | sudo nc -U /home/tim/vm/qemu-monitor.socket -q 1
 # wait for it to stop
 pgrep qemu-system-x86

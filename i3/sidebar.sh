@@ -1,4 +1,4 @@
-
+#!/bin/sh
 if pgrep conky; then
 #	X=$(xdotool getmouselocation | awk '{print $1}' | cut -d : -f 2)
 #	Y=$(xdotool getmouselocation | awk '{print $2}' | cut -d : -f 2)

@@ -1,3 +1,4 @@
+#!/bin/sh
 # primary
 sudo ddcutil setvcp 10 30 -b 5
 # secondary

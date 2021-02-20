@@ -1,3 +1,4 @@
+#!/bin/bash
 cd /home/tim/scripts
 # idfk about how this code looks
 if [[ $(cat currentrotation) -eq "0" ]]; then

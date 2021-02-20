@@ -1,3 +1,4 @@
+#!/bin/sh
 xrandr \
 	--output DisplayPort-0 \
 		--mode 3840x2160 \

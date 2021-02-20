@@ -1,3 +1,4 @@
+#!/bin/sh
 xrandr \
 	--output DisplayPort-0 \
 		--primary \
@@ -9,7 +10,7 @@ xrandr \
 		--rotate right \
 		--mode 1920x1080 \
 		--panning 1080x1920+1380+2160 \
-		--pos 1380x2160 
+		--pos 1380x2160
 xrandr --output DisplayPort-0 --panning 3840x2160+0+0 # I don't fucking care why this works ok?
 xinput set-prop pointer:"ELAN2514:00 04F3:2AF0" --type=float "Coordinate Transformation Matrix" 0 1 0 -1 0 1 0 0 1
 xinput set-prop "ELAN2514:00 04F3:2AF0 Pen (0)" --type=float "Coordinate Transformation Matrix" 0 1 0 -1 0 1 0 0 1

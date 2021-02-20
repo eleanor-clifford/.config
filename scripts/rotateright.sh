@@ -1,3 +1,4 @@
+#!/bin/sh
 xrandr --output DisplayPort-0 --off --output eDP --rotate right --auto
 xinput set-prop pointer:"ELAN2514:00 04F3:2AF0" --type=float "Coordinate Transformation Matrix" 0 1 0 -1 0 1 0 0 1
 xinput set-prop "ELAN2514:00 04F3:2AF0 Pen (0)" --type=float "Coordinate Transformation Matrix" 0 1 0 -1 0 1 0 0 1
