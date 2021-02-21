@@ -8,6 +8,7 @@ vim=full
 link_to_home=true
 firefox=true
 fish=true
+grub=true
 install=true
 wallpapers=false
 no_wallpapers=false
@@ -15,19 +16,22 @@ ignore_metaconfig=false
 help=false
 for i in "$@"; do
 	case "$i" in
-		--help)          help=true;;
-		--no-install)    install=false;;
-		--no-link)	     link_to_home=false;;
-		--no-firefox)    firefox=false;;
-		--no-vimrc)      vim=none;;
-		--minimal-vimrc) vim=minimal;;
-		--no-fish)       fish=false;;
-		--wallpapers)    wallpapers=true;;
-		--no-wallpapers) no_wallpapers=true;;
+		--help)              help=true;;
+		--install=false)     install=false;;
+		--link=false)        link_to_home=false;;
+		--firefox=false)     firefox=false;;
+		--vim=none)          vim=none;;
+		--vim=minimal)       vim=minimal;;
+		--fish=false)        fish=false;;
+		--grub=false)        grub=false;;
+		--grub=true)         grub=true;;
+		--wallpapers=true)   wallpapers=true;;
+		--wallpapers=false)  wallpapers=false;;
 		--update)
 			vim=update
 			firefox=false
 			fish=false
+			grub=false
 			keyboard=false
 			install=false
 			wallpapers=true
@@ -38,6 +42,7 @@ for i in "$@"; do
 			link_to_home=false
 			install=false
 			fish=false
+			grub=false
 			no_wallpapers=true
 			ignore_metaconfig=true
 			keyboard=false
@@ -53,14 +58,16 @@ When the installation is finished, a new commit will be made to distinguish
 between the application of metaconfigurations and any further changes.
 
   --help                display this help and exit
-  --no-install          don't install any packages
-  --no-link             don't symlink dotfiles into $HOME
-  --no-firefox          don't install firefox theme
-  --no-vimrc            don't install vimrc
-  --minimal-vimrc       install minimal vim (no plugins)
-  --no-fish             don't set fish as the default config (default is to ask)
-  --wallpapers          install nonfree wallpapers (default is to ask)
-  --no-wallpapers       don't install any wallpapers (default is to ask)
+  --install=false       don't install any packages
+  --link=false          don't symlink dotfiles into $HOME
+  --firefox=false       don't install firefox theme
+  --vim=none            don't install vimrc
+  --vim=minimal         install minimal vim (no plugins)
+  --fish=false          don't set fish as the default config (default is to ask)
+  --grub=false          don't install grub theme (default is to ask)
+  --grub=true           install grub theme (default is to ask)
+  --wallpapers=true     install nonfree wallpapers (default is to ask)
+  --wallpapers=false    don't install any wallpapers (default is to ask)
   --firefox-only        install the custom firefox theme and exit
   --update              update configurations without installing or symlinking
                         anything. Can also be used without reverting to before
@@ -373,6 +380,33 @@ if $fish; then
 		case $yn in
 			[Yy]* )
 				chsh -s /usr/bin/fish
+				break;;
+			[Nn]* ) break;;
+			*)      echo "Please respond"; exit 1;
+		esac
+	done
+fi
+
+if $grub; then
+	while true; do
+		read -p "Install grub theme? " yn
+		case $yn in
+			[Yy]* )
+				sudo sh -c '
+				if [ -d /boot/grub/themes/tux-grub-theme ]; then
+					echo "grub theme already installed"
+				else
+					cp -r tux-grub-theme /boot/grub/themes
+					# check if a theme is defined
+					if cat /etc/default/grub | egrep -q "^GRUB_THEME"; then
+						sed -i '"'"'s|^GRUB_THEME|GRUB_THEME="/boot/grub/themes/tux-grub-theme/theme.txt"|'"'"'
+					else
+						echo '"'"'GRUB_THEME="/boot/grub/themes/tux-grub-theme/theme.txt"'"'"' \
+							>> /etc/default/grub
+					fi
+					grub-mkconfig -o /boot/grub/grub.cfg
+				fi
+				'
 				break;;
 			[Nn]* ) break;;
 			*)      echo "Please respond"; exit 1;

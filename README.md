@@ -37,14 +37,16 @@ When the installation is finished, a new commit will be made to distinguish
 between the application of metaconfigurations and any further changes.
 
   --help                display this help and exit
-  --no-install          don't install any packages
-  --no-link             don't symlink dotfiles into $HOME
-  --no-firefox          don't install firefox theme
-  --no-vimrc            don't install vimrc
-  --minimal-vimrc       install minimal vim (no plugins)
-  --no-fish             don't set fish as the default config (default is to ask)
-  --wallpapers          install nonfree wallpapers (default is to ask)
-  --no-wallpapers       don't install any wallpapers (default is to ask)
+  --install=false       don't install any packages
+  --link=false          don't symlink dotfiles into $HOME
+  --firefox=false       don't install firefox theme
+  --vim=none            don't install vimrc
+  --vim=minimal         install minimal vim (no plugins)
+  --fish=false          don't set fish as the default config (default is to ask)
+  --grub=false          don't install grub theme (default is to ask)
+  --grub=true           install grub theme (default is to ask)
+  --wallpapers=true     install nonfree wallpapers (default is to ask)
+  --wallpapers=false    don't install any wallpapers (default is to ask)
   --firefox-only        install the custom firefox theme and exit
   --update              update configurations without installing or symlinking
                         anything. Can also be used without reverting to before
