@@ -44,6 +44,8 @@ between the application of metaconfigurations and any further changes.
   --minimal-vimrc       install minimal vim (no plugins)
   --no-fish             don't set fish as the default config (default is to ask)
   --wallpapers          install nonfree wallpapers (default is to ask)
+  --no-wallpapers       don't install any wallpapers (default is to ask)
+  --firefox-only        install the custom firefox theme and exit
   --update              update configurations without installing or symlinking
                         anything. Can also be used without reverting to before
                         the last use.

@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# things that will be left to do after this script finishes
+todo=""
+
 # default arguments
 vim=full
 link_to_home=true
@@ -7,6 +10,8 @@ firefox=true
 fish=true
 install=true
 wallpapers=false
+no_wallpapers=false
+ignore_metaconfig=false
 help=false
 for i in "$@"; do
 	case "$i" in
@@ -18,6 +23,7 @@ for i in "$@"; do
 		--minimal-vimrc) vim=minimal;;
 		--no-fish)       fish=false;;
 		--wallpapers)    wallpapers=true;;
+		--no-wallpapers) no_wallpapers=true;;
 		--update)
 			vim=update
 			firefox=false
@@ -25,6 +31,16 @@ for i in "$@"; do
 			keyboard=false
 			install=false
 			wallpapers=true
+			;;
+		--firefox-only)
+			vim=none
+			firefox=true
+			link_to_home=false
+			install=false
+			fish=false
+			no_wallpapers=true
+			ignore_metaconfig=true
+			keyboard=false
 			;;
 	esac
 done
@@ -44,40 +60,45 @@ between the application of metaconfigurations and any further changes.
   --minimal-vimrc       install minimal vim (no plugins)
   --no-fish             don't set fish as the default config (default is to ask)
   --wallpapers          install nonfree wallpapers (default is to ask)
+  --no-wallpapers       don't install any wallpapers (default is to ask)
+  --firefox-only        install the custom firefox theme and exit
   --update              update configurations without installing or symlinking
                         anything. Can also be used without reverting to before
                         the last use."
+
 	exit 0
 fi
 
-# Check that there are not uncommited changes
-if ! [ "$(git diff HEAD)" = "" ]; then
-	if [ "$(git log --oneline -1 --no-decorate | awk '{print $2}')" \
-			= "METACONF_APPLIED" ]; then
-		echo "ERROR: revert host specific configuration and commit first"
-		exit 1
-	else
-		echo "ERROR: please commit changes first"
-		exit 1
-	fi
-else
-	if git log --oneline --no-decorate | awk '{print $2}' \
-			| grep -q METACONF_APPLIED; then
-		if $update; then
-			# check that only the last commit was automatic
-			if git log --oneline --no-decorate | tail -n +2 | awk '{print $2}' \
-					| grep -q METACONF_APPLIED; then
-				echo "ERROR: host specific configurations not properly reverted"
-				exit 1
-			else
-				git reset --hard HEAD~
-				git pull
-			fi
+if ! $ignore_metaconfig; then
+	# Check that there are not uncommited changes
+	if ! [ "$(git diff HEAD)" = "" ]; then
+		if [ "$(git log --oneline -1 --no-decorate | awk '{print $2}')" \
+				= "METACONF_APPLIED" ]; then
+			echo "ERROR: revert host specific configuration and commit first"
+			exit 1
 		else
-			echo "ERROR: host specific configurations not properly reverted"
+			echo "ERROR: please commit changes first"
 			exit 1
 		fi
+	else
+		if git log --oneline --no-decorate | awk '{print $2}' \
+				| grep -q METACONF_APPLIED; then
+			if $update; then
+				# check that only the last commit was automatic
+				if git log --oneline --no-decorate | tail -n +2 | awk '{print $2}' \
+						| grep -q METACONF_APPLIED; then
+					echo "ERROR: host specific configurations not properly reverted"
+					exit 1
+				else
+					git reset --hard HEAD~
+					git pull
+				fi
+			else
+				echo "ERROR: host specific configurations not properly reverted"
+				exit 1
+			fi
 
+		fi
 	fi
 fi
 
@@ -95,9 +116,9 @@ if $install; then
 
 					# Stop telling me my shell is disgusting, it's just shell ok?
 					echo "
-	[custom]
-	SigLevel = Optional TrustAll
-	Server = file:///home/custompkgs" | sudo tee -a /etc/pacman.conf >/dev/null
+[custom]
+SigLevel = Optional TrustAll
+Server = file:///home/custompkgs" | sudo tee -a /etc/pacman.conf >/dev/null
 					sudo install -d /home/custompkgs -o $USER
 					repo-add /home/custompkgs/custom.db.tar.gz
 					sudo pacman -Syu
@@ -142,110 +163,112 @@ fi
 IFS="
 "
 
-# Apply metaconfig
-if [ ! -f metaconfig/$(cat /etc/hostname).metaconf ]; then
-	echo "No metaconfig defined for this hostname"
-	exit 1
-fi
-
-PREFIX=''
-POSTFIX_FILE_APPEND_PREFIX=''
-POSTFIX_FILE_APPENDED=''
-
-echo "====> applying metaconfig variables..."
-for line in $(cat "metaconfig/$(cat /etc/hostname).metaconf"); do
-
-	# Parse config
-	if echo $line | egrep -q "^\s*#"; then
-		continue
-	fi
-
-	KEY=$(echo $line | sed -n 's/^\([^ ]\+\) *= *\([^ ].*\)/\1/p')
-	VAL=$(echo $line | sed -n '
-		s/^\([^ ]\+\) *= *\([^ ].*\)/\2/;
-		s/\([^\\]\)#.*/\1/; s/^#.*//;
-		s/\\#/#/g; s/\s*$//gp
-	')
-
-	if [ "$KEY" = '' ]; then
-		echo "Syntax Error: $line"
+if ! $ignore_metaconfig; then
+	# Apply metaconfig
+	if [ ! -f metaconfig/$(cat /etc/hostname).metaconf ]; then
+		echo "No metaconfig defined for this hostname"
 		exit 1
 	fi
 
-	if [ "$KEY" = 'PREFIX' ]; then
-		PREFIX=$VAL
-		continue
-	fi
+	PREFIX=''
+	POSTFIX_FILE_APPEND_PREFIX=''
+	POSTFIX_FILE_APPENDED=''
 
-	if [ "$KEY" = 'POSTFIX_FILE_APPEND_PREFIX' ]; then
-		POSTFIX_FILE_APPEND_PREFIX=$VAL
-		continue
-	fi
+	echo "====> applying metaconfig variables..."
+	for line in $(cat "metaconfig/$(cat /etc/hostname).metaconf"); do
 
-	if [ "$KEY" = 'POSTFIX_FILE_APPENDED' ]; then
-		POSTFIX_FILE_APPENDED=$VAL
-		continue
-	fi
-
-	if [ "$PREFIX" = '' ]; then
-		echo "A prefix must be defined first"
-		exit 1
-	fi
-
-	# Apply to all files
-	find . -type f | grep -v metaconf | egrep -v '\.git' | \
-		tr '\n' '\0' | xargs -0 sed -i "s/$PREFIX$KEY/$VAL/g"
-done
-
-# Apply file appends
-if [ "$POSTFIX_FILE_APPEND_PREFIX" = '' ] | [ "$POSTFIX_FILE_APPENDED" = '' ]; then
-	echo "file append prefixes must be defined"
-	exit 1
-fi
-POSTFIX_FILE_APPEND="$POSTFIX_FILE_APPEND_PREFIX$(cat /etc/hostname)"
-
-echo "====> applying append files..."
-for i in $(find . -type f -name "*$POSTFIX_FILE_APPEND"); do
-
-	orig_file=$(echo "$i" | sed "s/$POSTFIX_FILE_APPEND//")
-
-	if ! [ -f $orig_file ]; then
-		echo "====> WARNING: no file to append $i to"
-		continue
-	fi
-
-	last_append=$(echo "$i" | \
-		sed "s/$POSTFIX_FILE_APPEND/$POSTFIX_FILE_APPENDED/")
-	if [ -f $last_append ]; then
-		if diff $i $last_append > /dev/null; then
-			echo "====> skipping $i"
+		# Parse config
+		if echo $line | egrep -q "^\s*#"; then
 			continue
 		fi
 
-		echo "====> found existing append for $orig_file, removing..."
-		cp $orig_file "$orig_file.orig"
+		KEY=$(echo $line | sed -n 's/^\([^ ]\+\) *= *\([^ ].*\)/\1/p')
+		VAL=$(echo $line | sed -n '
+			s/^\([^ ]\+\) *= *\([^ ].*\)/\2/;
+			s/\([^\\]\)#.*/\1/; s/^#.*//;
+			s/\\#/#/g; s/\s*$//gp
+		')
 
-		# fuck it i would need a gnuism anyway to deal with newlines so may as
-		# well use vim
-		if ! which vim >/dev/null; then
-			echo "====> You need vim for this"
+		if [ "$KEY" = '' ]; then
+			echo "Syntax Error: $line"
 			exit 1
 		fi
 
-		vim -u NONE +"s/\n$(cat $last_append)\%$//" +wq $orig_file
-		#sed -iz "s/$(cat $last_append)$//" $orig_file
-		if diff "$orig_file" "$orig_file.orig" > /dev/null; then
-			echo "====> ERROR: failed to remove append from file $orig_file"
+		if [ "$KEY" = 'PREFIX' ]; then
+			PREFIX=$VAL
 			continue
 		fi
 
+		if [ "$KEY" = 'POSTFIX_FILE_APPEND_PREFIX' ]; then
+			POSTFIX_FILE_APPEND_PREFIX=$VAL
+			continue
+		fi
+
+		if [ "$KEY" = 'POSTFIX_FILE_APPENDED' ]; then
+			POSTFIX_FILE_APPENDED=$VAL
+			continue
+		fi
+
+		if [ "$PREFIX" = '' ]; then
+			echo "A prefix must be defined first"
+			exit 1
+		fi
+
+		# Apply to all files
+		find . -type f | grep -v metaconf | egrep -v '\.git' | \
+			tr '\n' '\0' | xargs -0 sed -i "s/$PREFIX$KEY/$VAL/g"
+	done
+
+	# Apply file appends
+	if [ "$POSTFIX_FILE_APPEND_PREFIX" = '' ] | [ "$POSTFIX_FILE_APPENDED" = '' ]; then
+		echo "file append prefixes must be defined"
+		exit 1
 	fi
+	POSTFIX_FILE_APPEND="$POSTFIX_FILE_APPEND_PREFIX$(cat /etc/hostname)"
 
-	cat $i >> $orig_file
-	cp $i $last_append
+	echo "====> applying append files..."
+	for i in $(find . -type f -name "*$POSTFIX_FILE_APPEND"); do
 
-	echo "====> appended $i to $orig_file"
-done
+		orig_file=$(echo "$i" | sed "s/$POSTFIX_FILE_APPEND//")
+
+		if ! [ -f $orig_file ]; then
+			echo "====> WARNING: no file to append $i to"
+			continue
+		fi
+
+		last_append=$(echo "$i" | \
+			sed "s/$POSTFIX_FILE_APPEND/$POSTFIX_FILE_APPENDED/")
+		if [ -f $last_append ]; then
+			if diff $i $last_append > /dev/null; then
+				echo "====> skipping $i"
+				continue
+			fi
+
+			echo "====> found existing append for $orig_file, removing..."
+			cp $orig_file "$orig_file.orig"
+
+			# fuck it i would need a gnuism anyway to deal with newlines so may as
+			# well use vim
+			if ! which vim >/dev/null; then
+				echo "====> You need vim for this"
+				exit 1
+			fi
+
+			vim -u NONE +"s/\n$(cat $last_append)\%$//" +wq $orig_file
+			#sed -iz "s/$(cat $last_append)$//" $orig_file
+			if diff "$orig_file" "$orig_file.orig" > /dev/null; then
+				echo "====> ERROR: failed to remove append from file $orig_file"
+				continue
+			fi
+
+		fi
+
+		cat $i >> $orig_file
+		cp $i $last_append
+
+		echo "====> appended $i to $orig_file"
+	done
+fi
 
 if $link_to_home; then
 	# Install dotfiles to $HOME
@@ -308,31 +331,36 @@ fi
 
 if $firefox; then
 	## Firefox
-	firefox_dir=$(find $HOME -type d \
-		-regex ".*\.mozilla/firefox/.*\.default-release")
-	if [ "$firefox_dir" = "" ]; then
-		echo "Firefox must be run once before the config can be made, skipping..."
-	elif ! [ "$(echo "$firefox_dir" | wc -l)" = "1" ]; then
-		echo "Multiple firefox installs located, skipping..."
-	else
-		echo "Installing firefox theme..."
-		if [ -d "$firefox_dir/chrome" ]; then
-			cd "$firefox_dir/chrome"
-			if git config --get remote.origin.url | grep -q "tim-clifford"; then
-				git pull
-				cd - >/dev/null
+	if [ -d $HOME/.mozilla ]; then
+		firefox_dir=$(find $HOME/.mozilla -type d \
+				-regex ".*/firefox/.*\.default-release")
+		if [ "$firefox_dir" = "" ]; then
+			todo="$todo firefox "
+			echo "Firefox must be run once before the config can be made, skipping..."
+		elif ! [ "$(echo "$firefox_dir" | wc -l)" = "1" ]; then
+			echo "Multiple firefox installs located, skipping..."
+		else
+			echo "Installing firefox theme..."
+			if [ -d "$firefox_dir/chrome" ]; then
+				cd "$firefox_dir/chrome"
+				if git config --get remote.origin.url | grep -q "tim-clifford"; then
+					git pull
+					cd - >/dev/null
+				else
+					cd - >/dev/null
+					rm -r "$firefox_dir/chrome"
+					git clone https://github.com/tim-clifford/minimal-functional-fox-dracula
+					mv minimal-functional-fox-dracula "$firefox_dir/chrome"
+					todo="$todo firefox_stylesheets "
+				fi
 			else
-				cd - >/dev/null
-				rm -r "$firefox_dir/chrome"
 				git clone https://github.com/tim-clifford/minimal-functional-fox-dracula
 				mv minimal-functional-fox-dracula "$firefox_dir/chrome"
+				todo="$todo firefox_stylesheets "
 			fi
-		else
-			git clone https://github.com/tim-clifford/minimal-functional-fox-dracula
-			mv minimal-functional-fox-dracula "$firefox_dir/chrome"
 		fi
-		echo -n "You must enable toolkit.legacyUserProfileCustomizations.stylesheets "
-		echo "to use the custom firefox theme"
+	else
+		echo "Firefox must be run once before the config can be made, skipping..."
 	fi
 fi
 
@@ -374,7 +402,7 @@ if $wallpapers; then
 	rm -f current.png
 	ln -s nonfree-wallpapers/current.png current.png
 	cd - >/dev/null
-else
+elif ! $no_wallpapers; then
 	while true; do
 		read -p "Get nonfree wallpapers? (you must have access) " yn
 		case $yn in
@@ -403,14 +431,31 @@ else
 	done
 fi
 
-echo "====> Commiting host-specific configuration..."
-git add .
-git commit -m "METACONF_APPLIED at $(date -u +"%Y-%m-%d %H:%M:%S")"
-if ! [ -f ".git/hooks/pre-push" ]; then
-	ln -s "$(pwd)/pre-push" "$(pwd)/.git/hooks"
-fi
+if ! $ignore_metaconfig; then
+	echo "====> Commiting host-specific configuration..."
+	git add .
+	git commit -m "METACONF_APPLIED at $(date -u +"%Y-%m-%d %H:%M:%S")"
+	if ! [ -f ".git/hooks/pre-push" ]; then
+		ln -s "$(pwd)/pre-push" "$(pwd)/.git/hooks"
+	fi
 
-# Reload i3 if we're doing this on the fly
-if pgrep i3 >/dev/null; then
-	i3-msg restart
+	# Reload i3 if we're doing this on the fly
+	if pgrep i3 >/dev/null; then
+		i3-msg restart
+	fi
+fi
+if ! [ "$todo" = "" ]; then
+	echo "\
+	====> TODO LIST:"
+fi
+if echo $todo | grep -q "firefox_stylesheets "; then
+	echo "\
+  - You must enable toolkit.legacyUserProfileCustomizations.stylesheets
+    to use the custom firefox theme.
+  - Type \`:installnative\` and follow the instructions,
+    then type \`:source\` in firefox, to enable tridactyl"
+elif echo $todo | grep -q "firefox "; then
+	echo "\
+  - Firefox must be run before you can install the custom theme
+	You can then use \`./install.sh --firefox-only\`"
 fi
