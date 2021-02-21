@@ -1,0 +1,20 @@
+set newtab about:blank
+bind n scrollpx -50
+bind e scrollline 10
+bind i scrollline -10
+bind o scrollpx 50
+
+bind N back
+bind E tabprev
+bind I tabnext
+bind O forward
+
+bind K fillcmdline tabopen
+bind k fillcmdline open
+
+bind H null
+bind h null
+bind J null
+bind j null
+bind l null
+bind L null
