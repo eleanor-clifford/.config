@@ -28,9 +28,9 @@
 /spotify
 /teams
 /polybar/stderr
-/.xournalpp/autosave
-/.xournalpp/errorlogs
-/.xournalpp/metadata
+/xournalpp/autosave
+/xournalpp/errorlogs
+/xournalpp/metadata
 /onedrive*
 /mimeapps.list
 /autostart

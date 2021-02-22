@@ -24,7 +24,7 @@ exec --no-startup-id numlockx on
 exec --no-startup-id $HOME/.config/scripts/setup_mouse.sh
 
 # background
-exec_always --no-startup-id "sleep 2; feh --bg-scale $HOME/.config/wallpapers/current.png"
+exec_always --no-startup-id "sleep 2; feh --bg-fill $HOME/.config/wallpapers/current.png --geometry +0"
 
 # beep
 exec --no-startup-id xset b off
