@@ -115,6 +115,7 @@ bindsym $mod+Shift+u exec libreoffice
 bindsym $mod+Shift+k exec nautilus
 bindsym $mod+Shift+c exec freecad
 bindsym $mod+c       exec flameshot gui
+bindsym $mod+v       exec peek
 
 # kill focused window
 bindsym $mod+Shift+q exec $HOME/.config/scripts/kill-not-plank.sh

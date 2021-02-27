@@ -358,12 +358,12 @@ if $firefox; then
 					rm -r "$firefox_dir/chrome"
 					git clone https://github.com/tim-clifford/minimal-functional-fox-dracula
 					mv minimal-functional-fox-dracula "$firefox_dir/chrome"
-					todo="$todo firefox_stylesheets "
+					todo="$todo firefox_postinstall "
 				fi
 			else
 				git clone https://github.com/tim-clifford/minimal-functional-fox-dracula
 				mv minimal-functional-fox-dracula "$firefox_dir/chrome"
-				todo="$todo firefox_stylesheets "
+				todo="$todo firefox_postinstall "
 			fi
 		fi
 	else
@@ -482,12 +482,15 @@ if ! [ "$todo" = "" ]; then
 	echo "\
 	====> TODO LIST:"
 fi
-if echo $todo | grep -q "firefox_stylesheets "; then
-	echo "\
-  - You must enable toolkit.legacyUserProfileCustomizations.stylesheets
-    to use the custom firefox theme.
+if echo $todo | grep -q "firefox_postinstall "; then
+	echo "To finish Firefox configuration:\
   - Type \`:installnative\` and follow the instructions,
-    then type \`:source\` in firefox, to enable tridactyl"
+    then type \`:source\` to enable tridactyl config
+  - in \`about:config\`:
+    * Clear \`extensions.webextensions.restrictedDomains\`
+      to allow extensions on all pages
+	* Enable \`toolkit.legacyUserProfileCustomizations.stylesheets\`
+      to use the custom firefox theme."
 elif echo $todo | grep -q "firefox "; then
 	echo "\
   - Firefox must be run before you can install the custom theme
