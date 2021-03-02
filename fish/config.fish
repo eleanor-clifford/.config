@@ -49,3 +49,6 @@ alias claer='clear'
 
 alias muttp='neomutt -F ~/.config/neomutt/neomuttrc-personal'
 alias muttc='neomutt -F ~/.config/neomutt/neomuttrc-cam'
+
+alias ecfg='cd ~/.config; nvim .git/index'
+alias vim='nvim'

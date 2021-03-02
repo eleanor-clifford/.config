@@ -155,9 +155,13 @@ Server = file:///home/custompkgs" | sudo tee -a /etc/pacman.conf >/dev/null
 					# remove comment
 					pkgs=$(echo "$pkgs" | tail -n +2)
 					if echo "$pkgs" | egrep '^aur/'; then
-						eval "$INSTALL_AUR $(echo "$pkgs" | sed -n 's|^aur/||p' | tr '\n' ' ')"
+						if ! eval "$INSTALL_AUR $(echo "$pkgs" | sed -n 's|^aur/||p' | tr '\n' ' ')"; then
+							exit $?
+						fi
 					fi
-					eval "$INSTALL $(echo "$pkgs" | sed 's|^aur/||' | tr '\n' ' ')"
+					if ! eval "$INSTALL $(echo "$pkgs" | sed 's|^aur/||' | tr '\n' ' ')"; then
+						exit $?
+					fi
 					break;;
 				[Nn]* )
 					break;;
@@ -222,7 +226,7 @@ if ! $ignore_metaconfig; then
 		fi
 
 		# Apply to all files
-		find . -type f | grep -v metaconf | egrep -v '\.git' | \
+		find . -type f | grep -v metaconf | grep -v nvim | egrep -v '\.git' | \
 			tr '\n' '\0' | xargs -0 sed -i "s/$PREFIX$KEY/$VAL/g"
 	done
 
@@ -254,8 +258,8 @@ if ! $ignore_metaconfig; then
 			echo "====> found existing append for $orig_file, removing..."
 			cp $orig_file "$orig_file.orig"
 
-			# fuck it i would need a gnuism anyway to deal with newlines so may as
-			# well use vim
+			# fuck it i would need a gnuism anyway to deal with newlines so may
+			# as well use vim
 			if ! which vim >/dev/null; then
 				echo "====> You need vim for this"
 				exit 1
@@ -483,7 +487,7 @@ if ! [ "$todo" = "" ]; then
 	====> TODO LIST:"
 fi
 if echo $todo | grep -q "firefox_postinstall "; then
-	echo "To finish Firefox configuration:\
+	echo "To finish Firefox configuration:
   - Type \`:installnative\` and follow the instructions,
     then type \`:source\` to enable tridactyl config
   - in \`about:config\`:
