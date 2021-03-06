@@ -155,11 +155,15 @@ Server = file:///home/custompkgs" | sudo tee -a /etc/pacman.conf >/dev/null
 					# remove comment
 					pkgs=$(echo "$pkgs" | tail -n +2)
 					if echo "$pkgs" | egrep '^aur/'; then
-						if ! eval "$INSTALL_AUR $(echo "$pkgs" | sed -n 's|^aur/||p' | tr '\n' ' ')"; then
+						if ! eval "$INSTALL_AUR $(echo "$pkgs" \
+								| sed -n 's|^aur/||p' | tr '\n' ' ')"
+						then
 							exit $?
 						fi
 					fi
-					if ! eval "$INSTALL $(echo "$pkgs" | sed 's|^aur/||' | tr '\n' ' ')"; then
+					if ! eval "$INSTALL $(echo "$pkgs" \
+								| sed 's|^aur/||' | tr '\n' ' ')"
+					then
 						exit $?
 					fi
 					break;;
@@ -226,12 +230,13 @@ if ! $ignore_metaconfig; then
 		fi
 
 		# Apply to all files
-		find . -type f | grep -v metaconf | grep -v nvim | egrep -v '\.git' | \
+		git ls-tree -r --name-only $(git branch --show-current) | \
 			tr '\n' '\0' | xargs -0 sed -i "s/$PREFIX$KEY/$VAL/g"
 	done
 
 	# Apply file appends
-	if [ "$POSTFIX_FILE_APPEND_PREFIX" = '' ] | [ "$POSTFIX_FILE_APPENDED" = '' ]; then
+	if [ "$POSTFIX_FILE_APPEND_PREFIX" = '' ] \
+			|| [ "$POSTFIX_FILE_APPENDED" = '' ]; then
 		echo "file append prefixes must be defined"
 		exit 1
 	fi
@@ -284,7 +289,9 @@ fi
 if $link_to_home; then
 	# Install dotfiles to $HOME
 	for i in $(find . -maxdepth 1 -regex '\.\/\..+'); do
-		if echo "$i" | egrep -q ".git|$POSTFIX_FILE_APPENDED|$POSTFIX_FILE_APPEND_PREFIX"; then
+		if echo "$i" | egrep -q \
+				".git|$POSTFIX_FILE_APPENDED|$POSTFIX_FILE_APPEND_PREFIX"
+		then
 			continue
 		fi
 		fullpath=$(eval echo $(echo $i | sed 's|^\.|$(pwd)|'))
@@ -423,8 +430,10 @@ if $keyboard; then
 		read -p "Install keyboard layout? " yn
 		case $yn in
 			[Yy]* )
-				sudo cp ./colemak-custom/colemak-custom /usr/share/X11/xkb/symbols/
-				sudo cp ./colemak-custom/colemak-custom.map.gz /usr/share/kbd/keymaps/i386/colemak/
+				sudo cp ./colemak-custom/colemak-custom \
+					     /usr/share/X11/xkb/symbols/
+				sudo cp ./colemak-custom/colemak-custom.map.gz \
+					     /usr/share/kbd/keymaps/i386/colemak/
 				break;;
 			[Nn]* ) break;;
 			*)      echo "Please respond"; exit 1;

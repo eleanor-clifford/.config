@@ -121,7 +121,7 @@ bindsym $mod+v       exec peek
 bindsym $mod+Shift+q exec $HOME/.config/scripts/kill-not-plank.sh
 
 # start dmenu (a program launcher)
-bindsym $mod+s exec dmenu_run
+bindsym $mod+s exec bemenu-run
 bindsym $mod+a exec jgmenu_run >/dev/null 2>&1 &
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
