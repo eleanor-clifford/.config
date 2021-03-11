@@ -16,22 +16,6 @@ end
 
 export BROWSER=/usr/bin/firefox
 export AUR_PAGER="$HOME/.config/scripts/rangerp.sh"
-export BEMENU_SCALE=2
-export BEMENU_OPTS="\
- --list 10		\
- --tb  '#6272a4'\
- --tf  '#f8f8f2'\
- --fb  '#282a36'\
- --ff  '#f8f8f2'\
- --nb  '#282a36'\
- --nf  '#6272a4'\
- --hb  '#44475a'\
- --hf  '#50fa7b'\
- --sb  '#44475a'\
- --sf  '#50fa7b'\
- --scb '#282a36'\
- --scf '#ff79c6'\
-"
 
 alias extend-hdmi="xrandr --output eDP-1-1 --auto --output HDMI-1-1 --auto --right-of eDP-1-1"
 alias clone-hdmi="xrandr --output eDP-1-1 --auto --output HDMI-1-1 --auto --same-as eDP-1-1"
@@ -66,5 +50,7 @@ alias claer='clear'
 alias muttp='neomutt -F ~/.config/neomutt/neomuttrc-personal'
 alias muttc='neomutt -F ~/.config/neomutt/neomuttrc-cam'
 
-alias ecfg='cd ~/.config; nvim .git/index'
+alias ecfg='nvim +"cd ~/.config | edit .git/index"'
 alias vim='nvim'
+# imagine using graphical vim lmao
+alias gvim='~/.config/scripts/gvim.sh'
