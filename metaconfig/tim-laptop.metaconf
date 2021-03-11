@@ -40,7 +40,7 @@ POLYBAR_TOP_LINE_SIZE           = 14
 POLYBAR_TOP_NOTOSANS_SIZE       = 10;0
 POLYBAR_TOP_FONTAWESOME4_SIZE   = 18;3
 POLYBAR_TOP_FONTAWESOME5_SIZE   = 18;3
-POLYBAR_TOP_MODULES_LEFT        = oblogout spotify-back spotify-pause spotify-next spotify-title
+POLYBAR_TOP_MODULES_LEFT        = oblogout player-back player-pause player-next player-title
 POLYBAR_TOP_MODULES_CENTER      = i3-touch closewindow touchrotate touchportrait touchlandscape touchvoldown touchvolup touchbrightdown touchbrightup touchkeyboard
 POLYBAR_TOP_MODULES_RIGHT       = network battery power
 
