@@ -12,3 +12,9 @@ xrandr \
 		--pos 3840x504 \
 		--panning 2944x1656+3840+504 \
 		--gamma 1:1:1 \
+
+# setup i2c_dev for ddcutil, easier to do it here than add more things for the
+# installer to do
+if ! lsmod | grep -q i2c_dev; then
+	modprobe i2c_dev
+fi
