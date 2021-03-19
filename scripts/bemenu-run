@@ -1,5 +1,5 @@
 #!/bin/sh
-export BEMENU_SCALE=2
+export BEMENU_SCALE=_METACONF_REPLACE_BEMENU_SCALE
 export BEMENU_OPTS="\
  --list 10		\
  --prompt ' > '

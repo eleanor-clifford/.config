@@ -20,6 +20,9 @@ PRI_DISP = DP-2 HDMI3
 SEC_DISP = DP5  HDMI-0
 LOCK_RESOLUTION = 3840x2160
 
+# bemenu
+BEMENU_SCALE = 2
+
 # These are optional comments in front of the relevant lines
 
 LOAD_CACHE_FILESYSTEMS =      # onedrive, dropbox
@@ -31,10 +34,9 @@ VOLUME_TICK_UP   = +1%
 VOLUME_TICK_DOWN = -1%
 
 # picom
+PICOM_CORNER_RADIUS = 30.0
 DISABLE_PICOM =               # My regex isn't very good, for these
                               # to work they can't end on whitespace
-# picom
-PICOM_CORNER_RADIUS = 30.0
 
 #polybar
 POLYBAR_TOP_LINE_SIZE           = 21

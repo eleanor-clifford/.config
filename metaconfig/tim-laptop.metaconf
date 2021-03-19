@@ -20,6 +20,9 @@ PRI_DISP = eDP
 SEC_DISP = DisplayPort-0 eDP
 LOCK_RESOLUTION = 1920x1080
 
+# bemenu
+BEMENU_SCALE = 1
+
 # These are optional comments in front of the relevant lines
 
 LOAD_CACHE_FILESYSTEMS =      # onedrive, dropbox

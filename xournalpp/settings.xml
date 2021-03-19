@@ -7,7 +7,7 @@
   <property name="zoomGesturesEnabled" value="true"/>
   <property name="selectedToolbar" value="Dracula"/>
   <property name="lastSavePath" value="/home/tim/OneDrive-Cam/Example_Papers/2P7"/>
-  <property name="lastOpenPath" value="/home/tim/OneDrive-Cam/Example_Papers/2P7"/>
+  <property name="lastOpenPath" value="/home/tim/OneDrive-Cam/Example_Papers/2P1"/>
   <property name="lastImagePath" value="file:///home/tim"/>
   <property name="zoomStep" value="10.00000000"/>
   <property name="zoomStepScroll" value="2.00000000"/>
@@ -49,10 +49,10 @@
   <property name="defaultSaveName" value="%F-Note-%H-%M"/>
   <property name="autosaveEnabled" value="true"/>
   <property name="autosaveTimeout" value="3"/>
-  <property name="addHorizontalSpace" value="false"/>
-  <property name="addHorizontalSpaceAmount" value="150"/>
-  <property name="addVerticalSpace" value="false"/>
-  <property name="addVerticalSpaceAmount" value="150"/>
+  <property name="addHorizontalSpace" value="true"/>
+  <property name="addHorizontalSpaceAmount" value="600"/>
+  <property name="addVerticalSpace" value="true"/>
+  <property name="addVerticalSpaceAmount" value="600"/>
   <property name="drawDirModsEnabled" value="false"/>
   <property name="drawDirModsRadius" value="50"/>
   <property name="snapRotation" value="false"/>
