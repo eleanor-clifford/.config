@@ -2,17 +2,17 @@
 
 exec_always --no-startup-id $HOME/.config/i3/display-setup.sh
 
-workspace 1  output DP-2 HDMI3
-workspace 2  output DP-2 HDMI3
-workspace 3  output DP-2 HDMI3
-workspace 4  output DP-2 HDMI3
-workspace 5  output DP-2 HDMI3
+workspace 1  output _METACONF_REPLACE_PRI_DISP
+workspace 2  output _METACONF_REPLACE_PRI_DISP
+workspace 3  output _METACONF_REPLACE_PRI_DISP
+workspace 4  output _METACONF_REPLACE_PRI_DISP
+workspace 5  output _METACONF_REPLACE_PRI_DISP
 
-workspace 6  output DP5  HDMI-0
-workspace 7  output DP5  HDMI-0
-workspace 8  output DP5  HDMI-0
-workspace 9  output DP5  HDMI-0
-workspace 10 output DP5  HDMI-0
+workspace 6  output _METACONF_REPLACE_SEC_DISP
+workspace 7  output _METACONF_REPLACE_SEC_DISP
+workspace 8  output _METACONF_REPLACE_SEC_DISP
+workspace 9  output _METACONF_REPLACE_SEC_DISP
+workspace 10 output _METACONF_REPLACE_SEC_DISP
 
 # lock screen
 exec --no-startup-id $HOME/.config/i3/lock.sh -u $HOME/.config/wallpapers/current.png
@@ -55,9 +55,9 @@ gaps inner 10
 for_window [class="^Fullscreen*"] fullscreen enable
 
 # startup apps
- exec --no-startup-id "/usr/bin/onedrive -m --confdir $HOME/.config/onedrive --syncdir $HOME/OneDrive-Cam"
- exec --no-startup-id "/usr/bin/onedrive -m --confdir $HOME/.config/onedrive-personal --syncdir $HOME/OneDrive-Personal"
- exec --no-startup-id "/usr/bin/dropbox"
+_METACONF_REPLACE_LOAD_CACHE_FILESYSTEMS exec --no-startup-id "/usr/bin/onedrive -m --confdir $HOME/.config/onedrive --syncdir $HOME/OneDrive-Cam"
+_METACONF_REPLACE_LOAD_CACHE_FILESYSTEMS exec --no-startup-id "/usr/bin/onedrive -m --confdir $HOME/.config/onedrive-personal --syncdir $HOME/OneDrive-Personal"
+_METACONF_REPLACE_LOAD_CACHE_FILESYSTEMS exec --no-startup-id "/usr/bin/dropbox"
 
 _METACONF_REPLACE_LOAD_NETWORK_FILESYSTEMS exec --no-startup-id "/usr/bin/google-drive-ocamlfuse $HOME/GoogleDrive-Work -label default"
 _METACONF_REPLACE_LOAD_NETWORK_FILESYSTEMS exec --no-startup-id "/usr/bin/google-drive-ocamlfuse $HOME/GoogleDrive-Cam -label cam"

@@ -189,6 +189,16 @@ if ! $ignore_metaconfig; then
 	POSTFIX_FILE_APPEND_PREFIX=''
 	POSTFIX_FILE_APPENDED=''
 
+	# Build file list once only. Cheaper to look at extension than use `file`
+	FILETYPE_IGNORE='png svg jpg gz dll msi klc exe'
+
+	echo "====> building file list..."
+	files=$(comm -23 \
+			<(git ls-tree -r --name-only $(git branch --show-current) | sort) \
+			<(git submodule status | awk '{print $2}' | sort) \
+		| egrep -v '\.(png|svg|jpg|pdf|gif|gz|dll|msi|klc|exe)$' \
+		| xargs -I'{}' sh -c 'test -L {} || echo {}')
+
 	echo "====> applying metaconfig variables..."
 	for line in $(cat "metaconfig/$(cat /etc/hostname).metaconf"); do
 
@@ -207,55 +217,64 @@ if ! $ignore_metaconfig; then
 		if [ "$KEY" = '' ]; then
 			echo "Syntax Error: $line"
 			exit 1
-		fi
 
-		if [ "$KEY" = 'PREFIX' ]; then
+		elif [ "$KEY" = 'PREFIX' ]; then
 			PREFIX=$VAL
-			continue
-		fi
 
-		if [ "$KEY" = 'POSTFIX_FILE_APPEND_PREFIX' ]; then
+		elif [ "$KEY" = 'POSTFIX_FILE_APPEND_PREFIX' ]; then
 			POSTFIX_FILE_APPEND_PREFIX=$VAL
-			continue
-		fi
 
-		if [ "$KEY" = 'POSTFIX_FILE_APPENDED' ]; then
+		elif [ "$KEY" = 'POSTFIX_FILE_APPENDED' ]; then
 			POSTFIX_FILE_APPENDED=$VAL
-			continue
-		fi
 
-		if [ "$PREFIX" = '' ]; then
+		elif [ "$PREFIX" = '' ]; then
 			echo "A prefix must be defined first"
 			exit 1
+
+		else
+			# Apply to all files, skipping non-ascii and ignoring sed errors
+			echo "$files" | xargs -n1 sed -i "s/$PREFIX$KEY/$VAL/g"
 		fi
 
-		# Apply to all files
-		git ls-tree -r --name-only $(git branch --show-current) | \
-			tr '\n' '\0' | xargs -0 sed -i "s/$PREFIX$KEY/$VAL/g"
+		echo "  ==> set $KEY to $VAL"
 	done
 
 	# Apply file appends
 	if [ "$POSTFIX_FILE_APPEND_PREFIX" = '' ] \
 			|| [ "$POSTFIX_FILE_APPENDED" = '' ]; then
-		echo "file append prefixes must be defined"
+		echo "ERROR: file append prefixes must be defined"
 		exit 1
 	fi
-	POSTFIX_FILE_APPEND="$POSTFIX_FILE_APPEND_PREFIX$(cat /etc/hostname)"
+
+	POSTFIX_FILE_APPEND_ALL="$POSTFIX_FILE_APPEND_PREFIX""all"
+	POSTFIX_FILE_APPEND_HOST="$POSTFIX_FILE_APPEND_PREFIX$(cat /etc/hostname)"
 
 	echo "====> applying append files..."
-	for i in $(find . -type f -name "*$POSTFIX_FILE_APPEND"); do
-
-		orig_file=$(echo "$i" | sed "s/$POSTFIX_FILE_APPEND//")
-
+	# Get all files with either all or host extension, take off the extension,
+	# and remove duplicates
+	for orig_file in $(find -L . -type f -regextype sed -regex \
+		".*\($POSTFIX_FILE_APPEND_HOST\|$POSTFIX_FILE_APPEND_ALL\)" \
+		| sed "s/$POSTFIX_FILE_APPEND_PREFIX.*//" | uniq -u)
+	do
 		if ! [ -f $orig_file ]; then
-			echo "====> WARNING: no file to append $i to"
+			echo "WARNING: $orig does not exist but append files for it do"
 			continue
 		fi
 
-		last_append=$(echo "$i" | \
-			sed "s/$POSTFIX_FILE_APPEND/$POSTFIX_FILE_APPENDED/")
+		# Build the append to add
+		append=""
+		if [ -f "$orig_file$POSTFIX_FILE_APPEND_ALL" ]; then
+			append="$append$(cat "$orig_file$POSTFIX_FILE_APPEND_ALL")"
+		fi
+
+		if [ -f "$orig_file$POSTFIX_FILE_APPEND_HOST" ]; then
+			append="$append$(cat "$orig_file$POSTFIX_FILE_APPEND_HOST")"
+		fi
+
+		last_append="$orig_file$POSTFIX_FILE_APPENDED"
+
 		if [ -f $last_append ]; then
-			if diff $i $last_append > /dev/null; then
+			if diff <(echo "$append") $last_append > /dev/null; then
 				echo "====> skipping $i"
 				continue
 			fi
@@ -266,27 +285,27 @@ if ! $ignore_metaconfig; then
 			# fuck it i would need a gnuism anyway to deal with newlines so may
 			# as well use vim
 			if ! which vim >/dev/null; then
-				echo "====> You need vim for this"
+				echo "ERROR: You need vim for this operation"
 				exit 1
 			fi
 
 			vim -u NONE +"s/\n$(cat $last_append)\%$//" +wq $orig_file
-			#sed -iz "s/$(cat $last_append)$//" $orig_file
+
 			if diff "$orig_file" "$orig_file.orig" > /dev/null; then
-				echo "====> ERROR: failed to remove append from file $orig_file"
+				echo "ERROR: failed to remove append from file $orig_file"
 				continue
 			fi
 
 		fi
 
-		cat $i >> $orig_file
-		cp $i $last_append
-
-		echo "====> appended $i to $orig_file"
+		echo "$append" >> $orig_file
+		echo "$append" >  $last_append
+		echo "  ==> appended to $orig_file"
 	done
 fi
 
 if $link_to_home; then
+	echo "====> applying links..."
 	# Install dotfiles to $HOME
 	for i in $(find . -maxdepth 1 -regex '\.\/\..+'); do
 		if echo "$i" | egrep -q \
@@ -296,7 +315,6 @@ if $link_to_home; then
 		fi
 		fullpath=$(eval echo $(echo $i | sed 's|^\.|$(pwd)|'))
 		homepath=$(eval echo $(echo $i | sed 's|.*/\(.*\)$|$HOME/\1|'))
-		echo "====> linking $homepath -> $fullpath"
 		if [ -L "$homepath" ]; then
 			rm "$homepath"
 		fi
@@ -304,6 +322,7 @@ if $link_to_home; then
 			mv "$homepath" "$homepath.orig"
 		fi
 		ln -s "$fullpath" $HOME
+		echo "  ==> linked $homepath -> $fullpath"
 	done
 fi
 
