@@ -1,0 +1,50 @@
+#!/bin/bash
+#/usr/bin/pulseaudio --start
+sudo /usr/bin/qemu-system-x86_64 \
+\
+    `# System` \
+\
+    -name win-vm,debug-threads=on \
+    -enable-kvm \
+    -cpu host,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time,kvm=off,hv_vendor_id="whatever" \
+    -smp sockets=1,cores=4,threads=1 \
+    -m 8G \
+    -drive file=/home/tim/vm/win_img,format=raw,cache=none,if=virtio \
+    -drive if=pflash,format=raw,readonly,file=/usr/share/ovmf/x64/OVMF_CODE.fd \
+    -drive if=pflash,format=raw,file=/home/tim/vm/OVMF_VARS.fd \
+    -vga none \
+    -nographic \
+\
+    `# Networking` \
+\
+    -net nic \
+    -net user,smb=/ \
+\
+    `# PCI` \
+\
+    -device vfio-pci,host=01:00.0 `# Graphics` \
+    -device vfio-pci,host=01:00.1 `# Graphics Audio` \
+    -device vfio-pci,host=03:00.0 `# Wireless Network Adapter` \
+    -device vfio-pci,host=04:00.0 `# USB controller` \
+\
+    `# USB` \
+\
+    -device qemu-xhci,id=xhci \
+    -device usb-host,bus=xhci.0,vendorid=0x0d8c,productid=0x0102,port=1 `#Sound Card` \
+    -device usb-host,bus=xhci.0,vendorid=0x046d,productid=0x0a4d,port=2 `#Logitech Card` \
+`#    -device usb-host,bus=xhci.0,vendorid=0x0738,productid=0x2237,port=3  Joystick` \
+\
+    `# Keyboard and Mouse (evdev)` \
+\
+    -object input-linux,id=kbd1,evdev=/dev/input/by-id/ckb-Corsair_Gaming_K70_LUX_RGB_Keyboard_vKB_-event,grab_all=on,repeat=on \
+    -object input-linux,id=kbd2,evdev=/dev/input/by-id/ckb-Corsair_Gaming_K70_LUX_RGB_Keyboard_vM_-event \
+    -object input-linux,id=mouse1,evdev=/dev/input/by-id/usb-Logitech_USB_Receiver-if02-event-mouse \
+\
+    `# Access` \
+\
+    -monitor unix:/home/tim/vm/qemu-monitor.socket,server,nowait \
+`#    -device virtio-serial-pci` \
+`#    -device virtserialport,chardev=spicechannel0,name=com.redhat.spice.0` \
+`#    -chardev spicevmc,id=spicechannel0,name=vdagent` \
+`#    -spice unix,addr=/home/tim/qemu-spice.socket,disable-ticketing` \
+>/home/tim/qemu-log
