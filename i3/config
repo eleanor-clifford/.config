@@ -63,7 +63,8 @@ _METACONF_REPLACE_LOAD_NETWORK_FILESYSTEMS exec --no-startup-id "/usr/bin/google
 _METACONF_REPLACE_LOAD_NETWORK_FILESYSTEMS exec --no-startup-id "/usr/bin/google-drive-ocamlfuse $HOME/GoogleDrive-Cam -label cam"
 _METACONF_REPLACE_LOAD_NETWORK_FILESYSTEMS exec --no-startup-id "/usr/bin/google-drive-ocamlfuse $HOME/GoogleDrive-Personal -label personal"
 
-_METACONF_REPLACE_LOAD_TOUCHSCREEN_TOOLS exec --no-startup-id flameshot &
+exec --no-startup-id "/usr/bin/protonmail-bridge --noninteractive &"
+
 exec --no-startup-id "$HOME/.i3/titlebar.rb"
 
 # composite manager

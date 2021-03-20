@@ -61,7 +61,10 @@
 /chromium/
 /gtk-2.0/
 /octave/
-/.FreeCAD/
+/.FreeCAD/AddonManager
+/.FreeCAD/cookies
+/.FreeCAD/Macro
+/.FreeCAD/Mod
 /StardewValley/
 /keepassxc/
 /signald/

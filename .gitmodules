@@ -1,3 +1,27 @@
 [submodule "wallpapers/nonfree-wallpapers"]
 	path = wallpapers/nonfree-wallpapers
 	url = git@github.com:tim-clifford/nonfree-wallpapers.git
+[submodule "dracula/qt5"]
+	path = dracula/qt5
+	url = git@github.com:dracula/qt5
+[submodule "dracula/fish"]
+	path = dracula/fish
+	url = git@github.com:dracula/fish
+[submodule "dracula/kicad"]
+	path = dracula/kicad
+	url = git@github.com:dracula/kicad
+[submodule "dracula/pandoc"]
+	path = dracula/pandoc
+	url = git@github.com:dracula/pandoc.git
+[submodule "dracula/latex"]
+	path = dracula/latex
+	url = git@github.com:dracula/latex
+[submodule "dracula/freecad"]
+	path = dracula/freecad
+	url = git@github.com:tim-clifford/dracula-freecad
+[submodule "dracula/matplotlib"]
+	path = dracula/matplotlib
+	url = git@github.com:dracula/matplotlib
+[submodule "dracula/xournalpp"]
+	path = dracula/xournalpp
+	url = git@github.com:dracula/xournalpp
