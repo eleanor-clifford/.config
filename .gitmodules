@@ -25,3 +25,9 @@
 [submodule "dracula/xournalpp"]
 	path = dracula/xournalpp
 	url = git@github.com:dracula/xournalpp
+[submodule "polybar/player"]
+	path = polybar/player
+	url = git@github.com:windows-bad/polybar-player
+[submodule "nvim"]
+	path = nvim
+	url = git@github.com:tim-clifford/nvimrc

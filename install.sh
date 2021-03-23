@@ -4,7 +4,7 @@
 todo=""
 
 # default arguments
-vim=full
+vim=true
 link_to_home=true
 firefox=true
 fish=true
@@ -13,6 +13,7 @@ install=true
 wallpapers=false
 no_wallpapers=false
 ignore_metaconfig=false
+dracula=true
 help=false
 for i in "$@"; do
 	case "$i" in
@@ -20,7 +21,7 @@ for i in "$@"; do
 		--install=false)     install=false;;
 		--link=false)        link_to_home=false;;
 		--firefox=false)     firefox=false;;
-		--vim=none)          vim=none;;
+		--vim=false)         vim=false;;
 		--vim=minimal)       vim=minimal;;
 		--fish=false)        fish=false;;
 		--grub=false)        grub=false;;
@@ -28,7 +29,10 @@ for i in "$@"; do
 		--wallpapers=true)   wallpapers=true;;
 		--wallpapers=false)  wallpapers=false;;
 		--update)
-			vim=update
+			dracula=false
+			;&
+		--update-dracula)
+			vim=true
 			firefox=false
 			fish=false
 			grub=false
@@ -37,7 +41,7 @@ for i in "$@"; do
 			wallpapers=true
 			;;
 		--firefox-only)
-			vim=none
+			vim=false
 			firefox=true
 			link_to_home=false
 			install=false
@@ -61,8 +65,7 @@ between the application of metaconfigurations and any further changes.
   --install=false       don't install any packages
   --link=false          don't symlink dotfiles into $HOME
   --firefox=false       don't install firefox theme
-  --vim=none            don't install vimrc
-  --vim=minimal         install minimal vim (no plugins)
+  --vim=false           don't install vimrc
   --fish=false          don't set fish as the default config (default is to ask)
   --grub=false          don't install grub theme (default is to ask)
   --grub=true           install grub theme (default is to ask)
@@ -71,9 +74,17 @@ between the application of metaconfigurations and any further changes.
   --firefox-only        install the custom firefox theme and exit
   --update              update configurations without installing or symlinking
                         anything. Can also be used without reverting to before
-                        the last use."
+                        the last use. Doesn't update dracula themes
+  --update-dracula      like --update, but also update dracula themes"
 
 	exit 0
+fi
+
+if $install; then
+	# we probably want to init submodules
+	git submodule update --init --remote
+elif $dracula; then
+	git submodule update --init --remote dracula/*
 fi
 
 if ! $ignore_metaconfig; then
@@ -326,44 +337,8 @@ if $link_to_home; then
 	done
 fi
 
-if [ "$vim" = "minimal" ]; then
-	wd=$(pwd)
-	mkdir -p "$HOME/.vim"
-	cd "$HOME/.vim"
-	if [ -d git ]; then
-		cd git
-		git pull origin master
-	else
-		git clone https://github.com/tim-clifford/vimrc
-		mv vimrc git
-		cd git
-	fi
-
-	./make_minimal.sh
-	ln -s $(pwd)/.vimrc-minimal $HOME/.vimrc
-	cd $wd
-
-elif [ "$vim" = "full" ]; then
-	wd=$(pwd)
-	mkdir -p "$HOME/.vim"
-	cd "$HOME/.vim"
-	if [ -d git ]; then
-		cd git
-		git pull origin master
-	else
-		git clone https://github.com/tim-clifford/vimrc
-		mv vimrc git
-		cd git
-	fi
-
-	./install.sh
-	cd $wd
-
-elif [ "$vim" = "update" ]; then
-	cd "$HOME/.vim/git"
-	git pull origin master
-	#./install.sh --update
-	cd - >/dev/null
+if $vim; then
+	git submodule update --init --remote nvim
 fi
 
 if $firefox; then
@@ -461,9 +436,7 @@ if $keyboard; then
 fi
 
 if $wallpapers; then
-	git submodule update --init
-	git submodule update --remote
-	# I'm not sure I fully understand links tbh
+	git submodule update --init --remote wallpapers/nonfree-wallpapers
 	cd wallpapers
 	rm -f current.png
 	ln -s nonfree-wallpapers/current.png current.png
