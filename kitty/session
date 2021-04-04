@@ -1,4 +1,4 @@
 layout tall:bias=55
 # splits:split_axis=vertical
 cd ~
-launch fish
+launch zsh

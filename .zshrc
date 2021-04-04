@@ -1,86 +1,242 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
-
-# Path to your oh-my-zsh installation.
-  export ZSH=$HOME/.oh-my-zsh
-
-# Set name of the theme to load. Optionally, if you set this to "random"
-# it'll load a random theme each time that oh-my-zsh is loaded.
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="tim"
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion. Case
-# sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-HIST_STAMPS="yyyy-mm-dd"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
-
-source $ZSH/oh-my-zsh.sh
-
-if ! pgrep -u "$USER" ssh-agent > /dev/null; then
-    ssh-agent > "$XDG_RUNTIME_DIR/ssh-agent.env"
+# TTY {{{
+if [ "$(tty)" = "/dev/tty1" ]; then
+	sleep 1 && startx
 fi
 
-if [[ ! "$SSH_AUTH_SOCK" ]]; then
-    eval "$(<"$XDG_RUNTIME_DIR/ssh-agent.env")"
+if tty | grep -q "/dev/tty"; then
+	$HOME/.config/scripts/set_tty_colors.sh
 fi
+# }}}
+# Options {{{
+# The following lines were added by compinstall
 
-export EDITOR=/usr/bin/vim
-export VISUAL=/usr/bin/vim
+zstyle ':completion:*' completer _expand _complete _ignored _approximate
+zstyle ':completion:*' completions 1
+zstyle ':completion:*' glob 1
+zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'r:|[._-/]=** r:|=**' 'l:|=* r:|=*'
+zstyle ':completion:*' max-errors 3
+zstyle ':completion:*' substitute 0
+zstyle :compinstall filename '/home/tim/.zshrc'
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=10000
+SAVEHIST=10000
+setopt autocd
+unsetopt beep notify
+bindkey -v
+# End of lines configured by zsh-newuser-install
+# }}}
+# Plugins {{{
+source /usr/share/zsh/share/antigen.zsh
+
+# Load the oh-my-zsh's library.
+antigen use oh-my-zsh
+
+antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle olivierverdier/zsh-git-prompt
+antigen bundle jeffreytse/zsh-vi-mode
+
+antigen apply
+
+# Insulter
+. ~/.config/zsh-plugins/bash-insulter/src/bash.command-not-found
+
+# Git prompt
+source ~/.config/zsh-plugins/zsh-git-prompt/zshrc.sh
+
+# }}}
+# Colors {{{
+ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=red,bold'
+ZSH_HIGHLIGHT_STYLES[reserved-word]='fg=yellow'
+ZSH_HIGHLIGHT_STYLES[alias]='fg=magenta'
+ZSH_HIGHLIGHT_STYLES[suffix-alias]='fg=green,underline'
+ZSH_HIGHLIGHT_STYLES[global-alias]='fg=cyan'
+ZSH_HIGHLIGHT_STYLES[builtin]='fg=green'
+ZSH_HIGHLIGHT_STYLES[function]=''
+ZSH_HIGHLIGHT_STYLES[command]='fg=cyan'
+ZSH_HIGHLIGHT_STYLES[precommand]='fg=green,underline'
+ZSH_HIGHLIGHT_STYLES[commandseparator]='none'
+ZSH_HIGHLIGHT_STYLES[hashed-command]=''
+ZSH_HIGHLIGHT_STYLES[autodirectory]='fg=green,underline'
+ZSH_HIGHLIGHT_STYLES[path]='fg=blue,underline'
+ZSH_HIGHLIGHT_STYLES[path_pathseparator]=''
+ZSH_HIGHLIGHT_STYLES[path_prefix]=''
+ZSH_HIGHLIGHT_STYLES[path_prefix_pathseparator]=''
+ZSH_HIGHLIGHT_STYLES[globbing]='fg=blue'
+ZSH_HIGHLIGHT_STYLES[history-expansion]='fg=blue'
+ZSH_HIGHLIGHT_STYLES[command-substitution]='none'
+ZSH_HIGHLIGHT_STYLES[command-substitution-unquoted]=''
+ZSH_HIGHLIGHT_STYLES[command-substitution-quoted]=''
+ZSH_HIGHLIGHT_STYLES[command-substitution-delimiter]='fg=magenta'
+ZSH_HIGHLIGHT_STYLES[command-substitution-delimiter-unquoted]=''
+ZSH_HIGHLIGHT_STYLES[command-substitution-delimiter-quoted]=''
+ZSH_HIGHLIGHT_STYLES[process-substitution]='none'
+ZSH_HIGHLIGHT_STYLES[process-substitution-delimiter]='fg=magenta'
+ZSH_HIGHLIGHT_STYLES[arithmetic-expansion]=''
+ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='none'
+ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='none'
+ZSH_HIGHLIGHT_STYLES[back-quoted-argument]='none'
+ZSH_HIGHLIGHT_STYLES[back-quoted-argument-unclosed]=''
+ZSH_HIGHLIGHT_STYLES[back-quoted-argument-delimiter]='fg=magenta'
+ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=yellow'
+ZSH_HIGHLIGHT_STYLES[single-quoted-argument-unclosed]=''
+ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=yellow'
+ZSH_HIGHLIGHT_STYLES[double-quoted-argument-unclosed]=''
+ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument]='fg=yellow'
+ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument-unclosed]=''
+ZSH_HIGHLIGHT_STYLES[rc-quote]='fg=cyan'
+ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]='fg=cyan'
+ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]='fg=cyan'
+ZSH_HIGHLIGHT_STYLES[back-dollar-quoted-argument]='fg=cyan'
+ZSH_HIGHLIGHT_STYLES[assign]='none'
+ZSH_HIGHLIGHT_STYLES[redirection]='fg=yellow'
+ZSH_HIGHLIGHT_STYLES[comment]='fg=#67a'
+ZSH_HIGHLIGHT_STYLES[comment]='fg=#67a'
+ZSH_HIGHLIGHT_STYLES[named-fd]='none'
+ZSH_HIGHLIGHT_STYLES[numeric-fd]='none'
+ZSH_HIGHLIGHT_STYLES[arg0]='fg=green'
+ZSH_HIGHLIGHT_STYLES[default]='none'
+# }}}
+# Environment {{{
+export EDITOR=/usr/bin/nvim
+export VISUAL=/usr/bin/nvim
 export BROWSER=/usr/bin/firefox
-export AUR_PAGER=ranger
 export SUDO_ASKPASS=/usr/lib/ssh/x11-ssh-askpass
+export AUR_PAGER="$HOME/.config/scripts/rangerp.sh"
+# }}}
+# Aliases {{{
+alias update-wallpapers="sudo systemctl restart wallpapers"
+alias mount-all='/home/tim/scripts/mount-all.sh'
+alias unmount-all='/home/tim/scripts/unmount-all.sh'
+alias umount-all='/home/tim/scripts/unmount-all.sh'
+alias aur-remove='repo-remove /home/custompkgs/custom.db.tar.gz'
 
-if [ -f /etc/zsh.command-not-found ]; then
-    . /etc/zsh.command-not-found
-fi
+alias vi='vim'
+alias vim='nvim' # idk...
+alias gvim='~/.config/scripts/gvim.sh' # imagine using graphical vim lmao
+alias ecfg='nvim +"cd ~/.config | edit .git/index"'
 
-alias extend-hdmi="xrandr --output eDP-1-1 --auto --output HDMI-1-1 --auto --right-of eDP-1-1"
-alias clone-hdmi="xrandr --output eDP-1-1 --auto --output HDMI-1-1 --auto --same-as eDP-1-1"
-alias disable-hdmi="xrandr --output eDP-1-1 --auto --output HDMI-1-1 --off"
-alias only-hdmi="xrandr --output eDP-1-1 --off --output HDMI-1-1 --auto"
-alias nano=vim
 alias icat='kitty +kitten icat'
-alias indentp="indent \
--nbad -bap -nbc -bbo -hnl -br -brs -c33 -cd33 -ncdb -ce -ci4 \
--cli0 -d0 -di1 -nfc1 -i4 -ip0 -l80 -lp -npcs -nprs -npsl -sai \
--saf -saw -ncs -nsc -sob -nfca -cp33 -nss -ts4 -il1 "
-alias aur-remove='repo-remove /home/custompkgs/custom.db.tar'
+
+# I'm bad at typing
+alias claer='clear'
+
+alias muttp='neomutt -F ~/.config/neomutt/neomuttrc-personal'
+alias muttc='neomutt -F ~/.config/neomutt/neomuttrc-cam'
+
+alias ssh='TERM=xterm ssh'
+# }}}
+# Prompt {{{
+function git_prompt() {
+	# Don't print a prompt if we aren't in a git repo
+	if ! [ "$GIT_BRANCH" = ":" ]; then
+		echo -n "$(git_super_status)"
+	fi
+}
+function vi_prompt() {
+	echo -n "%B%F{black}"
+	case $ZVM_MODE in
+		$ZVM_MODE_NORMAL)
+			echo -n "%K{blue} NORMAL "
+		;;
+		$ZVM_MODE_INSERT)
+			echo -n "%K{green} INSERT "
+		;;
+		$ZVM_MODE_VISUAL)
+			echo -n "%K{yellow} VISUAL "
+		;;
+		$ZVM_MODE_VISUAL_LINE)
+			echo -n "%K{yellow} V-LINE "
+		;;
+	esac
+	echo -n "%b%f%k"
+}
+
+ZSH_THEME_GIT_PROMPT_PREFIX="G:["
+ZSH_THEME_GIT_PROMPT_SUFFIX="]"
+ZSH_THEME_GIT_PROMPT_SEPARATOR="|"
+ZSH_THEME_GIT_PROMPT_BRANCH="%{$fg[blue]%}"
+ZSH_THEME_GIT_PROMPT_STAGED="%{$fg[cyan]%}%{●%G%}"
+ZSH_THEME_GIT_PROMPT_CONFLICTS="%{$fg[red]%}%{✖%G%}"
+ZSH_THEME_GIT_PROMPT_CHANGED="%{$fg[yellow]%}%{✚%G%}"
+ZSH_THEME_GIT_PROMPT_BEHIND="%{↓%G%}"
+ZSH_THEME_GIT_PROMPT_AHEAD="%{↑%G%}"
+ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[yellow]%}%{…%G%}"
+ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[green]%}%{✔%G%}"
+
+PROMPT=$(echo \
+	'$(vi_prompt)'                                                            \
+	`# Colored exit code `                                                    \
+	'%(?.%F{green}%?.%F{red}%?)'                                              \
+	`# user@distro `                                                          \
+	'%F{cyan}%n%f@%F{blue}$(sed -n '"'"'s/^ID=//p'"'"' /etc/os-release)'      \
+	`# folder name`                                                           \
+	'%F{magenta}%~'                                                           \
+	`# Authorization`                                                         \
+	'%f%(!.#.$) ')
+
+RPROMPT='$(git_prompt)'
+# }}}
+# Vi mode {{{
+ZVM_CURSOR_STYLE_ENABLED=false
+function zvm_after_lazy_keybindings() {
+	# zsh vicmd (normal) mode
+	zvm_bindkey vicmd "n" vi-backward-char
+	zvm_bindkey vicmd "e" down-line-or-history
+	zvm_bindkey vicmd "i" up-line-or-history
+	zvm_bindkey vicmd "o" vi-forward-char
+
+	zvm_bindkey vicmd "k" zvm_open_line_below
+	zvm_bindkey vicmd "l" vi-forward-word-end
+	zvm_bindkey vicmd "h" zvm_enter_insert_mode
+	zvm_bindkey vicmd "j" vi-repeat-search
+
+	zvm_bindkey vicmd "E" vi-join
+
+	zvm_bindkey vicmd "K" zvm_open_line_above
+	zvm_bindkey vicmd "L" vi-forward-blank-word-end
+	zvm_bindkey vicmd "H" zvm_insert_bol
+	zvm_bindkey vicmd "J" vi-rev-repeat-search
+
+	# zsh viopp mode
+	zvm_bindkey vicmd "hW" select-in-blank-word
+	zvm_bindkey vicmd "ha" select-in-shell-word
+	zvm_bindkey vicmd "hw" select-in-word
+	zvm_bindkey vicmd "e"  down-line
+	zvm_bindkey vicmd "i"  up-line
+
+	zvm_bindkey vicmd "h"   zvm_readkeys_handler
+	zvm_bindkey vicmd "h^[" zvm_select_surround
+	zvm_bindkey vicmd "h "  zvm_select_surround
+	zvm_bindkey vicmd "h\"" zvm_select_surround
+	zvm_bindkey vicmd "h'"  zvm_select_surround
+	zvm_bindkey vicmd "h("  zvm_select_surround
+	zvm_bindkey vicmd "h)"  zvm_select_surround
+	zvm_bindkey vicmd "h<"  zvm_select_surround
+	zvm_bindkey vicmd "h>"  zvm_select_surround
+	zvm_bindkey vicmd "hW"  select-in-blank-word
+	zvm_bindkey vicmd "h["  zvm_select_surround
+	zvm_bindkey vicmd "h]"  zvm_select_surround
+	zvm_bindkey vicmd "h\`" zvm_select_surround
+	zvm_bindkey vicmd "ha"  select-in-shell-word
+	zvm_bindkey vicmd "hw"  select-in-word
+	zvm_bindkey vicmd "h{"  zvm_select_surround
+	zvm_bindkey vicmd "h}"  zvm_select_surround
+	zvm_bindkey vicmd "e"   down-line
+	zvm_bindkey vicmd "i"   up-line
+	zvm_bindkey vicmd "k"   zvm_exchange_point_and_mark
+
+	# zvm viins (insert) mode
+	zvm_bindkey vicmd 'h' zvm_enter_insert_mode
+	zvm_bindkey vicmd 'H' zvm_insert_bol
+
+	# zvm other key bindings
+	zvm_bindkey visual 'k' zvm_exchange_point_and_mark
+	zvm_bindkey vicmd  'k' zvm_open_line_below
+	zvm_bindkey vicmd  'K' zvm_open_line_above
+}
+# }}}

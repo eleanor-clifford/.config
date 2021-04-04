@@ -7,13 +7,13 @@ todo=""
 vim=true
 link_to_home=true
 firefox=true
-fish=true
+zsh=true
 grub=true
 install=true
 wallpapers=false
 no_wallpapers=false
 ignore_metaconfig=false
-dracula=true
+submodules=true
 help=false
 for i in "$@"; do
 	case "$i" in
@@ -23,18 +23,18 @@ for i in "$@"; do
 		--firefox=false)     firefox=false;;
 		--vim=false)         vim=false;;
 		--vim=minimal)       vim=minimal;;
-		--fish=false)        fish=false;;
+		--zsh=false)         zsh=false;;
 		--grub=false)        grub=false;;
 		--grub=true)         grub=true;;
 		--wallpapers=true)   wallpapers=true;;
 		--wallpapers=false)  wallpapers=false;;
 		--update)
-			dracula=false
+			submodules=false
 			;&
-		--update-dracula)
+		--update-submodules)
 			vim=true
 			firefox=false
-			fish=false
+			zsh=false
 			grub=false
 			keyboard=false
 			install=false
@@ -45,7 +45,7 @@ for i in "$@"; do
 			firefox=true
 			link_to_home=false
 			install=false
-			fish=false
+			zsh=false
 			grub=false
 			no_wallpapers=true
 			ignore_metaconfig=true
@@ -66,7 +66,7 @@ between the application of metaconfigurations and any further changes.
   --link=false          don't symlink dotfiles into $HOME
   --firefox=false       don't install firefox theme
   --vim=false           don't install vimrc
-  --fish=false          don't set fish as the default config (default is to ask)
+  --zsh=false           don't set zsh as the default config (default is to ask)
   --grub=false          don't install grub theme (default is to ask)
   --grub=true           install grub theme (default is to ask)
   --wallpapers=true     install nonfree wallpapers (default is to ask)
@@ -74,17 +74,14 @@ between the application of metaconfigurations and any further changes.
   --firefox-only        install the custom firefox theme and exit
   --update              update configurations without installing or symlinking
                         anything. Can also be used without reverting to before
-                        the last use. Doesn't update dracula themes
-  --update-dracula      like --update, but also update dracula themes"
+                        the last use. Doesn't update submodules
+  --update-submodules   like --update, but also update submodules"
 
 	exit 0
 fi
 
-if $install; then
-	# we probably want to init submodules
+if $install || $submodules; then
 	git submodule update --init --remote
-elif $dracula; then
-	git submodule update --init --remote dracula/*
 fi
 
 if ! $ignore_metaconfig; then
@@ -379,12 +376,12 @@ fi
 ## Less
 lesskey lessrc
 
-if $fish; then
+if $zsh; then
 	while true; do
-		read -p "Change shell to fish? " yn
+		read -p "Change shell to zsh? " yn
 		case $yn in
 			[Yy]* )
-				chsh -s /usr/bin/fish
+				chsh -s /usr/bin/zsh
 				break;;
 			[Nn]* ) break;;
 			*)      echo "Please respond"; exit 1;

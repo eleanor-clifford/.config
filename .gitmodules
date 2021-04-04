@@ -3,7 +3,7 @@
 	url = git@github.com:tim-clifford/nonfree-wallpapers.git
 [submodule "dracula/qt5"]
 	path = dracula/qt5
-	url = git@github.com:dracula/qt5
+	url = git@github.com:tim-clifford/dracula-qt5
 [submodule "dracula/fish"]
 	path = dracula/fish
 	url = git@github.com:dracula/fish
@@ -31,3 +31,9 @@
 [submodule "nvim"]
 	path = nvim
 	url = git@github.com:tim-clifford/nvimrc
+[submodule "zsh-plugins/bash-insulter"]
+	path = zsh-plugins/bash-insulter
+	url = git@github.com:hkbakke/bash-insulter
+[submodule "zsh-plugins/zsh-git-prompt"]
+	path = zsh-plugins/zsh-git-prompt
+	url = git@github.com:olivierverdier/zsh-git-prompt
