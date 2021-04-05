@@ -16,7 +16,7 @@ zstyle ':completion:*' glob 1
 zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'r:|[._-/]=** r:|=**' 'l:|=* r:|=*'
 zstyle ':completion:*' max-errors 3
 zstyle ':completion:*' substitute 0
-zstyle :compinstall filename '/home/tim/.zshrc'
+zstyle :compinstall filename "$HOME/.zshrc"
 
 autoload -Uz compinit
 compinit
@@ -110,14 +110,14 @@ export AUR_PAGER="$HOME/.config/scripts/rangerp.sh"
 # }}}
 # Aliases {{{
 alias update-wallpapers="sudo systemctl restart wallpapers"
-alias mount-all='/home/tim/scripts/mount-all.sh'
-alias unmount-all='/home/tim/scripts/unmount-all.sh'
-alias umount-all='/home/tim/scripts/unmount-all.sh'
+alias mount-all="$HOME/scripts/mount-all.sh"
+alias unmount-all="$HOME/scripts/unmount-all.sh"
+alias umount-all="$HOME/scripts/unmount-all.sh"
 alias aur-remove='repo-remove /home/custompkgs/custom.db.tar.gz'
 
 alias vi='vim'
 alias vim='nvim' # idk...
-alias gvim='~/.config/scripts/gvim.sh' # imagine using graphical vim lmao
+alias gvim='vim "+Gclog" "+Gstatus"' # imagine using graphical vim lmao
 alias ecfg='nvim +"cd ~/.config | edit .git/index"'
 
 alias icat='kitty +kitten icat'

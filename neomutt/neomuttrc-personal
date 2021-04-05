@@ -68,7 +68,7 @@ set autoedit        = yes
 # IMAP {{{
 set folder       = imap://127.0.0.1:1143
 set imap_user    = tclifford@protonmail.com
-set imap_pass    = `/home/tim/.config/scripts/get_password.sh desktop.bridge.protonmail.com`
+set imap_pass    = `$HOME/.config/scripts/get_password.sh desktop.bridge.protonmail.com`
 set spoolfile    = +INBOX
 mailboxes        = +INBOX +Sent
 

@@ -1,12 +1,12 @@
-#!/bin/bash
-cd /home/tim/scripts
+#!/bin/sh
+cd $HOME/.config/scripts
 # idfk about how this code looks
-if [[ $(cat currentrotation) -eq "0" ]]; then
+if [ "$(cat currentrotation)" = "0" ]; then
 	./rotateright.sh
-elif [[ $(cat currentrotation) -eq "1" ]]; then
+elif [ "$(cat currentrotation)" = "1" ]; then
 	./rotateinverse.sh
-elif [[ $(cat currentrotation) -eq "2" ]]; then
+elif [ "$(cat currentrotation)" = "2" ]; then
 	./rotateleft.sh
-elif [[ $(cat currentrotation) -eq "3" ]]; then
+elif [ "$(cat currentrotation)" = "3" ]; then
 	./rotatenormal.sh
 fi

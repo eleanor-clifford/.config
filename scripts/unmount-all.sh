@@ -1,5 +1,5 @@
 #!/bin/sh
-fusermount -u /home/tim/GoogleDrive-Work
-fusermount -u /home/tim/GoogleDrive-Personal
-fusermount -u /home/tim/GoogleDrive-Cam
+fusermount -u $HOME/GoogleDrive-Work
+fusermount -u $HOME/GoogleDrive-Personal
+fusermount -u $HOME/GoogleDrive-Cam
 sftpman umount_all

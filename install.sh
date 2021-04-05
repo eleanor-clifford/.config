@@ -151,7 +151,7 @@ Server = file:///home/custompkgs" | sudo tee -a /etc/pacman.conf >/dev/null
 	# Install packages
 	INSTALL='sudo pacman -S'
 	INSTALL_AUR="aur sync"
-	export AUR_PAGER=/home/tim/.config/scripts/rangerp.sh
+	export AUR_PAGER="$HOME/.config/scripts/rangerp.sh"
 
 	IFS="#" # Split on the package section comment, don't care that it's hacky
 	for pkgs in $(cat pkglist.conf); do
