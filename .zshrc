@@ -129,6 +129,34 @@ alias muttp='neomutt -F ~/.config/neomutt/neomuttrc-personal'
 alias muttc='neomutt -F ~/.config/neomutt/neomuttrc-cam'
 
 alias ssh='TERM=xterm ssh'
+
+function gls() {
+
+	# nah, fuck this, idfc, it's not robust
+
+	files=$(ls --color=always \
+			| egrep --color=never "($(\
+				echo -n $(git ls-tree --name-only HEAD)\
+				| sed 's/\./\\./g;s/[[:space:]]\+/|/g'))")
+
+	files_no_color=$(ls --color=never \
+			| egrep --color=never "($(\
+				echo -n $(git ls-tree --name-only HEAD)\
+				| sed 's/[[:space:]]\+/|/g'))")
+
+	# arrange columns based on uncolored variant (or they will not align)
+	cols="$(column <(echo "$files_no_color") --fillrows)"
+
+	IFS="
+"
+	for i in $(paste <(echo "$files") <(echo "$files_no_color")); do
+		x="$(echo "$i" | sed 's/\(.*\)\t\(.*\)/\1/')"
+		y="$(echo "$i" | sed 's/\(.*\)\t\(.*\)/\2/')"
+		# replace occurences in column with colored version
+		cols="$(echo $cols | sed "s/\\(\\t\\|^\\)$y\\(\\t\\|$\\)/\\1$x\\2/")"
+	done
+	echo $cols
+}
 # }}}
 # Prompt {{{
 function git_prompt() {
