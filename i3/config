@@ -1,7 +1,5 @@
 # display setup
 
-exec_always --no-startup-id $HOME/.config/i3/display-setup.sh
-
 workspace 1  output _METACONF_REPLACE_PRI_DISP
 workspace 2  output _METACONF_REPLACE_PRI_DISP
 workspace 3  output _METACONF_REPLACE_PRI_DISP
@@ -15,7 +13,7 @@ workspace 9  output _METACONF_REPLACE_SEC_DISP
 workspace 10 output _METACONF_REPLACE_SEC_DISP
 
 # lock screen
-exec --no-startup-id $HOME/.config/i3/lock.sh -u $HOME/.config/wallpapers/current.png
+exec --no-startup-id $HOME/.config/i3/scripts/lock.sh -u $HOME/.config/wallpapers/current.png -r 3840x2160
 
 # Numlock
 exec --no-startup-id numlockx on
@@ -65,7 +63,7 @@ _METACONF_REPLACE_LOAD_NETWORK_FILESYSTEMS exec --no-startup-id "/usr/bin/google
 
 exec --no-startup-id "/usr/bin/protonmail-bridge --noninteractive &"
 
-exec --no-startup-id "$HOME/.i3/titlebar.rb"
+exec --no-startup-id "$HOME/.config/i3/scripts/titlebar.rb"
 
 # composite manager
 _METACONF_REPLACE_DISABLE_PICOM exec_always --no-startup-id picom -b --experimental-backends
@@ -162,7 +160,7 @@ bindsym $mod+b split v
 bindsym $mod+t fullscreen toggle
 
 # enter focused mode
-bindsym $mod+h exec $HOME/.config/i3/toggle-focused-mode.sh
+bindsym $mod+h exec $HOME/.config/i3/scripts/toggle-focused-mode.sh
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+r layout stacking
@@ -212,8 +210,8 @@ bindsym $mod+Shift+asterisk move container to workspace 10
 # bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +1% #increase sound volume
 # bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -1% #decrease sound volume
 
-bindsym XF86AudioRaiseVolume exec --no-startup-id $HOME/.config/i3/raise-volume.sh
-bindsym XF86AudioLowerVolume exec --no-startup-id $HOME/.config/i3/lower-volume.sh
+bindsym XF86AudioRaiseVolume exec --no-startup-id $HOME/.config/i3/scripts/raise-volume.sh
+bindsym XF86AudioLowerVolume exec --no-startup-id $HOME/.config/i3/scripts/lower-volume.sh
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle # mute sound
 
 # Media Player controls
@@ -232,7 +230,7 @@ bindsym $mod+Shift+p exec pkill -9 polybar; exec pkill -9 picom; restart
 # bindsym $mod+Shift+o exec i3-msg exit
 
 # lock i3
-bindsym $mod+l exec $HOME/.config/i3/lock.sh -l
+bindsym $mod+l exec $HOME/.config/i3/scripts/lock.sh -l -r 3840x2160
 bindsym $mod+End exec systemctl suspend
 
 # open exit screen

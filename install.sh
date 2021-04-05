@@ -498,3 +498,7 @@ elif echo $todo | grep -q "firefox "; then
   - Firefox must be run before you can install the custom theme
 	You can then use \`./install.sh --firefox-only\`"
 fi
+if $install; then
+	echo "To enable gpg key unlocking with i3lock:
+  - follow the instructions at https://github.com/cruegge/pam-gnupg"
+fi

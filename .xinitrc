@@ -39,7 +39,7 @@ setxkbmap colemak-custom
 
 session=${2:-i3}
 case $session in
-	i3              ) exec i3;;
+	i3              ) exec dbus-launch i3;;
 	vm              ) exec /usr/bin/win-vm;;
 	rfx             ) exec /usr/bin/win-rfx;;
 	remote          ) exec ssh -X tim-manjaro-desktop i3;;

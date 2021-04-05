@@ -18,6 +18,7 @@ DPI = 96
 # i3
 PRI_DISP = eDP
 SEC_DISP = DisplayPort-0 eDP
+LOCK_RESOLUTION = 1920x1080
 
 # These are optional comments in front of the relevant lines
 

@@ -5,41 +5,40 @@
 # Project Repository : https://github.com/pavanjadhaw/betterlockscreen
 
 # find your resolution so images can be resized to match your screen resolution
-#res=$(xdpyinfo | grep dimensions | sed -r 's/^[^0-9]*([0-9]+x[0-9]+).*$/\1/')
-# force this to be correct. soz Pavan
-# also disabling dimblur for speed
-res=3840x2160
+res=$(xdpyinfo | grep dimensions | sed -r 's/^[^0-9]*([0-9]+x[0-9]+).*$/\1/')
 default_timeout="$(cut -d ' ' -f4 <<< $(xset q | sed -n '25p'))"
+default_dpms=$(xset q | awk '/^[[:blank:]]*DPMS is/ {print $(NF)}')
 
 init_filenames() {
 	#$1 resolution
 
-	# custom i3lock colors
+	# copy this block to ~/.config/betterlockscreenrc" to customize
+	insidecolor=00000000
+	ringcolor=ffffffff
+	keyhlcolor=d23c3dff
+	bshlcolor=d23c3dff
+	separatorcolor=00000000
+	insidevercolor=00000000
+	insidewrongcolor=d23c3dff
+	ringvercolor=ffffffff
+	ringwrongcolor=ffffffff
+	verifcolor=ffffffff
+	timecolor=ffffffff
+	datecolor=ffffffff
+	loginbox=00000066
+	font="sans-serif"
+	locktext='Type password to unlock...'
+	wallpaper_cmd='feh --bg-fill --no-fehbg'
+
+	# override defaults with config
 	theme_rc="$HOME/.config/betterlockscreenrc"
 	if [ -e "$theme_rc" ]; then
-	    source "$theme_rc"
-	else
-        # copy this block to ~/.config/betterlockscreenrc" to customize
-	    insidecolor=00000000
-	    ringcolor=ffffffff
-	    keyhlcolor=d23c3dff
-	    bshlcolor=d23c3dff
-	    separatorcolor=00000000
-	    insidevercolor=00000000
-	    insidewrongcolor=d23c3dff
-	    ringvercolor=ffffffff
-	    ringwrongcolor=ffffffff
-	    verifcolor=ffffffff
-	    timecolor=ffffffff
-	    datecolor=ffffffff
-	    loginbox=00000066
-		font="sans-serif"
-      	locktext='Type password to unlock...'
+		source "$theme_rc"
 	fi
 
 	# create folder in ~/.cache/i3lock directory
 	res_folder="$HOME/.cache/i3lock/$1"
-	folder="$HOME/.i3/lock-cache"
+	folder="$HOME/.cache/i3lock/current"
 	echo "Got" "$@" "$res_folder"
 	if [ ! -d "$folder" -o -n "$2" ]; then
 		rm -rf "$folder"
@@ -75,7 +74,7 @@ init_filenames "$res"
 
 prelock() {
 	if [ ! -z "$lock_timeout" ]; then
-	  xset dpms "$lock_timeout"
+		xset dpms "$lock_timeout"
 	fi
 	if [ ! -z "$(pidof dunst)" ]; then
 		pkill -u "$USER" -USR1 dunst
@@ -87,16 +86,15 @@ lock() {
 	#$1 image path
 
 	i3lock \
+		-t -i "$1" \
 		-c 000000 \
-		`#-t `\
-		-e -i "$1" \
-		--timepos='x+110:h-70' \
-		--datepos='x+43:h-45' \
+		--timepos='x+110:h+y-70' \
+		--datepos='x+43:h+y-45' \
 		--clock --date-align 1 --datestr "$locktext" \
 		--insidecolor=$insidecolor --ringcolor=$ringcolor --line-uses-inside \
 		--keyhlcolor=$keyhlcolor --bshlcolor=$bshlcolor --separatorcolor=$separatorcolor \
 		--insidevercolor=$insidevercolor --insidewrongcolor=$insidewrongcolor \
-		--ringvercolor=$ringvercolor --ringwrongcolor=$ringwrongcolor --indpos='x+280:h-70' \
+		--ringvercolor=$ringvercolor --ringwrongcolor=$ringwrongcolor --indpos='x+280:h+y-70' \
 		--radius=20 --ring-width=4 --veriftext='' --wrongtext='' \
 		--verifcolor="$verifcolor" --timecolor="$timecolor" --datecolor="$datecolor" \
 		--time-font="$font" --date-font="$font" --layout-font="$font" --verif-font="$font" --wrong-font="$font" \
@@ -107,7 +105,10 @@ lock() {
 
 postlock() {
 	if [ ! -z "$lock_timeout" ]; then
-	  xset dpms "$default_timeout"
+		xset dpms "$default_timeout"
+		if [ "$default_dpms" = "Disabled" ]; then
+			xset -dpms
+		fi
 	fi
 	if [ ! -z "$(pidof dunst)" ] ; then
 		pkill -u "$USER" -USR2 dunst
@@ -204,7 +205,7 @@ update() {
 	user_image="$folder/user_image.png"
 
 	# create folder
-		if [ ! -d "$folder" ]; then
+	if [ ! -d "$folder" ]; then
 		echo "Creating '$folder' directory to cache processed images."
 		mkdir -p "$folder"
 	fi
@@ -286,29 +287,30 @@ wallpaper() {
 	case "$1" in
 		'')
 			# set resized image as wallpaper if no argument is supplied by user
-			feh --bg-fill "$resized"
+			wallpaper="$resized"
 			;;
 
 		dim)
 			# set dimmed image as wallpaper
-			feh --bg-fill "$dim"
+			wallpaper="$dim"
 			;;
 
 		blur)
 			# set blurred image as wallpaper
-			feh --bg-fill "$blur"
+			wallpaper="$blur"
 			;;
 
 		dimblur)
 			# set dimmed + blurred image as wallpaper
-			feh --bg-fill "$dimblur"
+			wallpaper="$dimblur"
 			;;
 
 		pixel)
 			# set pixelated image as wallpaper
-			feh --bg-fill "$pixel"
+			wallpaper="$pixel"
 			;;
 	esac
+	eval "$wallpaper_cmd $wallpaper"
 }
 
 
@@ -369,6 +371,7 @@ usage() {
 	echo '	-w --wall'
 	echo '		you can also set lockscreen background as wallpaper'
 	echo '		to set wallpaper (e.g. betterlockscreen -w or betterlockscreen --wall)'
+	echo '		(The default wallpaper setter is feh, to set your own use the -wc command)'
 	echo '		you can also use dimmed or blurred variants.'
 	echo '		E.g: betterlockscreen -w dim (for dimmed wallpaper)'
 	echo '		E.g: betterlockscreen -w blur (for blurred wallpaper)'
@@ -396,9 +399,15 @@ usage() {
 	echo
 	echo
 	echo '	--off <timeout>'
-	echo '            to set custom monitor turn off timeout for lockscreen'
-	echo '            timeout is in seconds'
-	echo '            E.g: betterlockscreen -l dim --off 5'
+	echo '		to set custom monitor turn off timeout for lockscreen'
+	echo '		timeout is in seconds'
+	echo '		E.g: betterlockscreen -l dim --off 5'
+	echo
+	echo
+	echo '	-wc --wallpaper_cmd <command>'
+	echo '		to set your custom wallpaper setter'
+	echo '		the default is "feh --bg-fill --no-fehbg"'
+	echo '		E.g: betterlockscreen -wc "xwallpaper --zoom" -w'
 }
 
 
@@ -424,7 +433,7 @@ for arg in "$@"; do
 			if [[ ${2:0:1} = '-' ]]; then
 				shift 1
 			else
-		       		lockstyle="$2"; shift 2
+				lockstyle="$2"; shift 2
 			fi
 			;;
 
@@ -457,6 +466,11 @@ for arg in "$@"; do
 
 		-b | --blur)
 			blur_level="$2"
+			shift 2
+			;;
+
+		-wc | --wallpaper_cmd)
+			wallpaper_cmd="$2"
 			shift 2
 			;;
 
