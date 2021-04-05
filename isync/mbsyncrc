@@ -1,0 +1,46 @@
+ImapAccount   proton
+Host          127.0.0.1
+Port          1143
+User          tclifford@protonmail.com
+PassCmd       "$HOME/.config/scripts/get_password.sh desktop.bridge.protonmail.com"
+SSLType       None
+AuthMechs     LOGIN
+
+IMAPStore     proton-remote
+Account       proton
+
+MaildirStore  proton-local
+Subfolders    Verbatim
+Path          ~/.mail/proton/
+Inbox         ~/.mail/proton/Inbox
+
+Channel       proton
+Far           :proton-remote:
+Near          :proton-local:
+Patterns      *
+Create        Both
+SyncState     *
+
+ImapAccount   cam
+Host          outlook.office365.com
+Port          993
+User          tc565@cam.ac.uk
+PassCmd       "$HOME/.config/scripts/get_password.sh cam.ac.uk"
+SSLType       IMAPS
+AuthMechs     LOGIN
+
+IMAPStore     cam-remote
+Account       cam
+
+MaildirStore  cam-local
+Subfolders    Verbatim
+Path          ~/.mail/cam/
+Inbox         ~/.mail/cam/Inbox
+
+Channel       cam
+Far           :cam-remote:
+Near          :cam-local:
+Patterns      *
+Create        Both
+SyncState     *
+

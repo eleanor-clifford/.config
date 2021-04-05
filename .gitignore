@@ -17,7 +17,6 @@
 /procps
 /pulse
 /qalculate
-/systemd
 /i3/lock-cache
 /i3/config.save*
 /i3/focused

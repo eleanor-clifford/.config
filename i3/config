@@ -65,6 +65,9 @@ exec --no-startup-id "/usr/bin/protonmail-bridge --noninteractive &"
 
 exec --no-startup-id "$HOME/.config/i3/scripts/titlebar.rb"
 
+# check for new email
+exec "mbsync -Vac $HOME/.config/isync/mbsyncrc && notmuch new"
+
 # composite manager
 _METACONF_REPLACE_DISABLE_PICOM exec_always --no-startup-id picom -b --experimental-backends
 

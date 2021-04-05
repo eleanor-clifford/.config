@@ -1,4 +1,6 @@
+# vi: ft=neomuttrc
 # Mappings {{{
+# Colemak Vim {{{
 bind index,pager  E sidebar-next
 bind index,pager  I sidebar-prev
 bind index,pager  O sidebar-open
@@ -35,6 +37,11 @@ bind attach       o  view-attach
 bind attach       j  search-next
 bind attach       J  search-opposite
 
+bind attach,index,pager \CD next-page
+bind attach,index,pager \CU previous-page
+# }}}
+bind index,pager S sidebar-toggle-visible
+
 #bind browser n goto-parent
 #bind pager,browser gg top-page
 #bind pager,browser G bottom-page
@@ -44,9 +51,12 @@ macro index,pager \cb "|urlview\n"
 macro index,pager v   "|vim -\n"
 macro index,pager V   "|cat /dev/stdin > /tmp/mutt-vimexternal; kitty vim +'set ft=mail' /tmp/mutt-vimexternal &\n"
 macro attach      w   "|cat /dev/stdin > /tmp/mutt-w3m.html; w3m -cols 80 /tmp/mutt-w3m.html\n"
+
+macro generic     \'   ":set from=tclifford@protonmail.com"
+macro generic     \"   ":set from=tc565@cam.ac.uk"
 # }}}
 # Sidebar {{{
-set sidebar_visible
+unset sidebar_visible
 set sidebar_format = "%B%?F? [%F]?%* %?N?%N/?%S"
 set mail_check_stats
 # }}}
@@ -65,42 +75,27 @@ set editor          = vim
 set edit_headers    = yes
 set autoedit        = yes
 # }}}
-# IMAP {{{
-set folder       = imap://127.0.0.1:1143
-set imap_user    = tclifford@protonmail.com
-set imap_pass    = `$HOME/.config/scripts/get_password.sh desktop.bridge.protonmail.com`
-set spoolfile    = +INBOX
-mailboxes        = +INBOX +Sent
+# Mail {{{
+set realname       = 'Tim Clifford'
+set from           = 'tclifford@protonmail.com'
+set envelope_from  = yes
+set sendmail       = "/usr/bin/msmtp"
+set folder         = ~/.mail
+set spoolfile      = "notmuch://?query=tag:inbox"
+set postponed      = +drafts
+set mbox           = +mbox
+set mbox_type      = Maildir
+set mail_check     = 10 # How often to check for new mail (time in seconds).
+set signature      = ""
 
-# Store message headers locally to speed things up.
-# If hcache is a folder, Mutt will create sub cache folders for each account
-# which may speeds things up even more.
-set header_cache = ~/.cache/neomutt-personal/headers
-
-# Store messages locally to speed things up, like searching message bodies.
-# Can be the same folder as header_cache.
-# This will cost important disk usage according to your e-mail amount.
-set message_cachedir = ~/.cache/neomutt-personal/messages
-
-# Allow Mutt to open a new IMAP connection automatically.
-unset imap_passive
-
-# Keep the IMAP connection alive by polling intermittently (time in seconds).
-set imap_keepalive = 300
-
-# How often to check for new mail (time in seconds).
-set mail_check = 60
-# }}}
-# SMTP {{{
-set realname        = 'Tim Clifford'
-set from            = tclifford@protonmail.com
-set use_from        = yes
 unset record
-
-set smtp_url        = smtp://tclifford@protonmail.com@127.0.0.1:1025
-set smtp_pass       = $imap_pass
-set ssl_starttls    = yes
-
+# magic from https://neomutt.org/guide/advancedusage.html#13-3-%C2%A0monitoring-new-mail
+mailboxes `find ~/.mail/ -type d -name cur | sort | sed -e 's:/cur/*$::' -e 's/ /\\ /g' | tr '\n' ' '`
+virtual-mailboxes "Inbox" "notmuch://?query=tag:inbox"
+virtual-mailboxes "Unread" "notmuch://?query=tag:unread"
+# }}}
+# GPG {{{
+source ~/.config/neomutt/gpg.rc
 # }}}
 # {{{ Dracula
 ###############################################################################

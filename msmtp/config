@@ -1,0 +1,27 @@
+# vi: ft=conf
+
+defaults
+auth            on
+tls_trust_file  /etc/ssl/certs/ca-certificates.crt
+logfile         ~/.msmtp.log
+
+# Protonmail
+account         proton
+host            127.0.0.1
+port            1025
+tls             on
+tls_starttls    on
+from            tclifford@protonmail.com
+user            tclifford@protonmail.com
+passwordeval    "$HOME/.config/scripts/get_password.sh desktop.bridge.protonmail.com"
+
+# Cam
+account         cam
+host            smtp.office365.com
+port            587
+tls             on
+from            tc565@cam.ac.uk
+user            tc565@cam.ac.uk
+passwordeval    "$HOME/.config/scripts/get_password.sh cam.ac.uk"
+
+account default : proton

@@ -105,7 +105,6 @@ ZSH_HIGHLIGHT_STYLES[default]='none'
 export EDITOR=/usr/bin/nvim
 export VISUAL=/usr/bin/nvim
 export BROWSER=/usr/bin/firefox
-export SUDO_ASKPASS=/usr/lib/ssh/x11-ssh-askpass
 export AUR_PAGER="$HOME/.config/scripts/rangerp.sh"
 # }}}
 # Aliases {{{
@@ -125,8 +124,8 @@ alias icat='kitty +kitten icat'
 # I'm bad at typing
 alias claer='clear'
 
-alias muttp='neomutt -F ~/.config/neomutt/neomuttrc-personal'
-alias muttc='neomutt -F ~/.config/neomutt/neomuttrc-cam'
+alias mutt='neomutt'
+alias mbsync='mbsync -Vac ~/.config/isync/mbsyncrc && notmuch new'
 
 alias ssh='TERM=xterm ssh'
 
