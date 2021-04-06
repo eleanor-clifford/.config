@@ -33,6 +33,10 @@ LOAD_NETWORK_FILESYSTEMS = \# # google drive
 
 LOAD_TOUCHSCREEN_TOOLS =      # My regex isn't very good, for these
                               # to work they can't end on whitespace
+
+LOAD_PROAUDIO_TOOLS = \#      # My regex isn't very good, for these
+                              # to work they can't end on whitespace
+
 VOLUME_TICK_UP   = +5%
 VOLUME_TICK_DOWN = -5%
 
