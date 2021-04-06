@@ -1,4 +1,7 @@
 # vi: ft=neomuttrc
+# Misc settings {{{
+set sort = reverse-threads
+# }}}
 # Mappings {{{
 # Colemak Vim {{{
 bind index,pager  E sidebar-next
@@ -42,9 +45,12 @@ bind attach,index,pager \CU previous-page
 # }}}
 bind index,pager S sidebar-toggle-visible
 
-#bind browser n goto-parent
-#bind pager,browser gg top-page
-#bind pager,browser G bottom-page
+# Fix scroll wheel
+bind pager <up> previous-line
+bind pager <down> next-line
+
+bind index c collapse-thread
+bind index C collapse-all
 # }}}
 # Macros {{{
 macro index,pager \cb "|urlview\n"
@@ -61,12 +67,15 @@ set sidebar_format = "%B%?F? [%F]?%* %?N?%N/?%S"
 set mail_check_stats
 # }}}
 # Pager {{{
-# I want to preserve wrapping done on a 78/80 basis even with > indenting
-set wrap = 90
+unset markers # no +
+set wrap = 90 # preserve wrapping done on a 78/80 basis even with > indenting
 
 # view
 auto_view text/html                                      # view html automatically
 alternative_order text/plain text/enriched text/html     # save html for last
+
+# don't go to next email
+set pager_stop = yes
 
 # }}}
 # Editor {{{

@@ -117,7 +117,7 @@ alias aur-remove='repo-remove /home/custompkgs/custom.db.tar.gz'
 alias vi='vim'
 alias vim='nvim' # idk...
 alias gvim='vim "+Gclog" "+Gstatus"' # imagine using graphical vim lmao
-alias ecfg='nvim +"cd ~/.config | edit .git/index"'
+alias ecfg='nvim +"cd ~/.config" +"Gclog" +"Gstatus"'
 
 alias icat='kitty +kitten icat'
 
