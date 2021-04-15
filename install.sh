@@ -492,7 +492,9 @@ if echo $todo | grep -q "firefox_postinstall "; then
     * Clear \`extensions.webextensions.restrictedDomains\`
       to allow extensions on all pages
 	* Enable \`toolkit.legacyUserProfileCustomizations.stylesheets\`
-      to use the custom firefox theme."
+      to use the custom firefox theme.
+	* Enable \`full-screen-api.ignore-widgets\`
+	  to enable windowed fullscreen"
 elif echo $todo | grep -q "firefox "; then
 	echo "\
   - Firefox must be run before you can install the custom theme

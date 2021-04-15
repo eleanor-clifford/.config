@@ -127,7 +127,18 @@ alias claer='clear'
 alias mutt='neomutt'
 alias mbsync='mbsync -Vac ~/.config/isync/mbsyncrc && notmuch new'
 
-alias ssh='TERM=xterm ssh'
+alias ssh='TERM=xterm-256color ssh'
+
+function ghf() {
+	git remote rename origin upstream
+	gh repo fork --remote=true $1
+	origin=$(git config --get remote.origin.url \
+		| sed 's|https://github.com/|git@github.com:|')
+	git remote remove origin
+	git remote add origin $origin
+	git fetch origin
+	git branch -u origin/master master
+}
 
 function gls() {
 
@@ -210,60 +221,58 @@ RPROMPT='$(git_prompt)'
 # }}}
 # Vi mode {{{
 ZVM_CURSOR_STYLE_ENABLED=false
+
 function zvm_after_lazy_keybindings() {
-	# zsh vicmd (normal) mode
-	zvm_bindkey vicmd "n" vi-backward-char
-	zvm_bindkey vicmd "e" down-line-or-history
-	zvm_bindkey vicmd "i" up-line-or-history
-	zvm_bindkey vicmd "o" vi-forward-char
+	autoload -U up-line-or-beginning-search
+	autoload -U down-line-or-beginning-search
 
-	zvm_bindkey vicmd "k" zvm_open_line_below
-	zvm_bindkey vicmd "l" vi-forward-word-end
-	zvm_bindkey vicmd "h" zvm_enter_insert_mode
-	zvm_bindkey vicmd "j" vi-repeat-search
+	# Normal mode
+	zvm_bindkey vicmd "n"     vi-backward-char
+	zvm_bindkey vicmd "e"     down-line-or-beginning-search
+	zvm_bindkey vicmd "i"     up-line-or-beginning-search
+	zvm_bindkey vicmd "o"     vi-forward-char
 
-	zvm_bindkey vicmd "E" vi-join
+	zvm_bindkey vicmd "k"     zvm_open_line_below
+	zvm_bindkey vicmd "l"     vi-forward-word-end
+	zvm_bindkey vicmd "h"     zvm_enter_insert_mode i
+	zvm_bindkey vicmd "j"     vi-repeat-search
 
-	zvm_bindkey vicmd "K" zvm_open_line_above
-	zvm_bindkey vicmd "L" vi-forward-blank-word-end
-	zvm_bindkey vicmd "H" zvm_insert_bol
-	zvm_bindkey vicmd "J" vi-rev-repeat-search
+	zvm_bindkey vicmd "E"     vi-join
 
-	# zsh viopp mode
-	zvm_bindkey vicmd "hW" select-in-blank-word
-	zvm_bindkey vicmd "ha" select-in-shell-word
-	zvm_bindkey vicmd "hw" select-in-word
-	zvm_bindkey vicmd "e"  down-line
-	zvm_bindkey vicmd "i"  up-line
+	zvm_bindkey vicmd "K"     zvm_open_line_above
+	zvm_bindkey vicmd "L"     vi-forward-blank-word-end
+	zvm_bindkey vicmd "H"     zvm_insert_bol
+	zvm_bindkey vicmd "J"     vi-rev-repeat-search
 
-	zvm_bindkey vicmd "h"   zvm_readkeys_handler
-	zvm_bindkey vicmd "h^[" zvm_select_surround
-	zvm_bindkey vicmd "h "  zvm_select_surround
-	zvm_bindkey vicmd "h\"" zvm_select_surround
-	zvm_bindkey vicmd "h'"  zvm_select_surround
-	zvm_bindkey vicmd "h("  zvm_select_surround
-	zvm_bindkey vicmd "h)"  zvm_select_surround
-	zvm_bindkey vicmd "h<"  zvm_select_surround
-	zvm_bindkey vicmd "h>"  zvm_select_surround
-	zvm_bindkey vicmd "hW"  select-in-blank-word
-	zvm_bindkey vicmd "h["  zvm_select_surround
-	zvm_bindkey vicmd "h]"  zvm_select_surround
-	zvm_bindkey vicmd "h\`" zvm_select_surround
-	zvm_bindkey vicmd "ha"  select-in-shell-word
-	zvm_bindkey vicmd "hw"  select-in-word
-	zvm_bindkey vicmd "h{"  zvm_select_surround
-	zvm_bindkey vicmd "h}"  zvm_select_surround
-	zvm_bindkey vicmd "e"   down-line
-	zvm_bindkey vicmd "i"   up-line
-	zvm_bindkey vicmd "k"   zvm_exchange_point_and_mark
+	# Operation pending mode
+	zvm_bindkey viopp "e"     down-line
+	zvm_bindkey viopp "i"     up-line
 
-	# zvm viins (insert) mode
-	zvm_bindkey vicmd 'h' zvm_enter_insert_mode
-	zvm_bindkey vicmd 'H' zvm_insert_bol
+	zvm_bindkey viopp "h"     zvm_readkeys_handler
+	zvm_bindkey viopp "h^["   zvm_select_surround
+	zvm_bindkey viopp "h "    zvm_select_surround
+	zvm_bindkey viopp "h\""   zvm_select_surround
+	zvm_bindkey viopp "h'"    zvm_select_surround
+	zvm_bindkey viopp "h("    zvm_select_surround
+	zvm_bindkey viopp "h)"    zvm_select_surround
+	zvm_bindkey viopp "h<"    zvm_select_surround
+	zvm_bindkey viopp "h>"    zvm_select_surround
+	zvm_bindkey viopp "hW"    select-in-blank-word
+	zvm_bindkey viopp "h["    zvm_select_surround
+	zvm_bindkey viopp "h]"    zvm_select_surround
+	zvm_bindkey viopp "h\`"   zvm_select_surround
+	zvm_bindkey viopp "ha"    select-in-shell-word
+	zvm_bindkey viopp "hw"    select-in-word
+	zvm_bindkey viopp "h{"    zvm_select_surround
+	zvm_bindkey viopp "h}"    zvm_select_surround
 
-	# zvm other key bindings
-	zvm_bindkey visual 'k' zvm_exchange_point_and_mark
-	zvm_bindkey vicmd  'k' zvm_open_line_below
-	zvm_bindkey vicmd  'K' zvm_open_line_above
+	# Insert mode
+	zvm_bindkey viins '^P'    up-line-or-beginning-search
+	zvm_bindkey viins '^N'    down-line-or-beginning-search
+	zvm_bindkey viins '^[[A'  up-line-or-beginning-search
+	zvm_bindkey viins '^[[B'  down-line-or-beginning-search
+
+	# Visual mode
+	zvm_bindkey visual 'k'    zvm_exchange_point_and_mark
 }
 # }}}

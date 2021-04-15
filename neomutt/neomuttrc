@@ -1,6 +1,10 @@
 # vi: ft=neomuttrc
 # Misc settings {{{
-set sort = reverse-threads
+
+# from https://www.edwinwenink.xyz/posts/16-mutt-threads/
+# keep threads together, and sort by latest message in thread
+set sort     = reverse-threads
+set sort_aux = last-date-received
 # }}}
 # Mappings {{{
 # Colemak Vim {{{
@@ -54,12 +58,14 @@ bind index C collapse-all
 # }}}
 # Macros {{{
 macro index,pager \cb "|urlview\n"
-macro index,pager v   "|vim -\n"
-macro index,pager V   "|cat /dev/stdin > /tmp/mutt-vimexternal; kitty vim +'set ft=mail' /tmp/mutt-vimexternal &\n"
+macro index,pager v   "|nvim +'set ft=mail' -\n"
+macro index,pager V   "|cat /dev/stdin > /tmp/mutt-vimexternal; kitty nvim +'set ft=mail' /tmp/mutt-vimexternal &\n"
 macro attach      w   "|cat /dev/stdin > /tmp/mutt-w3m.html; w3m -cols 80 /tmp/mutt-w3m.html\n"
+macro attach      f   "|cat /dev/stdin > /tmp/mutt-firefox.html; firefox /tmp/mutt-firefox.html\n"
 
-macro generic     \'   ":set from=tclifford@protonmail.com"
-macro generic     \"   ":set from=tc565@cam.ac.uk"
+macro index,pager \cq ":set from=tclifford@protonmail.com\n"
+macro index,pager \cw ":set from=tim@cusf.co.uk\n"
+macro index,pager \cf ":set from=tc565@cam.ac.uk\n"
 # }}}
 # Sidebar {{{
 unset sidebar_visible
@@ -80,7 +86,7 @@ set pager_stop = yes
 # }}}
 # Editor {{{
 # Delete fields I don't want in vim
-set editor          = vim
+set editor          = nvim
 set edit_headers    = yes
 set autoedit        = yes
 # }}}
@@ -105,6 +111,19 @@ virtual-mailboxes "Unread" "notmuch://?query=tag:unread"
 # }}}
 # GPG {{{
 source ~/.config/neomutt/gpg.rc
+
+set crypt_use_gpgme           = yes
+set crypt_use_pka             = no
+set crypt_autosign            = yes
+set crypt_autoencrypt         = no
+set crypt_replyencrypt        = yes
+set crypt_replysignencrypted  = yes
+set crypt_verify_sig          = yes
+
+set pgp_self_encrypt          = yes
+set pgp_auto_decode           = yes
+set pgp_use_gpg_agent         = yes
+set pgp_default_key           = 8D511DF8680BA353AA21CE873BC5B96DD7A0FDDD
 # }}}
 # {{{ Dracula
 ###############################################################################

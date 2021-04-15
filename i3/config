@@ -68,6 +68,10 @@ exec --no-startup-id "$HOME/.config/i3/scripts/titlebar.rb"
 # check for new email
 exec "mbsync -Vac $HOME/.config/isync/mbsyncrc && notmuch new"
 
+# start keepass
+for_window [class="keepassxc"] move scratchpad
+exec "pass show pass-keepassxc/keepassxc | keepassxc --pw-stdin ~/OneDrive-Personal/passwords.kdbx"
+
 # composite manager
 _METACONF_REPLACE_DISABLE_PICOM exec_always --no-startup-id picom -b --experimental-backends
 

@@ -24,4 +24,22 @@ from            tc565@cam.ac.uk
 user            tc565@cam.ac.uk
 passwordeval    "$HOME/.config/scripts/get_password.sh cam.ac.uk"
 
+# CUSF
+account         cusf
+host            smtp.gmail.com
+port            587
+tls             on
+from            tim@cusf.co.uk
+user            tim.cusf
+passwordeval    "$HOME/.config/scripts/get_password.sh smtp.cusf.co.uk"
+
+# Mailjet (Blog)
+account			mailjet
+host            in-v3.mailjet.com
+port            587
+tls             on
+from            tim@clifford.lol
+user            8a8c46ac51c18bef3a70d4deec3aa898
+passwordeval    "$HOME/.config/scripts/get_password.sh in-v3.mailjet.com"
+
 account default : proton
