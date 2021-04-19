@@ -13,7 +13,7 @@ POSTFIX_FILE_APPENDED = .METACONF_FILE_APPENDED       # common across metaconfs
 STARTX_ON_TTY1 = 1
 
 # X
-DPI = 168
+DPI = 96
 
 # i3
 PRI_DISP = eDP
@@ -21,7 +21,7 @@ SEC_DISP = DisplayPort-0 eDP
 LOCK_RESOLUTION = 1920x1080
 
 # bemenu
-BEMENU_SCALE = 2
+BEMENU_SCALE = 1
 
 # These are optional comments in front of the relevant lines
 
@@ -40,20 +40,20 @@ DISABLE_PICOM =               # My regex isn't very good, for these
 PICOM_CORNER_RADIUS = 15.0
 
 #polybar
-POLYBAR_TOP_LINE_SIZE           = 21
-POLYBAR_TOP_NOTOSANS_SIZE       = 14;8
-POLYBAR_TOP_FONTAWESOME4_SIZE   = 20;8
-POLYBAR_TOP_FONTAWESOME5_SIZE   = 18;8
+POLYBAR_TOP_LINE_SIZE           = 14
+POLYBAR_TOP_NOTOSANS_SIZE       = 10;0
+POLYBAR_TOP_FONTAWESOME4_SIZE   = 18;3
+POLYBAR_TOP_FONTAWESOME5_SIZE   = 18;3
 POLYBAR_TOP_MODULES_LEFT        = oblogout player-back player-pause player-next player-title
 POLYBAR_TOP_MODULES_CENTER      = i3-touch closewindow touchrotate touchportrait touchlandscape touchvoldown touchvolup touchbrightdown touchbrightup touchkeyboard
 POLYBAR_TOP_MODULES_RIGHT       = network battery power
 
-POLYBAR_BOTTOM_HEIGHT           = 40
+POLYBAR_BOTTOM_HEIGHT           = 27
 
-POLYBAR_BOTTOM_LINE_SIZE        = 1
-POLYBAR_BOTTOM_NOTOSANS_SIZE    = 14;3
-POLYBAR_BOTTOM_FONTAWESOME_SIZE = 20;2
-POLYBAR_BOTTOM_MODULES_LEFT     = i3
+POLYBAR_BOTTOM_LINE_SIZE        = 2
+POLYBAR_BOTTOM_NOTOSANS_SIZE    = 10;2
+POLYBAR_BOTTOM_FONTAWESOME_SIZE = 10;2
+POLYBAR_BOTTOM_MODULES_LEFT     = i3 firstempty
 POLYBAR_BOTTOM_MODULES_CENTER   = #
 POLYBAR_BOTTOM_MODULES_RIGHT    = date
-POLYBAR_BOTTOM_TRAY_OFFSET      = -190
+POLYBAR_BOTTOM_TRAY_OFFSET      = -122
