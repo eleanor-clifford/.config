@@ -2,7 +2,7 @@ ImapAccount   proton
 Host          127.0.0.1
 Port          1143
 User          tclifford@protonmail.com
-PassCmd       "$HOME/.config/scripts/get_password.sh desktop.bridge.protonmail.com"
+PassCmd       "$HOME/.config/scripts/get_password.sh _METACONF_REPLACE_PROTONMAIL_BRIDGE_PASSWORD 'Could not sync mail (GPG key not unlocked)'"
 SSLType       None
 AuthMechs     LOGIN
 
@@ -25,7 +25,7 @@ ImapAccount   cam
 Host          outlook.office365.com
 Port          993
 User          tc565@cam.ac.uk
-PassCmd       "$HOME/.config/scripts/get_password.sh cam.ac.uk"
+PassCmd       "$HOME/.config/scripts/get_password.sh cam.ac.uk 'Could not sync mail (GPG key not unlocked)'"
 SSLType       IMAPS
 AuthMechs     LOGIN
 
@@ -40,6 +40,29 @@ Inbox         ~/.mail/cam/Inbox
 Channel       cam
 Far           :cam-remote:
 Near          :cam-local:
+Patterns      *
+Create        Both
+SyncState     *
+
+ImapAccount   cusfgmail
+Host          imap.gmail.com
+Port          993
+User          tim.cusf
+PassCmd       "$HOME/.config/scripts/get_password.sh smtp.cusf.co.uk 'Could not sync mail (GPG key not unlocked)'"
+SSLType       IMAPS
+AuthMechs     LOGIN
+
+IMAPStore     cusfgmail-remote
+Account       cusfgmail
+
+MaildirStore  cusfgmail-local
+Subfolders    Verbatim
+Path          ~/.mail/cusfgmail/
+Inbox         ~/.mail/cusfgmail/Inbox
+
+Channel       cusfgmail
+Far           :cusfgmail-remote:"[Gmail]/Sent Mail"
+Near          :cusfgmail-local:sent
 Patterns      *
 Create        Both
 SyncState     *

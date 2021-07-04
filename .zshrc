@@ -31,7 +31,7 @@ bindkey -v
 # End of lines configured by zsh-newuser-install
 # }}}
 # Plugins {{{
-source /usr/share/zsh/share/antigen.zsh
+source ~/.config/zsh-plugins/antigen.zsh
 
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
@@ -114,9 +114,9 @@ alias unmount-all="$HOME/scripts/unmount-all.sh"
 alias umount-all="$HOME/scripts/unmount-all.sh"
 alias aur-remove='repo-remove /home/custompkgs/custom.db.tar.gz'
 
-alias vi='vim'
+alias vi='/usr/bin/vim'
 alias vim='nvim' # idk...
-alias gvim='vim "+Gclog" "+Gstatus"' # imagine using graphical vim lmao
+alias gvim='nvim "+Gclog" "+Gstatus"' # imagine using graphical vim lmao
 alias ecfg='nvim +"cd ~/.config" +"Gclog" +"Gstatus"'
 
 alias icat='kitty +kitten icat'
@@ -124,7 +124,7 @@ alias icat='kitty +kitten icat'
 # I'm bad at typing
 alias claer='clear'
 
-alias mutt='neomutt'
+alias mutt='mbsync -Vac ~/.config/isync/mbsyncrc && notmuch new && neomutt'
 alias mbsync='mbsync -Vac ~/.config/isync/mbsyncrc && notmuch new'
 
 alias ssh='TERM=xterm-256color ssh'

@@ -24,13 +24,13 @@ Execute common git workflows for this repository
 			if [ "$(git diff HEAD)" = "" ]; then
 				# Clean working tree
 				git checkout HEAD~
-				git push origin HEAD:master -f
+				git push origin HEAD:master
 				git switch -
 			else
 				git add .
 				git stash
 				git checkout HEAD~
-				git push origin HEAD:master -f
+				git push origin HEAD:master
 				git switch -
 				git stash pop
 			fi

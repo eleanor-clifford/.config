@@ -101,7 +101,7 @@ set postponed      = +drafts
 set mbox           = +mbox
 set mbox_type      = Maildir
 set mail_check     = 10 # How often to check for new mail (time in seconds).
-set signature      = ""
+set signature      = "~/.config/neomutt/signature"
 
 unset record
 # magic from https://neomutt.org/guide/advancedusage.html#13-3-%C2%A0monitoring-new-mail

@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Close Window
+Icon=close
+Exec=~/.config/i3/scripts/kill-not-plank.sh
+Terminal=false

@@ -1,2 +1,3 @@
 text/html; ~/.config/neomutt/handle-html.sh; copiousoutput;
+application/pdf; zathura %s &;
 

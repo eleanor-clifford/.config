@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Rotate screen to normal
+Icon=rotate
+Exec=~/.config/scripts/rotatenormal.sh
+Terminal=false

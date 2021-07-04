@@ -23,6 +23,9 @@ LOCK_RESOLUTION = 1920x1080
 # bemenu
 BEMENU_SCALE = 2
 
+# protonmail
+PROTONMAIL_BRIDGE_PASSWORD = laptop.bridge.protonmail.com
+
 # These are optional comments in front of the relevant lines
 
 LOAD_CACHE_FILESYSTEMS =      # onedrive, dropbox
@@ -34,12 +37,11 @@ VOLUME_TICK_UP   = +5%
 VOLUME_TICK_DOWN = -5%
 
 # picom
+PICOM_CORNER_RADIUS = 15.0
 DISABLE_PICOM =               # My regex isn't very good, for these
                               # to work they can't end on whitespace
-# picom
-PICOM_CORNER_RADIUS = 15.0
 
-#polybar
+# polybar
 POLYBAR_TOP_LINE_SIZE           = 21
 POLYBAR_TOP_NOTOSANS_SIZE       = 14;8
 POLYBAR_TOP_FONTAWESOME4_SIZE   = 20;8

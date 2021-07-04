@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Rotate screen
+Icon=rotate
+Exec=~/.config/scripts/rotate.sh
+Terminal=false

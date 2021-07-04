@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=kitty
+GenericName=Terminal emulator
+Comment=A fast, feature full, GPU based terminal emulator
+TryExec=kitty
+Exec=/bedrock/bin/strat gentoo kitty
+Icon=/usr/share/icons/Linebit/192x192/apps/terminal.png
+Categories=System;TerminalEmulator;

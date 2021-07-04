@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Rotate screen to left orientation
+Icon=rotate
+Exec=~/.config/scripts/rotateleft.sh
+Terminal=false

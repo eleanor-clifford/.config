@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Lower brightness
+Icon=rotate
+Exec=xbacklight -dec 10
+Terminal=false

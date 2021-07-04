@@ -13,7 +13,7 @@ tls             on
 tls_starttls    on
 from            tclifford@protonmail.com
 user            tclifford@protonmail.com
-passwordeval    "$HOME/.config/scripts/get_password.sh desktop.bridge.protonmail.com"
+passwordeval    "$HOME/.config/scripts/get_password.sh _METACONF_REPLACE_PROTONMAIL_BRIDGE_PASSWORD"
 
 # Cam
 account         cam

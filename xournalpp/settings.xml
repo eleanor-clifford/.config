@@ -7,13 +7,13 @@
   <property name="zoomGesturesEnabled" value="true"/>
   <property name="selectedToolbar" value="Dracula"/>
   <property name="lastSavePath" value="/home/tim/OneDrive-Cam/Example_Papers/2P7"/>
-  <property name="lastOpenPath" value="/home/tim/OneDrive-Cam/Example_Papers/2P1"/>
-  <property name="lastImagePath" value="file:///home/tim"/>
+  <property name="lastOpenPath" value="/home/tim/OneDrive-Cam/Example_Papers/2P3"/>
+  <property name="lastImagePath" value="/home/tim/Pictures"/>
   <property name="zoomStep" value="10.00000000"/>
   <property name="zoomStepScroll" value="2.00000000"/>
   <property name="displayDpi" value="72"/>
-  <property name="mainWndWidth" value="935"/>
-  <property name="mainWndHeight" value="988"/>
+  <property name="mainWndWidth" value="915"/>
+  <property name="mainWndHeight" value="290"/>
   <property name="maximized" value="false"/>
   <property name="showToolbar" value="true"/>
   <property name="showSidebar" value="false"/>
@@ -43,8 +43,8 @@
   <property name="cursorHighlightBorderWidth" value="0.00000000"/>
   <property name="darkTheme" value="true"/>
   <property name="disableScrollbarFadeout" value="false"/>
-  <property name="scrollbarHideType" value="both"/>
   <!--Hides scroolbars in the main window, allowed values: "none", "horizontal", "vertical", "both"-->
+  <property name="scrollbarHideType" value="both"/>
   <property name="autoloadPdfXoj" value="true"/>
   <property name="defaultSaveName" value="%F-Note-%H-%M"/>
   <property name="autosaveEnabled" value="true"/>
@@ -55,12 +55,11 @@
   <property name="addVerticalSpaceAmount" value="600"/>
   <property name="drawDirModsEnabled" value="false"/>
   <property name="drawDirModsRadius" value="50"/>
-  <property name="snapRotation" value="false"/>
+  <property name="snapRotation" value="true"/>
   <property name="snapRotationTolerance" value="0.20000000"/>
   <property name="snapGrid" value="false"/>
   <property name="snapGridTolerance" value="0.25000000"/>
   <property name="snapGridSize" value="14.17000000"/>
-  <property name="touchWorkaround" value="false"/>
   <property name="touchDrawing" value="false"/>
   <property name="pressureGuessing" value="false"/>
   <property name="selectionBorderColor" value="4284641956"/>
@@ -72,8 +71,8 @@
   <property name="pdfPageCacheSize" value="10"/>
   <property name="preloadPagesBefore" value="3"/>
   <property name="preloadPagesAfter" value="5"/>
-  <!--Config for new pages-->
   <property name="eagerPageCleanup" value="true"/>
+  <!--Config for new pages-->
   <property name="pageTemplate" value="xoj/template&#10;copyLastPageSize=false&#10;copyLastPageSettings=false&#10;size=595.275591x841.889764&#10;backgroundType=plain&#10;backgroundColor=#ff282a36&#10;"/>
   <property name="sizeUnit" value=""/>
   <property name="audioFolder" value=""/>
@@ -93,10 +92,18 @@
   <property name="snapRecognizedShapesEnabled" value="false"/>
   <property name="restoreLineWidthEnabled" value="false"/>
   <property name="numIgnoredStylusEvents" value="0"/>
-  <property name="newInputSystemEnabled" value="true"/>
   <property name="inputSystemTPCButton" value="false"/>
   <property name="inputSystemDrawOutsideWindow" value="true"/>
   <property name="preferredLocale" value=""/>
+  <property name="stabilizerAveragingMethod" value="0"/>
+  <property name="stabilizerPreprocessor" value="0"/>
+  <property name="stabilizerBuffersize" value="20"/>
+  <property name="stabilizerSigma" value="0.50000000"/>
+  <property name="stabilizerDeadzoneRadius" value="1.30000000"/>
+  <property name="stabilizerDrag" value="0.40000000"/>
+  <property name="stabilizerMass" value="5.00000000"/>
+  <property name="stabilizerCuspDetection" value="true"/>
+  <property name="stabilizerFinalizeStroke" value="true"/>
   <property name="latexSettings.autoCheckDependencies" value="true"/>
   <property name="latexSettings.globalTemplatePath" value="/usr/share/xournalpp/resources/default_template.tex"/>
   <property name="latexSettings.genCmd" value="pdflatex -interaction=nonstopmode '{}'"/>
@@ -144,6 +151,14 @@
       <attribute name="deviceClass" type="int" value="2"/>
       <attribute name="deviceSource" type="int" value="1"/>
     </data>
+    <data name="Logitech MX Master">
+      <attribute name="deviceClass" type="int" value="1"/>
+      <attribute name="deviceSource" type="int" value="0"/>
+    </data>
+    <data name="SONiX SI Gaming Keyboard Consumer Control">
+      <attribute name="deviceClass" type="int" value="1"/>
+      <attribute name="deviceSource" type="int" value="0"/>
+    </data>
     <data name="SYNA32A0:00 06CB:CE14 Mouse">
       <attribute name="deviceClass" type="int" value="1"/>
       <attribute name="deviceSource" type="int" value="0"/>
@@ -159,10 +174,10 @@
     <data name="drawArrow">
       <attribute name="drawingType" type="string" value="default"/>
     </data>
-    <data name="drawCircle">
+    <data name="drawCoordinateSystem">
       <attribute name="drawingType" type="string" value="default"/>
     </data>
-    <data name="drawCoordinateSystem">
+    <data name="drawEllipse">
       <attribute name="drawingType" type="string" value="default"/>
     </data>
     <data name="drawRect">
@@ -173,7 +188,7 @@
     </data>
     <data name="eraser">
       <attribute name="drawingType" type="string" value="default"/>
-      <attribute name="size" type="string" value="MEDIUM"/>
+      <attribute name="size" type="string" value="VERY_FINE"/>
       <attribute name="type" type="string" value="deleteStroke"/>
     </data>
     <data name="hand">
@@ -190,9 +205,9 @@
       <attribute name="drawingType" type="string" value="default"/>
     </data>
     <data name="pen">
-      <attribute name="color" type="hex" value="f1fa8c"/>
+      <attribute name="color" type="hex" value="f8f8f2"/>
       <attribute name="drawingType" type="string" value="default"/>
-      <attribute name="fill" type="int" value="1"/>
+      <attribute name="fill" type="int" value="0"/>
       <attribute name="fillAlpha" type="int" value="255"/>
       <attribute name="size" type="string" value="MEDIUM"/>
       <attribute name="style" type="string" value="plain"/>

@@ -10,8 +10,8 @@ firefox=true
 zsh=true
 grub=true
 install=true
-wallpapers=false
-no_wallpapers=false
+nonfree=false
+no_nonfree=false
 ignore_metaconfig=false
 submodules=true
 help=false
@@ -26,8 +26,8 @@ for i in "$@"; do
 		--zsh=false)         zsh=false;;
 		--grub=false)        grub=false;;
 		--grub=true)         grub=true;;
-		--wallpapers=true)   wallpapers=true;;
-		--wallpapers=false)  wallpapers=false;;
+		--nonfree=true)      nonfree=true;;
+		--nonfree=false)     nonfree=false;;
 		--update)
 			submodules=false
 			;&
@@ -38,7 +38,7 @@ for i in "$@"; do
 			grub=false
 			keyboard=false
 			install=false
-			wallpapers=true
+			nonfree=true
 			;;
 		--firefox-only)
 			vim=false
@@ -47,7 +47,7 @@ for i in "$@"; do
 			install=false
 			zsh=false
 			grub=false
-			no_wallpapers=true
+			no_nonfree=true
 			ignore_metaconfig=true
 			keyboard=false
 			;;
@@ -69,8 +69,8 @@ between the application of metaconfigurations and any further changes.
   --zsh=false           don't set zsh as the default config (default is to ask)
   --grub=false          don't install grub theme (default is to ask)
   --grub=true           install grub theme (default is to ask)
-  --wallpapers=true     install nonfree wallpapers (default is to ask)
-  --wallpapers=false    don't install any wallpapers (default is to ask)
+  --nonfree=true        install nonfree content (default is to ask)
+  --nonfree=false       don't install any nonfree content (default is to ask)
   --firefox-only        install the custom firefox theme and exit
   --update              update configurations without installing or symlinking
                         anything. Can also be used without reverting to before
@@ -332,6 +332,11 @@ if $link_to_home; then
 		ln -s "$fullpath" $HOME
 		echo "  ==> linked $homepath -> $fullpath"
 	done
+	echo "====> applying .desktop file links..."
+	for f in $(ls applications); do
+		# -b makes backup
+		ln -sb $(pwd)/applications/$f $HOME/.local/share/applications/$f
+	done
 fi
 
 if $vim; then
@@ -432,39 +437,44 @@ if $keyboard; then
 	done
 fi
 
-if $wallpapers; then
-	git submodule update --init --remote wallpapers/nonfree-wallpapers
-	cd wallpapers
-	rm -f current.png
-	ln -s nonfree-wallpapers/current.png current.png
-	cd - >/dev/null
-elif ! $no_wallpapers; then
+if ! $nonfree && ! $no_nonfree; then
 	while true; do
-		read -p "Get nonfree wallpapers? (you must have access) " yn
+		read -p "Get nonfree content? (you must have access) " yn
 		case $yn in
 			[Yy]* )
-				git submodule update --init
-				git submodule update --remote
-				# I'm not sure I fully understand links tbh
-				cd wallpapers
-				rm -f current.png
-				cd nonfree-wallpapers
-				git lfs install
-				git lfs fetch
-				git lfs checkout
-				cd ..
-				ln -s nonfree-wallpapers/current.png current.png
-				cd ..
+				$nonfree=true
 				break;;
 			[Nn]* )
-				cd wallpapers
-				rm -f current.png
-				ln -s default_wallpaper.png current.png
-				cd - >/dev/null
 				break;;
-			*)  echo "Please respond"; exit 1;
+			*)
+				echo "Please respond"; exit 1;
 		esac
 	done
+fi
+
+if ! $no_nonfree && $nonfree; then
+	# Wallpapers
+	git submodule update --init
+	git submodule update --remote
+	cd nonfree
+	git lfs install
+	git lfs fetch
+	git lfs checkout
+	cd ../wallpapers
+	# I'm not sure I fully understand links tbh
+	ln -sf ../nonfree/wallpapers/current.png current.png
+	cd ..
+
+	# Icons
+	cd nonfree/icons
+	mkdir -p ~/.local/share/icons
+	ln -s $(pwd)/Linebit ~/.local/share/icons/Linebit
+	cd ../..
+else
+	# Set up default wallpaper
+	cd wallpapers
+	ln -sf default_wallpaper.png current.png
+	cd ..
 fi
 
 if ! $ignore_metaconfig; then

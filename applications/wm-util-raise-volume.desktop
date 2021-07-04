@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Raise volume
+Icon=rotate
+Exec=~/.config/i3/scripts/raise-volume.sh
+Terminal=false

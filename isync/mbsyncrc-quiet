@@ -1,0 +1,69 @@
+ImapAccount   proton
+Host          127.0.0.1
+Port          1143
+User          tclifford@protonmail.com
+PassCmd       "$HOME/.config/scripts/get_password_quiet.sh laptop.bridge.protonmail.com 'Could not sync mail (GPG key not unlocked)'"
+SSLType       None
+AuthMechs     LOGIN
+
+IMAPStore     proton-remote
+Account       proton
+
+MaildirStore  proton-local
+Subfolders    Verbatim
+Path          ~/.mail/proton/
+Inbox         ~/.mail/proton/Inbox
+
+Channel       proton
+Far           :proton-remote:
+Near          :proton-local:
+Patterns      *
+Create        Both
+SyncState     *
+
+ImapAccount   cam
+Host          outlook.office365.com
+Port          993
+User          tc565@cam.ac.uk
+PassCmd       "$HOME/.config/scripts/get_password_quiet.sh cam.ac.uk 'Could not sync mail (GPG key not unlocked)'"
+SSLType       IMAPS
+AuthMechs     LOGIN
+
+IMAPStore     cam-remote
+Account       cam
+
+MaildirStore  cam-local
+Subfolders    Verbatim
+Path          ~/.mail/cam/
+Inbox         ~/.mail/cam/Inbox
+
+Channel       cam
+Far           :cam-remote:
+Near          :cam-local:
+Patterns      *
+Create        Both
+SyncState     *
+
+ImapAccount   cusfgmail
+Host          imap.gmail.com
+Port          993
+User          tim.cusf
+PassCmd       "$HOME/.config/scripts/get_password_quiet.sh smtp.cusf.co.uk 'Could not sync mail (GPG key not unlocked)'"
+SSLType       IMAPS
+AuthMechs     LOGIN
+
+IMAPStore     cusfgmail-remote
+Account       cusfgmail
+
+MaildirStore  cusfgmail-local
+Subfolders    Verbatim
+Path          ~/.mail/cusfgmail/
+Inbox         ~/.mail/cusfgmail/Inbox
+
+Channel       cusfgmail
+Far           :cusfgmail-remote:"[Gmail]/Sent Mail"
+Near          :cusfgmail-local:sent
+Patterns      *
+Create        Both
+SyncState     *
+

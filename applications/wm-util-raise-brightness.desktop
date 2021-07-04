@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Raise brightness
+Icon=rotate
+Exec=xbacklight -inc 10
+Terminal=false

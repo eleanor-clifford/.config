@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Lower volume
+Icon=rotate
+Exec=~/.config/i3/scripts/lower-volume.sh
+Terminal=false

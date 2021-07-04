@@ -23,6 +23,9 @@ LOCK_RESOLUTION = 3840x2160
 # bemenu
 BEMENU_SCALE = 2
 
+# protonmail
+PROTONMAIL_BRIDGE_PASSWORD = desktop.bridge.protonmail.com
+
 # These are optional comments in front of the relevant lines
 
 LOAD_CACHE_FILESYSTEMS =      # onedrive, dropbox
@@ -38,7 +41,7 @@ PICOM_CORNER_RADIUS = 30.0
 DISABLE_PICOM =               # My regex isn't very good, for these
                               # to work they can't end on whitespace
 
-#polybar
+# polybar
 POLYBAR_TOP_LINE_SIZE           = 21
 POLYBAR_TOP_NOTOSANS_SIZE       = 14;8
 POLYBAR_TOP_FONTAWESOME4_SIZE   = 20;8

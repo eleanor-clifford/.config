@@ -1,5 +1,5 @@
 [submodule "wallpapers/nonfree-wallpapers"]
-	path = wallpapers/nonfree-wallpapers
+	path = nonfree
 	url = git@github.com:tim-clifford/nonfree-wallpapers.git
 [submodule "dracula/qt5"]
 	path = dracula/qt5
