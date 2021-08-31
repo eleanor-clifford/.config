@@ -1,11 +1,12 @@
 #!/bin/sh
-
-# things that will be left to do after this script finishes
-todo=""
+# Initialise variables {{{
+IFS="
+"
+todo="" # things that will be left to do after this script finishes
 
 # default arguments
 vim=true
-link_to_home=true
+link=true
 firefox=true
 zsh=true
 grub=true
@@ -15,11 +16,13 @@ no_nonfree=false
 ignore_metaconfig=false
 submodules=true
 help=false
+# }}}
+# Set variables from flags {{{
 for i in "$@"; do
 	case "$i" in
 		--help)              help=true;;
 		--install=false)     install=false;;
-		--link=false)        link_to_home=false;;
+		--link=false)        link=false;;
 		--firefox=false)     firefox=false;;
 		--vim=false)         vim=false;;
 		--vim=minimal)       vim=minimal;;
@@ -43,7 +46,7 @@ for i in "$@"; do
 		--firefox-only)
 			vim=false
 			firefox=true
-			link_to_home=false
+			link=false
 			install=false
 			zsh=false
 			grub=false
@@ -53,6 +56,8 @@ for i in "$@"; do
 			;;
 	esac
 done
+# }}}
+# Display help text {{{
 if $help; then
 	echo \
 "Usage: ./install.sh [OPTION]...
@@ -79,11 +84,13 @@ between the application of metaconfigurations and any further changes.
 
 	exit 0
 fi
-
+# }}}
+# Initialise submodules {{{
 if $install || $submodules; then
 	git submodule update --init --remote
 fi
-
+# }}}
+# Check git status {{{
 if ! $ignore_metaconfig; then
 	# Check that there are not uncommited changes
 	if ! [ "$(git diff HEAD)" = "" ]; then
@@ -116,9 +123,10 @@ if ! $ignore_metaconfig; then
 		fi
 	fi
 fi
-
+# }}}
+# Install packages {{{
 if $install; then
-	# Install AUR helper
+	# Install AUR helper {{{
 	while true; do
 		read -p "Install aurutils? " yn
 		case $yn in
@@ -147,8 +155,8 @@ Server = file:///home/custompkgs" | sudo tee -a /etc/pacman.conf >/dev/null
 				echo "Please respond";;
 		esac
 	done
-
-	# Install packages
+	# }}}
+	# Install packages {{{
 	INSTALL='sudo pacman -S'
 	INSTALL_AUR="aur sync"
 	export AUR_PAGER="$HOME/.config/scripts/rangerp.sh"
@@ -182,12 +190,13 @@ Server = file:///home/custompkgs" | sudo tee -a /etc/pacman.conf >/dev/null
 			esac
 		done
 	done
-fi
-IFS="
+	IFS="
 "
-
+	# }}}
+fi
+# }}}
+# Apply metaconfig {{{
 if ! $ignore_metaconfig; then
-	# Apply metaconfig
 	if [ ! -f metaconfig/$(cat /etc/hostname).metaconf ]; then
 		echo "No metaconfig defined for this hostname"
 		exit 1
@@ -200,13 +209,15 @@ if ! $ignore_metaconfig; then
 	# Build file list once only. Cheaper to look at extension than use `file`
 	FILETYPE_IGNORE='png svg jpg gz dll msi klc exe'
 
+	# Build file list {{{
 	echo "====> building file list..."
 	files=$(comm -23 \
 			<(git ls-tree -r --name-only $(git branch --show-current) | sort) \
 			<(git submodule status | awk '{print $2}' | sort) \
 		| egrep -v '\.(png|svg|jpg|pdf|gif|gz|dll|msi|klc|exe)$' \
 		| xargs -I'{}' sh -c 'test -L {} || echo {}')
-
+	# }}}
+	# Apply variables {{{
 	echo "====> applying metaconfig variables..."
 	for line in $(cat "metaconfig/$(cat /etc/hostname).metaconf"); do
 
@@ -246,8 +257,8 @@ if ! $ignore_metaconfig; then
 
 		echo "  ==> set $KEY to $VAL"
 	done
-
-	# Apply file appends
+	# }}}
+	# Apply file appends {{{
 	if [ "$POSTFIX_FILE_APPEND_PREFIX" = '' ] \
 			|| [ "$POSTFIX_FILE_APPENDED" = '' ]; then
 		echo "ERROR: file append prefixes must be defined"
@@ -310,41 +321,49 @@ if ! $ignore_metaconfig; then
 		echo "$append" >  $last_append
 		echo "  ==> appended to $orig_file"
 	done
+	# }}}
 fi
+# }}}
+# Link files {{{
+if $link; then
+	# jank, whatever
+	for i in 0 1; do
+		if [ $i -eq 0 ]; then
+			dir="links/homedir"
+			targetdir="$HOME"
+			echo "====> applying home directory links..."
+			sudo_bin=
+		else
+			dir="links/rootdir"
+			targetdir=""
+			echo "====> applying root directory links..."
+			# this will prepend if sudo is required. It's jank. whatever.
+			sudo_bin=sudo
+		fi
+		for file in $(find $dir -type f); do
+			if echo "$file" | egrep -q \
+					"$POSTFIX_FILE_APPENDED|$POSTFIX_FILE_APPEND_PREFIX"
+			then
+				continue
+			fi
+			targetpath="$(echo "$file" | sed "s|$dir|$targetdir|")"
+			path="$(realpath "$file")"
 
-if $link_to_home; then
-	echo "====> applying links..."
-	# Install dotfiles to $HOME
-	for i in $(find . -maxdepth 1 -regex '\.\/\..+'); do
-		if echo "$i" | egrep -q \
-				".git|$POSTFIX_FILE_APPENDED|$POSTFIX_FILE_APPEND_PREFIX"
-		then
-			continue
-		fi
-		fullpath=$(eval echo $(echo $i | sed 's|^\.|$(pwd)|'))
-		homepath=$(eval echo $(echo $i | sed 's|.*/\(.*\)$|$HOME/\1|'))
-		if [ -L "$homepath" ]; then
-			rm "$homepath"
-		fi
-		if [ -f "$homepath" ]; then
-			mv "$homepath" "$homepath.orig"
-		fi
-		ln -s "$fullpath" $HOME
-		echo "  ==> linked $homepath -> $fullpath"
-	done
-	echo "====> applying .desktop file links..."
-	for f in $(ls applications); do
-		# -b makes backup
-		ln -sb $(pwd)/applications/$f $HOME/.local/share/applications/$f
+			$sudo_bin ln -sb "$path" "$targetpath"
+			echo "  ==> linked $targetpath -> $path"
+		done
 	done
 fi
-
+# }}}
+# Perform application-specific tasks {{{
+# Neovim {{{
 if $vim; then
 	git submodule update --init --remote nvim
 fi
-
+# }}}
+# Firefox {{{
 if $firefox; then
-	## Firefox
+	## Install theme
 	if [ -d $HOME/.mozilla ]; then
 		firefox_dir=$(find $HOME/.mozilla -type d \
 				-regex ".*/firefox/.*\.default-release")
@@ -377,10 +396,11 @@ if $firefox; then
 		echo "Firefox must be run once before the config can be made, skipping..."
 	fi
 fi
-
-## Less
+# }}}
+# less {{{
 lesskey lessrc
-
+# }}}
+# ZSH {{{
 if $zsh; then
 	while true; do
 		read -p "Change shell to zsh? " yn
@@ -393,7 +413,8 @@ if $zsh; then
 		esac
 	done
 fi
-
+# }}}
+# GRUB {{{
 if $grub; then
 	while true; do
 		read -p "Install grub theme? " yn
@@ -420,7 +441,9 @@ if $grub; then
 		esac
 	done
 fi
-
+# }}}
+# }}}
+# Install keyboard layout {{{
 if $keyboard; then
 	while true; do
 		read -p "Install keyboard layout? " yn
@@ -436,7 +459,8 @@ if $keyboard; then
 		esac
 	done
 fi
-
+# }}}
+# Install nonfree content {{{
 if ! $nonfree && ! $no_nonfree; then
 	while true; do
 		read -p "Get nonfree content? (you must have access) " yn
@@ -476,7 +500,8 @@ else
 	ln -sf default_wallpaper.png current.png
 	cd ..
 fi
-
+# }}}
+# Commit configuration {{{
 if ! $ignore_metaconfig; then
 	echo "====> Commiting host-specific configuration..."
 	git add .
@@ -490,6 +515,8 @@ if ! $ignore_metaconfig; then
 		i3-msg restart
 	fi
 fi
+# }}}
+# Output todo list {{{
 if ! [ "$todo" = "" ]; then
 	echo "\
 	====> TODO LIST:"
@@ -514,3 +541,4 @@ if $install; then
 	echo "To enable gpg key unlocking with i3lock:
   - follow the instructions at https://github.com/cruegge/pam-gnupg"
 fi
+# }}}

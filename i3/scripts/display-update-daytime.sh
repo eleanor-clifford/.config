@@ -1,4 +1,8 @@
 #!/bin/sh
 modprobe i2c_dev
+
 # primary
-ddcutil setvcp 10 90 -b 9
+## get bus, shutup
+bus=$(ddcutil detect | grep -B10 'ASUS VG289' | grep /dev/i2c \
+	| sed 's|.*/dev/i2c-\([[:digit:]]\+\).*|\1|')
+ddcutil setvcp 10 90 -b $bus
