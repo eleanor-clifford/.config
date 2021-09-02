@@ -492,7 +492,7 @@ if ! $no_nonfree && $nonfree; then
 	# Icons
 	cd nonfree/icons
 	mkdir -p ~/.local/share/icons
-	ln -s $(pwd)/Linebit ~/.local/share/icons/Linebit
+	ln -sf $(pwd)/Linebit ~/.local/share/icons/Linebit
 	cd ../..
 else
 	# Set up default wallpaper

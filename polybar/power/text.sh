@@ -1,6 +1,7 @@
 #!/bin/dash
 pow=$(cat /sys/class/power_supply/BAT1/power_now)
-if ! [ -f $HOME/.config/polybar/power/pow.txt ]; then
+if ! [ -f $HOME/.config/polybar/power/pow.txt ] \
+		|| [ "$(cat $HOME/.config/polybar/power/pow.txt)" = "" ]; then
 	echo $pow > $HOME/.config/polybar/power/pow.txt
 fi
 lpow=$(cat $HOME/.config/polybar/power/pow.txt)
