@@ -6,6 +6,7 @@
 /chromium/
 /configstore
 /Cyberbotics
+/davmail/
 /dconf
 /Debauchee/
 /discord
@@ -55,6 +56,8 @@
 /kicad/kicad_common
 /kicad/pcbnew
 /kicad/sym-lib-table
+/kritadisplayrc
+/kritarc
 /libreoffice
 /libvirt/
 /lpass
@@ -79,6 +82,7 @@
 /qalculate
 /QDirStat
 /QtProject.conf
+/rclone/
 /rncbc.org/
 /sftpman
 /Signal
@@ -89,6 +93,7 @@
 /spotify
 /StardewValley/
 /teams
+/Trolltech.conf
 /unity3d/
 /UnityHub/
 /Unknown Organization/
@@ -100,6 +105,3 @@
 /xournalpp/errorlogs
 /xournalpp/metadata
 /zoomus.conf
-/Trolltech.conf
-/kritadisplayrc
-/kritarc

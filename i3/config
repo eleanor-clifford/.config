@@ -11,6 +11,17 @@ workspace 7  output _METACONF_REPLACE_SEC_DISP
 workspace 8  output _METACONF_REPLACE_SEC_DISP
 workspace 9  output _METACONF_REPLACE_SEC_DISP
 workspace 10 output _METACONF_REPLACE_SEC_DISP
+workspace 1  output DisplayPort-0 eDP
+workspace 2  output DisplayPort-0 eDP
+workspace 3  output DisplayPort-0 eDP
+workspace 4  output DisplayPort-0 eDP
+workspace 5  output DisplayPort-0 eDP
+
+workspace 6  output DisplayPort-0 eDP
+workspace 7  output DisplayPort-0 eDP
+workspace 8  output DisplayPort-0 eDP
+workspace 9  output DisplayPort-0 eDP
+workspace 10 output DisplayPort-0 eDP
 
 # lock screen
 exec --no-startup-id $HOME/.config/i3/scripts/lock.sh -u $HOME/.config/wallpapers/current.png -r 3840x2160
@@ -51,6 +62,9 @@ gaps inner 10
 
 # fullscreen if class is "Fullscreen"
 for_window [class="^Fullscreen*"] fullscreen enable
+
+# fuck the file chooser
+for_window [window_role="^GtkFileChooserDialog"] floating disable
 
 # check for new email
 exec "mbsync -Vac $HOME/.config/isync/mbsyncrc && notmuch new"
@@ -279,6 +293,7 @@ exec_always --no-startup-id $HOME/.config/i3/scripts/setup-disp_backg_bar.sh
 
 # Start locked; start plank and programs after
 exec $HOME/.config/i3/scripts/lock.sh -l; $HOME/.config/i3/scripts/startup.sh
+exec_always $HOME/.config/scripts/start_jack.sh
 exec_always --no-startup-id picom --experimental-backends -b
 
 #vi: ft=conf

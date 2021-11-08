@@ -10,6 +10,7 @@ account         proton
 host            127.0.0.1
 port            1025
 tls             on
+tls_certcheck   off
 tls_starttls    on
 from            tclifford@protonmail.com
 user            tclifford@protonmail.com
@@ -17,9 +18,10 @@ passwordeval    "$HOME/.config/scripts/get_password.sh _METACONF_REPLACE_PROTONM
 
 # Cam
 account         cam
-host            smtp.office365.com
-port            587
-tls             on
+host            127.0.0.1
+port            1026
+tls             off
+auth            login
 from            tc565@cam.ac.uk
 user            tc565@cam.ac.uk
 passwordeval    "$HOME/.config/scripts/get_password.sh cam.ac.uk"

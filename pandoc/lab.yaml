@@ -1,10 +1,11 @@
 metadata:
-  author: Tim Clifford
+  author: Tim Clifford (tc565)
   keywords:
     - 'Dracula theme'
 
 pdf-engine: xelatex
 highlight-style: $HOME/.config/pandoc/dracula.theme
+number-sections: true
 
 variables:
   geometry:  margin=1in

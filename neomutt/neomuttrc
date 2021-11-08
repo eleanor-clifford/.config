@@ -53,6 +53,10 @@ bind index,pager S sidebar-toggle-visible
 bind pager <up> previous-line
 bind pager <down> next-line
 
+# reply all
+bind pager D recall-message
+bind pager R group-reply
+
 bind index c collapse-thread
 bind index C collapse-all
 # }}}
@@ -63,9 +67,9 @@ macro index,pager V   "|cat /dev/stdin > /tmp/mutt-vimexternal; kitty nvim +'set
 macro attach      w   "|cat /dev/stdin > /tmp/mutt-w3m.html; w3m -cols 80 /tmp/mutt-w3m.html\n"
 macro attach      f   "|cat /dev/stdin > /tmp/mutt-firefox.html; firefox /tmp/mutt-firefox.html\n"
 
-macro index,pager \cq ":set from=tclifford@protonmail.com\n"
-macro index,pager \cw ":set from=tim@cusf.co.uk\n"
-macro index,pager \cf ":set from=tc565@cam.ac.uk\n"
+macro index,pager \cq ":set from=tclifford@protonmail.com signature=~/.config/neomutt/signature-personal\n"
+macro index,pager \cw ":set from=tim@cusf.co.uk signature=~/.config/neomutt/signature-cusf\n"
+macro index,pager \cf ":set from=tc565@cam.ac.uk signature=~/.config/neomutt/signature-personal\n"
 # }}}
 # Sidebar {{{
 unset sidebar_visible
@@ -100,8 +104,8 @@ set spoolfile      = "notmuch://?query=tag:inbox"
 set postponed      = +drafts
 set mbox           = +mbox
 set mbox_type      = Maildir
-set mail_check     = 10 # How often to check for new mail (time in seconds).
-set signature      = "~/.config/neomutt/signature"
+set mail_check     = 1 # How often to check for new mail (time in seconds).
+set signature      = "~/.config/neomutt/signature-personal"
 
 unset record
 # magic from https://neomutt.org/guide/advancedusage.html#13-3-%C2%A0monitoring-new-mail

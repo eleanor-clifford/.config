@@ -6,8 +6,8 @@
   <property name="pressureMultiplier" value="1.00000000"/>
   <property name="zoomGesturesEnabled" value="true"/>
   <property name="selectedToolbar" value="Dracula"/>
-  <property name="lastSavePath" value="/home/tim/OneDrive-Cam/Example_Papers/2P7"/>
-  <property name="lastOpenPath" value="/home/tim/OneDrive-Cam/Example_Papers/2P3"/>
+  <property name="lastSavePath" value="/home/tim/OneDrive-Cam/Example_Papers/3A5"/>
+  <property name="lastOpenPath" value="/home/tim/OneDrive-Cam/Example_Papers/3F1"/>
   <property name="lastImagePath" value="/home/tim/Pictures"/>
   <property name="edgePanSpeed" value="20.00000000"/>
   <property name="edgePanMaxMult" value="5.00000000"/>
@@ -15,7 +15,7 @@
   <property name="zoomStepScroll" value="2.00000000"/>
   <property name="displayDpi" value="72"/>
   <property name="mainWndWidth" value="1866"/>
-  <property name="mainWndHeight" value="934"/>
+  <property name="mainWndHeight" value="956"/>
   <property name="maximized" value="false"/>
   <property name="showToolbar" value="true"/>
   <property name="showSidebar" value="false"/>
@@ -65,6 +65,7 @@
   <property name="snapGridTolerance" value="0.25000000"/>
   <property name="snapGridSize" value="14.17000000"/>
   <property name="touchDrawing" value="false"/>
+  <property name="gtkTouchInertialScrolling" value="true"/>
   <property name="pressureGuessing" value="false"/>
   <property name="selectionBorderColor" value="4284641956"/>
   <property name="backgroundColor" value="4282664794"/>
@@ -155,6 +156,10 @@
       <attribute name="deviceClass" type="int" value="2"/>
       <attribute name="deviceSource" type="int" value="1"/>
     </data>
+    <data name="ELAN2514:00 04F3:2AF0 Stylus Eraser (0)">
+      <attribute name="deviceClass" type="int" value="3"/>
+      <attribute name="deviceSource" type="int" value="2"/>
+    </data>
     <data name="ELAN2514:00 04F3:2AF0 Stylus Pen (0)">
       <attribute name="deviceClass" type="int" value="2"/>
       <attribute name="deviceSource" type="int" value="1"/>
@@ -172,6 +177,10 @@
       <attribute name="deviceSource" type="int" value="0"/>
     </data>
     <data name="SYNA32A0:00 06CB:CE14 Touchpad">
+      <attribute name="deviceClass" type="int" value="1"/>
+      <attribute name="deviceSource" type="int" value="0"/>
+    </data>
+    <data name="Virtual core XTEST pointer">
       <attribute name="deviceClass" type="int" value="1"/>
       <attribute name="deviceSource" type="int" value="0"/>
     </data>
@@ -214,7 +223,7 @@
     </data>
     <data name="pen">
       <attribute name="color" type="hex" value="f8f8f2"/>
-      <attribute name="drawingType" type="string" value="ellipse"/>
+      <attribute name="drawingType" type="string" value="default"/>
       <attribute name="fill" type="int" value="0"/>
       <attribute name="fillAlpha" type="int" value="255"/>
       <attribute name="size" type="string" value="MEDIUM"/>

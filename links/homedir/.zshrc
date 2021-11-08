@@ -106,8 +106,12 @@ export EDITOR=/usr/bin/nvim
 export VISUAL=/usr/bin/nvim
 export BROWSER=/usr/bin/firefox
 export AUR_PAGER="$HOME/.config/scripts/rangerp.sh"
+export PATH="$PATH:$HOME/.dotnet/tools"
+export PATH="$PATH:$HOME/tmp/ltex-ls-15.0.0/bin"
 # }}}
 # Aliases {{{
+alias ls="ls --time-style=long-iso --color=tty"
+
 alias update-wallpapers="sudo systemctl restart wallpapers"
 alias mount-all="$HOME/scripts/mount-all.sh"
 alias unmount-all="$HOME/scripts/unmount-all.sh"
@@ -116,18 +120,20 @@ alias aur-remove='repo-remove /home/custompkgs/custom.db.tar.gz'
 
 alias vi='/usr/bin/vim'
 alias vim='nvim' # idk...
-alias gvim='nvim "+Gclog" "+Gstatus"' # imagine using graphical vim lmao
-alias ecfg='nvim +"cd ~/.config" +"Gclog" +"Gstatus"'
+alias gvim='nvim +Gclog +Git' # imagine using graphical vim lmao
+alias ecfg='nvim +"cd ~/.config" +Gclog +Git'
 
 alias icat='kitty +kitten icat'
 
 # I'm bad at typing
 alias claer='clear'
 
-alias mutt='mbsync -Vac ~/.config/isync/mbsyncrc && notmuch new && neomutt'
-alias mbsync='mbsync -Vac ~/.config/isync/mbsyncrc && notmuch new'
+alias mutt='mbsync -Vac ~/.config/isync/mbsyncrc; notmuch new && neomutt'
+alias mbsync='mbsync -Vac ~/.config/isync/mbsyncrc; notmuch new'
 
 alias ssh='TERM=xterm-256color ssh'
+
+alias lab='~/.config/scripts/lab.sh'
 
 function ghf() {
 	git remote rename origin upstream
@@ -275,4 +281,7 @@ function zvm_after_lazy_keybindings() {
 	# Visual mode
 	zvm_bindkey visual 'k'    zvm_exchange_point_and_mark
 }
+# }}}
+# Opam configuration {{{
+[[ ! -r /home/tim/.opam/opam-init/init.zsh ]] || source /home/tim/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
 # }}}

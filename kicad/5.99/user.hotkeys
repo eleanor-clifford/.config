@@ -149,10 +149,12 @@ common.InteractiveEdit.measureTool	Ctrl+Shift+M
 common.InteractivePicker.pickerTool	
 common.InteractiveSelection.selectionTool	
 common.SuiteControl.configurePaths	
+common.SuiteControl.donate	
 common.SuiteControl.getInvolved	
 common.SuiteControl.gettingStarted	
 common.SuiteControl.help	
 common.SuiteControl.listHotKeys	Ctrl+F1
+common.SuiteControl.openPreferences	Ctrl+,
 common.SuiteControl.reportBug	
 common.SuiteControl.showFootprintLibTable	
 common.SuiteControl.showSymbolLibTable	
@@ -181,6 +183,7 @@ eeschema.EditorControl.showBusManager
 eeschema.EditorControl.showHiddenFields	
 eeschema.EditorControl.showHiddenPins	
 eeschema.EditorControl.showPcbNew	
+eeschema.EditorControl.showPythonConsole	
 eeschema.EditorControl.updateNetHighlighting	
 eeschema.InspectionTool.checkSymbol	
 eeschema.InspectionTool.runERC	
@@ -188,6 +191,7 @@ eeschema.InspectionTool.showDatasheet	Alt+D
 eeschema.InteractiveDrawing.drawSheet	S
 eeschema.InteractiveDrawing.finishSheet	
 eeschema.InteractiveDrawing.importSheetPin	
+eeschema.InteractiveDrawing.importSingleSheetPin	
 eeschema.InteractiveDrawing.placeBusWireEntry	Z
 eeschema.InteractiveDrawing.placeGlobalLabel	Ctrl+H
 eeschema.InteractiveDrawing.placeHierarchicalLabel	H
@@ -219,6 +223,8 @@ eeschema.InteractiveEdit.editFootprint	F
 eeschema.InteractiveEdit.editReference	U
 eeschema.InteractiveEdit.editTextAndGraphics	
 eeschema.InteractiveEdit.editValue	V
+eeschema.InteractiveEdit.mirrorH	X
+eeschema.InteractiveEdit.mirrorV	Y
 eeschema.InteractiveEdit.mirrorX	X
 eeschema.InteractiveEdit.mirrorY	Y
 eeschema.InteractiveEdit.pinTable	
@@ -276,16 +282,22 @@ eeschema.SymbolLibraryControl.editSymbol
 eeschema.SymbolLibraryControl.exportSymbol	
 eeschema.SymbolLibraryControl.exportSymbolAsSVG	
 eeschema.SymbolLibraryControl.exportSymbolView	
+eeschema.SymbolLibraryControl.hideSymbolTree	
 eeschema.SymbolLibraryControl.importSymbol	
 eeschema.SymbolLibraryControl.newSymbol	
 eeschema.SymbolLibraryControl.pasteSymbol	
 eeschema.SymbolLibraryControl.saveInSchematic	
+eeschema.SymbolLibraryControl.saveLibraryAs	Ctrl+Shift+S
+eeschema.SymbolLibraryControl.saveSymbolAs	
 eeschema.SymbolLibraryControl.showComponentTree	
 eeschema.SymbolLibraryControl.showElectricalTypes	
+eeschema.SymbolLibraryControl.showSymbolTree	
 eeschema.SymbolLibraryControl.toggleSyncedPinsMode	
+eeschema.SymbolLibraryControl.updateSymbolFields	
 eeschema.SymbolMoveTool	
 kicad.Control.closeProject	
 kicad.Control.convertImage	Ctrl+B
+kicad.Control.editDrawingSheet	Ctrl+Y
 kicad.Control.editFootprints	Ctrl+F
 kicad.Control.editOtherPCB	
 kicad.Control.editOtherSch	
@@ -387,6 +399,7 @@ pcbnew.EditorControl.generateDrillFiles
 pcbnew.EditorControl.generateGerbers	
 pcbnew.EditorControl.generatePosFile	
 pcbnew.EditorControl.generateReportFile	
+pcbnew.EditorControl.group	
 pcbnew.EditorControl.groupCreate	
 pcbnew.EditorControl.groupEnter	
 pcbnew.EditorControl.groupLeave	
@@ -400,15 +413,19 @@ pcbnew.EditorControl.highlightNetTool
 pcbnew.EditorControl.importNetlist	
 pcbnew.EditorControl.importSpecctraSession	
 pcbnew.EditorControl.lock	
+pcbnew.EditorControl.placeFootprint	O
 pcbnew.EditorControl.placeModule	O
 pcbnew.EditorControl.placeTarget	
+pcbnew.EditorControl.removeFromGroup	
 pcbnew.EditorControl.showEeschema	
 pcbnew.EditorControl.showNet	
 pcbnew.EditorControl.toggleLastNetHighlight	
 pcbnew.EditorControl.toggleLock	L
+pcbnew.EditorControl.toggleNetHighlight	Ctrl+`
 pcbnew.EditorControl.trackViaSizeChanged	
 pcbnew.EditorControl.trackWidthDec	Shift+W
 pcbnew.EditorControl.trackWidthInc	W
+pcbnew.EditorControl.ungroup	
 pcbnew.EditorControl.unlock	
 pcbnew.EditorControl.viaSizeDec	\
 pcbnew.EditorControl.viaSizeInc	'
@@ -442,8 +459,11 @@ pcbnew.InteractiveDrawing.graphicPolygon	Ctrl+Shift+P
 pcbnew.InteractiveDrawing.incWidth	Ctrl++
 pcbnew.InteractiveDrawing.leader	
 pcbnew.InteractiveDrawing.line	Ctrl+Shift+L
+pcbnew.InteractiveDrawing.line45degMode	
 pcbnew.InteractiveDrawing.orthogonalDimension	
+pcbnew.InteractiveDrawing.placeCharacteristics	
 pcbnew.InteractiveDrawing.placeImportedGraphics	Ctrl+Shift+F
+pcbnew.InteractiveDrawing.placeStackup	
 pcbnew.InteractiveDrawing.rectangle	
 pcbnew.InteractiveDrawing.ruleArea	Ctrl+Shift+K
 pcbnew.InteractiveDrawing.setAnchor	Ctrl+Shift+N
@@ -482,6 +502,7 @@ pcbnew.InteractiveRouter.PlaceBlindVia	Alt+Shift+V
 pcbnew.InteractiveRouter.PlaceMicroVia	Ctrl+V
 pcbnew.InteractiveRouter.PlaceVia	V
 pcbnew.InteractiveRouter.SelLayerAndPlaceBlindVia	Alt+<
+pcbnew.InteractiveRouter.SelLayerAndPlaceMicroVia	
 pcbnew.InteractiveRouter.SelLayerAndPlaceVia	<
 pcbnew.InteractiveRouter.SelectLayerPair	
 pcbnew.InteractiveRouter.SettingsDialog	Ctrl+Shift+,
@@ -528,11 +549,14 @@ pcbnew.ModuleEditor.deleteFootprint
 pcbnew.ModuleEditor.editFootprint	
 pcbnew.ModuleEditor.exportFootprint	
 pcbnew.ModuleEditor.footprintProperties	
+pcbnew.ModuleEditor.hideFootprintTree	
 pcbnew.ModuleEditor.importFootprint	
 pcbnew.ModuleEditor.newFootprint	Ctrl+N
 pcbnew.ModuleEditor.pasteFootprint	
+pcbnew.ModuleEditor.repairFootprint	
 pcbnew.ModuleEditor.saveToBoard	
 pcbnew.ModuleEditor.saveToLibrary	
+pcbnew.ModuleEditor.showFootprintTree	
 pcbnew.ModuleEditor.toggleFootprintTree	
 pcbnew.PadTool.ApplyPadSettings	
 pcbnew.PadTool.CopyPadSettings	
@@ -547,6 +571,8 @@ pcbnew.PointEditor.removeCorner
 pcbnew.PositionRelative.positionRelative	Shift+P
 pcbnew.PositionRelative.selectpositionRelativeItem	
 pcbnew.ReannotateTool.ShowReannotateDialog	
+pcbnew.ScriptingTool.pluginsReload	
+pcbnew.ScriptingTool.pluginsShowFolder	
 pcbnew.ZoneFiller.zoneFill	
 pcbnew.ZoneFiller.zoneFillAll	B
 pcbnew.ZoneFiller.zoneUnfill	
