@@ -70,10 +70,11 @@ for_window [class="^Fullscreen*"] fullscreen enable
 for_window [window_role="^GtkFileChooserDialog"] floating disable
 
 # check for new email
+exec "davmail ~/.config/davmail/davmail.properties &"
 exec "mbsync -Vac $HOME/.config/isync/mbsyncrc && notmuch new"
 
 # start keepass
-for_window [class="KeePassXC"] move window to scratchpad
+# for_window [class="KeePassXC"] move window to scratchpad
 exec "pass show pass-keepassxc/keepassxc | keepassxc --pw-stdin ~/OneDrive-Personal/passwords.kdbx"
 
 # start jack

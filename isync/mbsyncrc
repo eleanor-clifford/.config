@@ -22,7 +22,7 @@ Create        Both
 SyncState     *
 
 ImapAccount   cam
-Host          localhost
+Host          127.0.0.1
 Port          1144
 User          tc565@cam.ac.uk
 PassCmd       "$HOME/.config/scripts/get_password.sh cam.ac.uk 'Could not sync mail (GPG key not unlocked)'"

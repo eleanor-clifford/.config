@@ -135,6 +135,8 @@ alias ssh='TERM=xterm-256color ssh'
 
 alias lab='~/.config/scripts/lab.sh'
 
+alias camvpn='sudo ip netns exec camvpn sudo -u tim'
+
 function ghf() {
 	git remote rename origin upstream
 	gh repo fork --remote=true $1

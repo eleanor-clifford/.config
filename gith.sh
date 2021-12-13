@@ -60,6 +60,10 @@ Execute common git workflows for this repository
 				./install.sh --update
 				git stash pop
 			fi
+			# Reload i3 if we're doing this on the fly
+			if pgrep i3 >/dev/null; then
+				i3-msg restart
+			fi
 		elif ! echo "$log" | grep -q "METACONF_APPLIED"; then
 			git pull
 		else

@@ -21,7 +21,7 @@ account         cam
 host            127.0.0.1
 port            1026
 tls             off
-auth            login
+auth            plain
 from            tc565@cam.ac.uk
 user            tc565@cam.ac.uk
 passwordeval    "$HOME/.config/scripts/get_password.sh cam.ac.uk"
