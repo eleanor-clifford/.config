@@ -1,5 +1,5 @@
 metadata:
-  author: Tim Clifford (tc565)
+  author: Tim Clifford (tc565), Trinity College
   keywords:
     - 'Dracula theme'
 
@@ -8,12 +8,14 @@ highlight-style: $HOME/.config/pandoc/dracula.theme
 number-sections: true
 
 variables:
-  geometry:  margin=1in
-  linkcolor: draculapink
-  filecolor: draculagreen
-  citecolor: draculapurple
-  urlcolor:  draculacyan
-  toccolor:  draculaorange
-  monofont:  NotoSansMono-Regular
+  papersize:      a4
+  documentclass:  article
+  geometry:       margin=1in
+  linkcolor:      draculapink
+  filecolor:      draculagreen
+  citecolor:      draculapurple
+  urlcolor:       draculacyan
+  toccolor:       draculaorange
+  monofont:       NotoSansMono-Regular
   header-includes:
     - \usepackage{$HOME/.config/pandoc/draculatheme}

@@ -15,7 +15,7 @@
 \usepackage[nameinlink,noabbrev,capitalise]{cleveref}
 \usepackage{booktabs}
 \usepackage{tabulary}
-\usepackage{appendix}
+\usepackage[titletoc,title]{appendix}
 \usepackage{tikz}
 \usepackage{import}
 \usepackage{fancyhdr}
@@ -23,9 +23,7 @@
 
 \renewcommand{\familydefault}{\sfdefault}
 
-\usepackage{titlesec}
-\titleformat*{\section}{\Large\bfseries\color{draculapurple}}
-\titleformat*{\subsection}{\large\bfseries\color{draculapurple}}
-\titleformat*{\subsubsection}{\bfseries\color{draculapurple}}
-\titleformat*{\paragraph}{\bfseries\color{draculapurple}}
-\titleformat*{\subparagraph}{\bfseries\color{draculapurple}}
+\newcommand{\rfig}[1]{\autoref{fig:#1}}
+\newcommand{\rsec}[1]{\autoref{sec:#1}}
+\newcommand{\rtbl}[1]{\autoref{tbl:#1}}
+\newcommand{\reqn}[1]{\autoref{eqn:#1}}

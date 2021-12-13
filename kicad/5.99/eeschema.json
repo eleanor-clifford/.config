@@ -7,7 +7,7 @@
     "sort_order": 0
   },
   "appearance": {
-    "color_theme": "_builtin_default",
+    "color_theme": "dracula",
     "edit_component_visible_columns": "0 1 2 3 4 5 6 7",
     "edit_sheet_visible_columns": "0 1 2 3 4 5 6 7",
     "erc_severities": 24,
@@ -144,13 +144,13 @@
     "hpgl_pen_size": 0.5
   },
   "printing": {
-    "background": false,
-    "color_theme": "",
+    "background": true,
+    "color_theme": "dracula",
     "layers": [],
-    "monochrome": true,
+    "monochrome": false,
     "scale": 1.0,
     "title_block": false,
-    "use_theme": false
+    "use_theme": true
   },
   "selection": {
     "draw_selected_children": true,
@@ -227,8 +227,8 @@
     "maximized": true,
     "mru_path": "",
     "perspective": "layout2|name=InfoBar;caption=;state=131452;dir=1;layer=1;row=0;pos=0;prop=100000;bestw=20;besth=30;minw=-1;minh=-1;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|name=MainToolbar;caption=;state=139632;dir=1;layer=6;row=0;pos=0;prop=100000;bestw=1281;besth=52;minw=-1;minh=-1;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|name=OptToolbar;caption=;state=139596;dir=4;layer=3;row=0;pos=0;prop=100000;bestw=52;besth=358;minw=-1;minh=-1;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|name=ToolsToolbar;caption=;state=139596;dir=2;layer=2;row=0;pos=0;prop=100000;bestw=52;besth=642;minw=-1;minh=-1;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|name=DrawFrame;caption=;state=1020;dir=5;layer=0;row=0;pos=0;prop=100000;bestw=387;besth=160;minw=-1;minh=-1;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|name=MsgPanel;caption=;state=131452;dir=3;layer=6;row=0;pos=0;prop=100000;bestw=400;besth=38;minw=-1;minh=-1;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|dock_size(1,6,0)=52|dock_size(4,3,0)=52|dock_size(2,2,0)=52|dock_size(5,0,0)=384|dock_size(3,6,0)=38|dock_size(1,1,0)=30|",
-    "pos_x": 0,
-    "pos_y": 0,
+    "pos_x": 1280,
+    "pos_y": 720,
     "size_x": 1280,
     "size_y": 720,
     "zoom_factors": [

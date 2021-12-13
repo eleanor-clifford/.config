@@ -35,7 +35,7 @@ fi
 export EDITOR=/usr/bin/vim
 export QT_QPA_PLATFORMTHEME=qt5ct
 export MOZ_USE_XINPUT2=1
-setxkbmap colemak-custom
+~/.config/scripts/setup-keyboards.sh
 
 session=${2:-i3}
 case $session in

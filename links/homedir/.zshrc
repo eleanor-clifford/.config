@@ -107,7 +107,7 @@ export VISUAL=/usr/bin/nvim
 export BROWSER=/usr/bin/firefox
 export AUR_PAGER="$HOME/.config/scripts/rangerp.sh"
 export PATH="$PATH:$HOME/.dotnet/tools"
-export PATH="$PATH:$HOME/tmp/ltex-ls-15.0.0/bin"
+export PATH="$PATH:$HOME/.local/bin"
 # }}}
 # Aliases {{{
 alias ls="ls --time-style=long-iso --color=tty"

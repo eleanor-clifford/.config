@@ -29,11 +29,14 @@ exec --no-startup-id $HOME/.config/i3/scripts/lock.sh -u $HOME/.config/wallpaper
 # Numlock
 exec --no-startup-id numlockx on
 
+# keyboards
+exec_always --no-startup-id $HOME/.config/scripts/setup-keyboards.sh
+
 # change mouse horizontal scroll acceleration
 exec --no-startup-id $HOME/.config/scripts/setup_mouse.sh
 
 # background
-exec_always --no-startup-id "sleep 2; feh --bg-fill $HOME/.config/wallpapers/current.png --geometry +0"
+exec_always --no-startup-id "sleep 2; feh --bg-fill $HOME/.config/wallpapers/current.png $(cat $HOME/.config/wallpapers/vertical-geometry)"
 
 # beep
 exec --no-startup-id xset b off
@@ -201,6 +204,17 @@ bindsym $mod+dollar workspace 8
 bindsym $mod+asciicircum workspace 9
 bindsym $mod+asterisk workspace 10
 
+bindsym $mod+1 workspace 1
+bindsym $mod+3 workspace 2
+bindsym $mod+5 workspace 3
+bindsym $mod+7 workspace 4
+bindsym $mod+9 workspace 5
+
+bindsym $mod+0 workspace 6
+bindsym $mod+2 workspace 7
+bindsym $mod+4 workspace 8
+bindsym $mod+6 workspace 9
+bindsym $mod+8 workspace 10
 
 # move focused container to workspace
 bindsym $mod+Shift+exclam move container to workspace 1
@@ -224,8 +238,8 @@ bindsym XF86AudioLowerVolume exec --no-startup-id $HOME/.config/i3/scripts/lower
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle # mute sound
 
 # Media Player controls
-bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
-bindsym XF86AudioPause exec --no-startup-id playerctl play-pause
+bindsym XF86AudioPlay exec --no-startup-id $HOME/.config/i3/scripts/play-pause.sh
+bindsym XF86AudioPause exec --no-startup-id $HOME/.config/i3/scripts/play-pause.sh
 bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 

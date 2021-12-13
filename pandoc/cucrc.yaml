@@ -1,0 +1,18 @@
+metadata:
+  author: Tim Clifford (Windsurfing Bosun)
+  keywords:
+    - 'Dracula theme'
+
+pdf-engine: xelatex
+highlight-style: $HOME/.config/pandoc/dracula.theme
+
+variables:
+  geometry:  margin=1in
+  linkcolor: draculapink
+  filecolor: draculagreen
+  citecolor: draculapurple
+  urlcolor:  draculacyan
+  toccolor:  draculaorange
+  monofont:  NotoSansMono-Regular
+  header-includes:
+    - \usepackage{$HOME/.config/pandoc/draculatheme}
