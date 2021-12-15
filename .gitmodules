@@ -40,3 +40,6 @@
 [submodule "polybar/power"]
 	path = polybar/power
 	url = git@github.com:tim-clifford/polybar-power
+[submodule "pkgbuilds"]
+	path = pkgbuilds
+	url = git@github.com:tim-clifford/pkgbuilds

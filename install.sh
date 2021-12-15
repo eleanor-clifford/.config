@@ -11,6 +11,8 @@ firefox=true
 zsh=true
 grub=true
 install=true
+install_all=false
+cont=false
 nonfree=false
 no_nonfree=false
 ignore_metaconfig=false
@@ -22,7 +24,13 @@ for i in "$@"; do
 	case "$i" in
 		--help)              help=true;;
 		--install=false)     install=false;;
+		--install=all)       install_all=true;;
+		--install=allcont)
+			install_all=true
+			cont=true
+			;;
 		--link=false)        link=false;;
+		--ignore-metaconf)   ignore_metaconfig=true;;
 		--firefox=false)     firefox=false;;
 		--vim=false)         vim=false;;
 		--vim=minimal)       vim=minimal;;
@@ -48,6 +56,7 @@ for i in "$@"; do
 			firefox=true
 			link=false
 			install=false
+			submodules=false
 			zsh=false
 			grub=false
 			no_nonfree=true
@@ -68,6 +77,8 @@ between the application of metaconfigurations and any further changes.
 
   --help                display this help and exit
   --install=false       don't install any packages
+  --install=all         install all packages
+  --install=allcont     install all packages (continue, no submodules)
   --link=false          don't symlink dotfiles into $HOME
   --firefox=false       don't install firefox theme
   --vim=false           don't install vimrc
@@ -86,7 +97,7 @@ between the application of metaconfigurations and any further changes.
 fi
 # }}}
 # Initialise submodules {{{
-if $install || $submodules; then
+if ! $cont && ($install || $submodules); then
 	git submodule update --init --remote
 fi
 # }}}
@@ -126,8 +137,11 @@ fi
 # }}}
 # Install packages {{{
 if $install; then
+	grep -q '^\[multilib' /etc/pacman.conf || echo "
+[multilib]
+Include = /etc/pacman.d/mirrorlist" | sudo tee -a /etc/pacman.conf >/dev/null
 	# Install AUR helper {{{
-	while true; do
+	$cont || while true; do
 		read -p "Install aurutils? " yn
 		case $yn in
 			[Yy]* )
@@ -157,41 +171,63 @@ Server = file:///home/custompkgs" | sudo tee -a /etc/pacman.conf >/dev/null
 	done
 	# }}}
 	# Install packages {{{
-	INSTALL='sudo pacman -S'
-	INSTALL_AUR="aur sync"
-	export AUR_PAGER="$HOME/.config/scripts/rangerp.sh"
+	INSTALL='sudo pacman -S --noconfirm --needed'
+	INSTALL_AUR="aur sync --noconfirm"
+	export AUR_PAGER="ls"
 
-	IFS="#" # Split on the package section comment, don't care that it's hacky
-	for pkgs in $(cat pkglist.conf); do
-		if [ "$pkgs" = "" ]; then continue; fi
-		while true; do
-		read -p "Install $(echo "$pkgs" | head -n1 | sed 's/^ *//')? " yn
-			case $yn in
-				[Yy]* )
-					# remove comment
-					pkgs=$(echo "$pkgs" | tail -n +2)
-					if echo "$pkgs" | egrep '^aur/'; then
-						if ! eval "$INSTALL_AUR $(echo "$pkgs" \
-								| sed -n 's|^aur/||p' | tr '\n' ' ')"
+	if $install_all; then
+		if ! eval "$INSTALL_AUR $(cat pkglist.conf \
+				| sed -n 's|^aur/||p' | tr '\n' ' ')"
+		then
+			exit $?
+		fi
+		if ! eval "$INSTALL $(cat pkglist.conf \
+				| grep -v '^#' | sed 's|^aur/||' | tr '\n' ' ')"
+		then
+			exit $?
+		fi
+	else
+		IFS="#" # Split on the package section comment, don't care that it's hacky
+		for pkgs in $(cat pkglist.conf); do
+			if [ "$pkgs" = "" ]; then continue; fi
+			while true; do
+				if $install_all; then
+					yn=y
+				else
+					read -p "Install $(echo "$pkgs" | head -n1 | sed 's/^ *//')? " yn
+				fi
+				case $yn in
+					[Yy]* )
+						# remove comment
+						pkgs=$(echo "$pkgs" | tail -n +2)
+						if echo "$pkgs" | egrep '^aur/'; then
+							if ! eval "$INSTALL_AUR $(echo "$pkgs" \
+									| sed -n 's|^aur/||p' | tr '\n' ' ')"
+							then
+								exit $?
+							fi
+						fi
+						if ! eval "$INSTALL $(echo "$pkgs" \
+									| sed 's|^aur/||' | tr '\n' ' ')"
 						then
 							exit $?
 						fi
-					fi
-					if ! eval "$INSTALL $(echo "$pkgs" \
-								| sed 's|^aur/||' | tr '\n' ' ')"
-					then
-						exit $?
-					fi
-					break;;
-				[Nn]* )
-					break;;
-				*)
-					echo "Please respond";;
-			esac
+						break;;
+					[Nn]* )
+						break;;
+					*)
+						echo "Please respond";;
+				esac
+			done
 		done
-	done
-	IFS="
+		IFS="
 "
+	fi
+	# }}}
+	# Install custom PKGBUILDs {{{
+	cd pkgbuilds
+	./install_all.sh
+	cd -
 	# }}}
 fi
 # }}}
@@ -349,6 +385,7 @@ if $link; then
 			targetpath="$(echo "$file" | sed "s|$dir|$targetdir|")"
 			path="$(realpath "$file")"
 
+			$sudo_bin mkdir -p "$(dirname "$targetpath")"
 			$sudo_bin ln -sb "$path" "$targetpath"
 			echo "  ==> linked $targetpath -> $path"
 		done
@@ -356,9 +393,17 @@ if $link; then
 fi
 # }}}
 # Perform application-specific tasks {{{
+# NetworkManager {{{
+if $install; then
+	sudo systemctl enable NetworkManager
+fi
+# }}}
 # Neovim {{{
 if $vim; then
 	git submodule update --init --remote nvim
+	cd nvim
+	./install.sh
+	cd ..
 fi
 # }}}
 # Firefox {{{
@@ -368,8 +413,8 @@ if $firefox; then
 		firefox_dir=$(find $HOME/.mozilla -type d \
 				-regex ".*/firefox/.*\.default-release")
 		if [ "$firefox_dir" = "" ]; then
-			todo="$todo firefox "
 			echo "Firefox must be run once before the config can be made, skipping..."
+			todo="$todo firefox "
 		elif ! [ "$(echo "$firefox_dir" | wc -l)" = "1" ]; then
 			echo "Multiple firefox installs located, skipping..."
 		else
@@ -394,6 +439,7 @@ if $firefox; then
 		fi
 	else
 		echo "Firefox must be run once before the config can be made, skipping..."
+		todo="$todo firefox "
 	fi
 fi
 # }}}
@@ -490,10 +536,12 @@ if ! $no_nonfree && $nonfree; then
 	cd ..
 
 	# Icons
-	cd nonfree/icons
+	# extra not sure since I had to mess with this
+	icondir="$(pwd)/nonfree/icons"
 	mkdir -p ~/.local/share/icons
-	ln -sf $(pwd)/Linebit ~/.local/share/icons/Linebit
-	cd ../..
+	cd ~/.local/share/icons
+	ln -sf "$icondir/Linebit"
+	cd -
 else
 	# Set up default wallpaper
 	cd wallpapers
@@ -517,9 +565,9 @@ if ! $ignore_metaconfig; then
 fi
 # }}}
 # Output todo list {{{
-if ! [ "$todo" = "" ]; then
-	echo "\
-	====> TODO LIST:"
+if $install || ! [ "$todo" = "" ]; then
+	echo -e '\e[33m\
+====> TODO LIST:\e[0m'
 fi
 if echo $todo | grep -q "firefox_postinstall "; then
 	echo "To finish Firefox configuration:
