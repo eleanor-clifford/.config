@@ -349,6 +349,7 @@ if $link; then
 			targetpath="$(echo "$file" | sed "s|$dir|$targetdir|")"
 			path="$(realpath "$file")"
 
+			$sudo_bin mkdir -p "$(dirname "$targetpath")"
 			$sudo_bin ln -sb "$path" "$targetpath"
 			echo "  ==> linked $targetpath -> $path"
 		done
@@ -531,7 +532,11 @@ if echo $todo | grep -q "firefox_postinstall "; then
 	* Enable \`toolkit.legacyUserProfileCustomizations.stylesheets\`
       to use the custom firefox theme.
 	* Enable \`full-screen-api.ignore-widgets\`
-	  to enable windowed fullscreen"
+	  to enable windowed fullscreen
+	* Set \`browser.urlbar.maxRichResults\` to 0
+	  to disable url results (use Tridactyl!)
+  - in \`about:preferences\`:
+	* set theme to dark"
 elif echo $todo | grep -q "firefox "; then
 	echo "\
   - Firefox must be run before you can install the custom theme

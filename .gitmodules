@@ -28,15 +28,9 @@
 [submodule "polybar/player"]
 	path = polybar/player
 	url = git@github.com:windows-bad/polybar-player
-[submodule "nvim"]
-	path = nvim
-	url = git@github.com:tim-clifford/nvimrc
-[submodule "zsh-plugins/bash-insulter"]
-	path = zsh-plugins/bash-insulter
-	url = git@github.com:hkbakke/bash-insulter
-[submodule "zsh-plugins/zsh-git-prompt"]
-	path = zsh-plugins/zsh-git-prompt
-	url = git@github.com:olivierverdier/zsh-git-prompt
 [submodule "polybar/power"]
 	path = polybar/power
 	url = git@github.com:tim-clifford/polybar-power
+[submodule "minimal"]
+	path = minimal
+	url = git@git.sr.ht:~tim-clifford/.config-minimal

@@ -3,13 +3,11 @@ data="$(sudo ip netns exec camvpn sudo -u tim ldapsearch -x -LLL \
 	-b "ou=people, o=University of Cambridge,dc=cam,dc=ac,dc=uk" \
 	givenName cn sn mail uid | sed -z 's|\n\n||g')"
 
-
 IFS="" # jaaaaaaaaaaaaank
 
 template="$(khard template)"
 
 for person in $data; do
-	echo $person
 	uid="$(echo "$person" | sed -n 's|uid: ||p')"
 	mail="$(echo "$person" | sed -n 's|mail: ||p')"
 	cn="$(echo "$person" | sed -n 's|cn: ||p')"

@@ -1,0 +1,10 @@
+[Unit]
+Description=Startup applications
+Documentation=https://github.com/Spotifyd/spotifyd
+After=graphical.target
+
+[Service]
+ExecStart=/home/tim/.config/i3/scripts/startup.sh
+
+[Install]
+WantedBy=default.target

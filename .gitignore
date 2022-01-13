@@ -10,6 +10,7 @@
 /dconf
 /Debauchee/
 /discord
+/Element/
 /evince
 /falkTX/
 /flameshot
@@ -22,6 +23,7 @@
 /.FreeCAD/Mod
 /gh
 /GIMP
+/gomuks/
 /GPlates/
 /gtk-2.0/
 /gtk-3.0/bookmarks
@@ -61,6 +63,7 @@
 /libreoffice
 /libvirt/
 /lpass
+/lsp-plugins/
 /matplotlib
 /Meltytech/
 /menus/
@@ -91,6 +94,7 @@
 /Slack
 /sonic-visualiser/
 /spotify
+/spotify-tui/
 /StardewValley/
 /teams
 /Trolltech.conf

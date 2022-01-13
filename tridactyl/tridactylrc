@@ -1,12 +1,12 @@
-set newtab about:blank
+set newtab duckduckgo.com
 bind n scrollpx -50
 bind e scrollline 10
 bind i scrollline -10
 bind o scrollpx 50
 
 bind N back
-bind E tabprev
-bind I tabnext
+bind E tabnext
+bind I tabprev
 bind O forward
 
 bind K fillcmdline tabopen

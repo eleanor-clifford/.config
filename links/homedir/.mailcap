@@ -1,3 +1,4 @@
 text/html; ~/.config/neomutt/handle-html.sh; copiousoutput;
 application/pdf; zathura %s &;
+application/vnd.openxmlformats-officedocument.wordprocessingml.document; lowriter %s &;
 
