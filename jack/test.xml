@@ -1,0 +1,20 @@
+<!DOCTYPE patchbay>
+<patchbay version="0.9.4" name="test">
+ <output-sockets>
+  <socket type="jack-audio" client="tim\-laptop" exclusive="off" name="tim\-laptop 1">
+   <plug>from_slave_1</plug>
+   <plug>from_slave_2</plug>
+  </socket>
+ </output-sockets>
+ <input-sockets>
+  <socket type="jack-audio" client="tim\-laptop" exclusive="off" name="tim\-laptop 1">
+   <plug>to_slave_1</plug>
+   <plug>to_slave_2</plug>
+  </socket>
+ </input-sockets>
+ <slots/>
+ <cables>
+  <cable output="tim\-laptop 1" input="tim\-laptop 1" type="jack-audio"/>
+ </cables>
+</patchbay>
+

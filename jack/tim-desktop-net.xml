@@ -1,0 +1,39 @@
+<!DOCTYPE patchbay>
+<patchbay name="tim-desktop-net" version="0.9.4">
+ <output-sockets>
+  <socket exclusive="off" client="PulseAudio\ JACK\ Sink" name="pulse_audio" type="jack-audio">
+   <plug>front\-left</plug>
+   <plug>front\-right</plug>
+  </socket>
+  <socket exclusive="off" client="alsoft" name="alsoft 1" type="jack-audio">
+   <plug>channel_1</plug>
+   <plug>channel_2</plug>
+  </socket>
+  <socket exclusive="on" client="system" name="audio_interface" type="jack-audio">
+   <plug>capture_1</plug>
+   <plug>capture_2</plug>
+  </socket>
+  <socket exclusive="off" client="tim\-laptop" name="tim\-laptop" type="jack-audio">
+   <plug>from_slave_1</plug>
+   <plug>from_slave_2</plug>
+  </socket>
+ </output-sockets>
+ <input-sockets>
+  <socket exclusive="off" client="tim\-laptop" name="tim\-laptop" type="jack-audio">
+   <plug>to_slave_1</plug>
+   <plug>to_slave_2</plug>
+  </socket>
+  <socket exclusive="off" client="system" name="audio_interface" type="jack-audio">
+   <plug>playback_1</plug>
+   <plug>playback_2</plug>
+  </socket>
+ </input-sockets>
+ <slots/>
+ <cables>
+  <cable output="pulse_audio" input="audio_interface" type="jack-audio"/>
+  <cable output="pulse_audio" input="tim\-laptop" type="jack-audio"/>
+  <cable output="tim\-laptop" input="audio_interface" type="jack-audio"/>
+  <cable output="alsoft 1" input="tim\-laptop" type="jack-audio"/>
+ </cables>
+</patchbay>
+
