@@ -1,0 +1,106 @@
+<!DOCTYPE patchbay>
+<patchbay name="ardour" version="0.9.5">
+ <output-sockets>
+  <socket name="system" exclusive="off" client="system" type="jack-audio">
+   <plug>capture_1</plug>
+   <plug>capture_2</plug>
+  </socket>
+  <socket name="PulseAudio JACK Sink" exclusive="off" client="PulseAudio\ JACK\ Sink" type="jack-audio">
+   <plug>front\-left</plug>
+   <plug>front\-right</plug>
+  </socket>
+  <socket name="ardour" exclusive="off" client="ardour" type="jack-audio">
+   <plug>LTC\-Out</plug>
+   <plug>Click\/audio_out\ 1</plug>
+   <plug>Click\/audio_out\ 2</plug>
+   <plug>Master\/audio_out\ 1</plug>
+   <plug>Master\/audio_out\ 2</plug>
+   <plug>auditioner\/audio_out\ 1</plug>
+   <plug>auditioner\/audio_out\ 2</plug>
+   <plug>Audio\ 1\/audio_out\ 1</plug>
+   <plug>Audio\ 1\/audio_out\ 2</plug>
+   <plug>Audio\ 2\/audio_out\ 1</plug>
+   <plug>Audio\ 2\/audio_out\ 2</plug>
+  </socket>
+  <socket name="system 2" exclusive="off" client="system" type="jack-audio">
+   <plug>capture_1</plug>
+   <plug>capture_1</plug>
+   <plug>capture_2</plug>
+   <plug>capture_2</plug>
+  </socket>
+  <socket name="ardour 2" exclusive="off" client="ardour" type="jack-audio">
+   <plug>Click\/audio_out\ 1</plug>
+   <plug>Click\/audio_out\ 2</plug>
+   <plug>Master\/audio_out\ 1</plug>
+   <plug>Master\/audio_out\ 2</plug>
+   <plug>auditioner\/audio_out\ 1</plug>
+   <plug>auditioner\/audio_out\ 2</plug>
+  </socket>
+  <socket name="ardour 3" exclusive="off" client="ardour" type="jack-audio">
+   <plug>Audio\ 1\/audio_out\ 1</plug>
+   <plug>Audio\ 1\/audio_out\ 2</plug>
+   <plug>Audio\ 2\/audio_out\ 1</plug>
+   <plug>Audio\ 2\/audio_out\ 2</plug>
+  </socket>
+  <socket name="ardour" exclusive="off" client="ardour" type="jack-midi">
+   <plug>MMC\ out</plug>
+   <plug>Scene\ out</plug>
+   <plug>x\-virtual\-keyboard</plug>
+   <plug>MTC\ out</plug>
+   <plug>MIDI\ Clock\ out</plug>
+  </socket>
+  <socket name="Midi Through" exclusive="off" client="Midi\ Through" type="alsa-midi">
+   <plug>Midi\ Through\ Port\-0</plug>
+  </socket>
+ </output-sockets>
+ <input-sockets>
+  <socket name="system" exclusive="off" client="system" type="jack-audio">
+   <plug>playback_1</plug>
+   <plug>playback_2</plug>
+  </socket>
+  <socket name="alsa_out" exclusive="off" client="alsa_out" type="jack-audio">
+   <plug>playback_1</plug>
+   <plug>playback_2</plug>
+  </socket>
+  <socket name="ardour" exclusive="off" client="ardour" type="jack-audio">
+   <plug>physical_audio_input_monitor_enable</plug>
+   <plug>Master\/audio_in\ 1</plug>
+   <plug>Master\/audio_in\ 2</plug>
+   <plug>LTC\ in</plug>
+   <plug>Audio\ 1\/audio_in\ 1</plug>
+   <plug>Audio\ 2\/audio_in\ 1</plug>
+  </socket>
+  <socket name="ardour 2" exclusive="off" client="ardour" type="jack-audio">
+   <plug>physical_audio_input_monitor_enable</plug>
+   <plug>Audio\ 1\/audio_in\ 1</plug>
+   <plug>physical_audio_input_monitor_enable</plug>
+   <plug>Audio\ 2\/audio_in\ 1</plug>
+  </socket>
+  <socket name="ardour 3" exclusive="off" client="ardour" type="jack-audio">
+   <plug>Master\/audio_in\ 1</plug>
+   <plug>Master\/audio_in\ 2</plug>
+   <plug>Master\/audio_in\ 1</plug>
+   <plug>Master\/audio_in\ 2</plug>
+  </socket>
+  <socket name="ardour" exclusive="off" client="ardour" type="jack-midi">
+   <plug>physical_midi_input_monitor_enable</plug>
+   <plug>MMC\ in</plug>
+   <plug>Scene\ in</plug>
+   <plug>MTC\ in</plug>
+   <plug>MIDI\ Clock\ in</plug>
+  </socket>
+  <socket name="Midi Through" exclusive="off" client="Midi\ Through" type="alsa-midi">
+   <plug>Midi\ Through\ Port\-0</plug>
+  </socket>
+ </input-sockets>
+ <slots/>
+ <cables>
+  <cable output="PulseAudio JACK Sink" input="alsa_out" type="jack-audio"/>
+  <cable output="PulseAudio JACK Sink" input="system" type="jack-audio"/>
+  <cable output="system 2" input="ardour 2" type="jack-audio"/>
+  <cable output="ardour 2" input="system" type="jack-audio"/>
+  <cable output="ardour 2" input="alsa_out" type="jack-audio"/>
+  <cable output="ardour 3" input="ardour 3" type="jack-audio"/>
+ </cables>
+</patchbay>
+

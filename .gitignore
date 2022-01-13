@@ -36,7 +36,6 @@
 /i3/focused
 /i3/lock-cache
 /inkscape/
-/jack/
 /@joplin/
 /joplin/
 /joplin-desktop/
@@ -86,7 +85,6 @@
 /QDirStat
 /QtProject.conf
 /rclone/
-/rncbc.org/
 /sftpman
 /Signal
 /Signal Beta
@@ -108,4 +106,8 @@
 /xournalpp/autosave
 /xournalpp/errorlogs
 /xournalpp/metadata
+/Yubico/
 /zoomus.conf
+/Element/
+/d-feet/
+/rncbc.org/

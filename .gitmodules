@@ -37,3 +37,6 @@
 [submodule "minimal"]
 	path = minimal
 	url = git@git.sr.ht:~tim-clifford/.config-minimal
+[submodule "dracula/gtk"]
+	path = dracula/gtk
+	url = https://github.com/dracula/gtk

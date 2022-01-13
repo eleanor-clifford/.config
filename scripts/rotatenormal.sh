@@ -1,8 +1,8 @@
 #!/bin/bash
 if xrandr | grep -q "DisplayPort-0 connected"; then
-	$HOME/scripts/rotatenormal-dualmonitor.sh
+	$HOME/.config/scripts/rotatenormal-dualmonitor.sh
 else
-	$HOME/scripts/rotatenormal-singlemonitor.sh
+	$HOME/.config/scripts/rotatenormal-singlemonitor.sh
 fi
 pkill -9 polybar
 pkill -9 picom

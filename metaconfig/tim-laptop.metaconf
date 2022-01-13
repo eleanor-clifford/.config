@@ -5,7 +5,8 @@ PREFIX = _METACONF_REPLACE_
 # e.g. keymaps to add to the end of a config
 # There is logic to prevent duplicate appends on a rerun
 
-# postfix to the file, prefix to the hostname
+# postfix to the file, prefix to the hostname. Be VERY careful changing this
+# it is also hardcoded in a couple places
 POSTFIX_FILE_APPEND_PREFIX   = .METACONF_FILE_APPEND_ # common across metaconfs
 POSTFIX_FILE_APPENDED = .METACONF_FILE_APPENDED       # common across metaconfs
 

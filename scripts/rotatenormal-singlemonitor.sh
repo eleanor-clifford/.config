@@ -10,5 +10,5 @@ xrandr \
 xinput set-prop pointer:"ELAN2514:00 04F3:2AF0" --type=float "Coordinate Transformation Matrix" 0 0 0 0 0 0 0 0 0
 xinput set-prop "ELAN2514:00 04F3:2AF0 Stylus Pen (0)" --type=float "Coordinate Transformation Matrix" 0 0 0 0 0 0 0 0 0
 xinput set-prop "ELAN2514:00 04F3:2AF0 Stylus Eraser (0)" --type=float "Coordinate Transformation Matrix" 0 0 0 0 0 0 0 0 0
-echo -n "0" > $HOME/scripts/currentrotation
+echo -n "0" > $HOME/.config/scripts/currentrotation
 

@@ -14,5 +14,5 @@ xrandr --output DisplayPort-0 --panning 3840x2160+0+0
 xinput set-prop pointer:"ELAN2514:00 04F3:2AF0" --type=float "Coordinate Transformation Matrix" 0.5 0 0.25 0 0.33333333 0.666666667 0 0 1
 xinput set-prop "ELAN2514:00 04F3:2AF0 Stylus Pen (0)" --type=float "Coordinate Transformation Matrix" 0.5 0 0.25 0 0.33333333 0.666666667 0 0 1
 xinput set-prop "ELAN2514:00 04F3:2AF0 Stylus Eraser (0)" --type=float "Coordinate Transformation Matrix" 0.5 0 0.25 0 0.33333333 0.666666667 0 0 1
-echo -n "0" > $HOME/scripts/currentrotation
+echo -n "0" > $HOME/.config/scripts/currentrotation
 

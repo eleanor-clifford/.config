@@ -9,8 +9,12 @@ else
 fi
 
 set_settings() { # $1: settings file
-	perl -i -pe 'BEGIN{undef $/;} s/\[Settings\].*?\n\n/'"$(cat $1)"'/smg' \
-		~/.config/rncbc.org/QjackCtl.conf
+	if grep -q '\[Settings\]' ~/.config/rncbc.org/QjackCtl.conf; then
+		perl -i -pe 'BEGIN{undef $/;} s/\[Settings\].*?\n\n/'"$(cat $1)"'/smg'\
+			~/.config/rncbc.org/QjackCtl.conf
+	else
+		cat $1 >> ~/.config/rncbc.org/QjackCtl.conf
+	fi
 }
 
 trap 'trap_exit' 2

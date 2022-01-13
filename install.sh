@@ -362,41 +362,19 @@ fi
 # }}}
 # Link files {{{
 if $link; then
-	# jank, whatever
-	for i in 0 1; do
-		if [ $i -eq 0 ]; then
-			dir="links/homedir"
-			targetdir="$HOME"
-			echo "====> applying home directory links..."
-			sudo_bin=
-		else
-			dir="links/rootdir"
-			targetdir=""
-			echo "====> applying root directory links..."
-			# this will prepend if sudo is required. It's jank. whatever.
-			sudo_bin=sudo
-		fi
-		for file in $(find $dir -type f); do
-			if echo "$file" | egrep -q \
-					"$POSTFIX_FILE_APPENDED|$POSTFIX_FILE_APPEND_PREFIX"
-			then
-				continue
-			fi
-			targetpath="$(echo "$file" | sed "s|$dir|$targetdir|")"
-			path="$(realpath "$file")"
-
-			$sudo_bin mkdir -p "$(dirname "$targetpath")"
-			$sudo_bin ln -sb "$path" "$targetpath"
-			echo "  ==> linked $targetpath -> $path"
-		done
-	done
+	. ./installscripts/link.sh
 fi
 # }}}
 # Perform application-specific tasks {{{
-# NetworkManager {{{
-if $install; then
-	sudo systemctl enable NetworkManager
-fi
+# Groups {{{
+sudo groupadd -r realtime || true
+sudo usermod -aG realtime `whoami`
+sudo groupadd -r video || true
+sudo usermod -aG video `whoami`
+sudo groupadd -r audio || true
+sudo usermod -aG audio `whoami`
+sudo groupadd -r autologin || true
+sudo usermod -aG autologin `whoami`
 # }}}
 # Neovim {{{
 if $vim; then
@@ -427,13 +405,13 @@ if $firefox; then
 				else
 					cd - >/dev/null
 					rm -r "$firefox_dir/chrome"
-					git clone https://github.com/tim-clifford/minimal-functional-fox-dracula
-					mv minimal-functional-fox-dracula "$firefox_dir/chrome"
+					git clone https://github.com/tim-clifford/firefox-config
+					mv firefox-config "$firefox_dir/chrome"
 					todo="$todo firefox_postinstall "
 				fi
 			else
-				git clone https://github.com/tim-clifford/minimal-functional-fox-dracula
-				mv minimal-functional-fox-dracula "$firefox_dir/chrome"
+				git clone https://github.com/tim-clifford/firefox-config
+				mv firefox-config "$firefox_dir/chrome"
 				todo="$todo firefox_postinstall "
 			fi
 		fi
@@ -488,6 +466,19 @@ if $grub; then
 	done
 fi
 # }}}
+# Systemd {{{
+sudo systemctl enable NetworkManager
+sudo systemctl enable bluetooth
+sudo systemctl enable bluealsa
+sudo systemctl enable lightdm
+sudo systemctl enable betterlockscreen@tim
+if [ "$(cat /etc/hostname)" = "tim-laptop" ]; then
+	systemctl --user enable barrierc
+elif [ "$(cat /etc/hostname)" = "tim-desktop" ]; then
+	systemctl --user enable barriers
+fi
+# }}}
+betterlockscreen -u ~/.config/wallpapers/current.png
 # }}}
 # Install keyboard layout {{{
 if $keyboard; then
@@ -572,7 +563,8 @@ fi
 if echo $todo | grep -q "firefox_postinstall "; then
 	echo "To finish Firefox configuration:
   - Type \`:installnative\` and follow the instructions,
-    then type \`:source\` to enable tridactyl config
+    then type \`:source\` to enable tridactyl config,
+	and :colors dracula-midnight to enable colors
   - in \`about:config\`:
     * Clear \`extensions.webextensions.restrictedDomains\`
       to allow extensions on all pages
@@ -585,12 +577,19 @@ if echo $todo | grep -q "firefox_postinstall "; then
   - in \`about:preferences\`:
 	* set theme to dark"
 elif echo $todo | grep -q "firefox "; then
-	echo "\
+	echo "To finish Firefox configuration:
   - Firefox must be run before you can install the custom theme
 	You can then use \`./install.sh --firefox-only\`"
 fi
 if $install; then
 	echo "To enable gpg key unlocking with i3lock:
   - follow the instructions at https://github.com/cruegge/pam-gnupg"
+	echo "To configure jack properly:
+  - set interface as required
+  - set 'Start JACK audio server on application startup'
+  - set 'Enable system tray icon'
+  - set 'Start minimized to system tray'"
+	echo "Required additional directories:
+  - .password-store"
 fi
 # }}}
