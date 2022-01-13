@@ -434,9 +434,9 @@ format-padding = 5
 
 [module/player-title]
 type = custom/script
-exec = $HOME/.config/scripts/islandscape.sh && $HOME/.config/polybar/player/title.sh -m 57 || $HOME/.config/polybar/player/title.sh -m 0
-format = "<label>"
+exec = $HOME/.config/scripts/islandscape.sh && $HOME/.config/polybar/player/title.sh --use-pushed-metadata spotifyd -m 57 || $HOME/.config/polybar/player/title.sh --use-pushed-metadata spotifyd -m 0
 exec-if = playerctl -l 2>&1 | egrep -vq 'No players'
+format = "<label>"
 interval = 0.5
 [module/player-back]
 type = custom/script

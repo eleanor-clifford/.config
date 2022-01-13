@@ -23,9 +23,6 @@ LOCK_RESOLUTION = 1920x1080
 # bemenu
 BEMENU_SCALE = 2
 
-# protonmail
-PROTONMAIL_BRIDGE_PASSWORD = laptop.bridge.protonmail.com
-
 # These are optional comments in front of the relevant lines
 
 LOAD_CACHE_FILESYSTEMS =      # onedrive, dropbox

@@ -5,43 +5,44 @@ auth            on
 tls_trust_file  /etc/ssl/certs/ca-certificates.crt
 logfile         ~/.msmtp.log
 
-# Protonmail
-account         proton
-host            127.0.0.1
-port            1025
+# Personal
+account         personal
+host            smtp.srcf.net
+port            587
 tls             on
-tls_certcheck   off
 tls_starttls    on
-from            tclifford@protonmail.com
-user            tclifford@protonmail.com
-passwordeval    "$HOME/.config/scripts/get_password.sh _METACONF_REPLACE_PROTONMAIL_BRIDGE_PASSWORD"
+from            tim@clifford.lol
+user            tc565
+passwordeval    "$HOME/.config/scripts/get_password.sh srcf.net"
+
+# SRCF
+account         srcf
+host            smtp.srcf.net
+port            587
+tls             on
+tls_starttls    on
+from            tc565@srcf.net
+user            tc565
+passwordeval    "$HOME/.config/scripts/get_password.sh srcf.net"
 
 # Cam
 account         cam
-host            127.0.0.1
-port            1026
-tls             off
-auth            plain
+host            smtp.srcf.net
+port            587
+tls             on
+tls_starttls    on
 from            tc565@cam.ac.uk
-user            tc565@cam.ac.uk
-passwordeval    "$HOME/.config/scripts/get_password.sh cam.ac.uk"
+user            tc565
+passwordeval    "$HOME/.config/scripts/get_password.sh srcf.net"
 
 # CUSF
 account         cusf
-host            smtp.gmail.com
+host            smtp.srcf.net
 port            587
 tls             on
+tls_starttls    on
 from            tim@cusf.co.uk
-user            tim.cusf
-passwordeval    "$HOME/.config/scripts/get_password.sh smtp.cusf.co.uk"
+user            tc565
+passwordeval    "$HOME/.config/scripts/get_password.sh srcf.net"
 
-# Mailjet (Blog)
-account			mailjet
-host            in-v3.mailjet.com
-port            587
-tls             on
-from            tim@clifford.lol
-user            8a8c46ac51c18bef3a70d4deec3aa898
-passwordeval    "$HOME/.config/scripts/get_password.sh in-v3.mailjet.com"
-
-account default : proton
+account default : personal

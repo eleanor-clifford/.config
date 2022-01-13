@@ -16,15 +16,12 @@ STARTX_ON_TTY1 = 1
 DPI = 168
 
 # i3
-PRI_DISP = DP-2 HDMI3
-SEC_DISP = DP5  HDMI-0
+PRI_DISP = DP-2
+SEC_DISP = DP-2
 LOCK_RESOLUTION = 3840x2160
 
 # bemenu
 BEMENU_SCALE = 2
-
-# protonmail
-PROTONMAIL_BRIDGE_PASSWORD = desktop.bridge.protonmail.com
 
 # These are optional comments in front of the relevant lines
 

@@ -1,69 +1,24 @@
-ImapAccount   proton
-Host          127.0.0.1
-Port          1143
-User          tclifford@protonmail.com
-PassCmd       "$HOME/.config/scripts/get_password.sh _METACONF_REPLACE_PROTONMAIL_BRIDGE_PASSWORD 'Could not sync mail (GPG key not unlocked)'"
-SSLType       None
-AuthMechs     LOGIN
-
-IMAPStore     proton-remote
-Account       proton
-
-MaildirStore  proton-local
-Subfolders    Verbatim
-Path          ~/.mail/proton/
-Inbox         ~/.mail/proton/Inbox
-
-Channel       proton
-Far           :proton-remote:
-Near          :proton-local:
-Patterns      *
-Create        Both
-SyncState     *
-
-ImapAccount   cam
-Host          127.0.0.1
-Port          1144
-User          tc565@cam.ac.uk
-PassCmd       "$HOME/.config/scripts/get_password.sh cam.ac.uk 'Could not sync mail (GPG key not unlocked)'"
-SSLType       None
-AuthMechs     LOGIN
-
-IMAPStore     cam-remote
-Account       cam
-
-MaildirStore  cam-local
-Subfolders    Verbatim
-Path          ~/.mail/cam/
-Inbox         ~/.mail/cam/Inbox
-
-Channel       cam
-Far           :cam-remote:
-Near          :cam-local:
-Patterns      *
-Create        Both
-SyncState     *
-
-ImapAccount   cusfgmail
-Host          imap.gmail.com
+ImapAccount   srcf
+Host          hades.srcf.net
 Port          993
-User          tim.cusf
-PassCmd       "$HOME/.config/scripts/get_password.sh smtp.cusf.co.uk 'Could not sync mail (GPG key not unlocked)'"
+User          tc565
+PassCmd       "$HOME/.config/scripts/get_password.sh srcf.net 'Could not sync mail (GPG key not unlocked)'"
 SSLType       IMAPS
 AuthMechs     LOGIN
 
-IMAPStore     cusfgmail-remote
-Account       cusfgmail
+IMAPStore     srcf-remote
+Account       srcf
+#Trash         Trash
 
-MaildirStore  cusfgmail-local
+MaildirStore  srcf-local
 Subfolders    Verbatim
-Path          ~/.mail/cusfgmail/
-Inbox         ~/.mail/cusfgmail/Inbox
+Path          ~/.mail/
+Inbox         ~/.mail/Inbox
 
-Channel       cusfgmail
-Far           :cusfgmail-remote:"[Gmail]/Sent Mail"
-Near          :cusfgmail-local:sent
+Channel       srcf
+Far           :srcf-remote:
+Near          :srcf-local:
 Patterns      *
 Create        Both
+Expunge       Both
 SyncState     *
-

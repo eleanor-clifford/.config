@@ -1,5 +1,5 @@
  INSERT  1 tim@arch ~ $ sudo ip netns add camvpn
-[sudo] password for tim: 
+[sudo] password for tim:
  INSERT  0 tim@arch ~ $ sudo ip netns exec camvpn ip addr add 127.0.0.1/8 dev lo
  INSERT  0 tim@arch ~ $ sudo ip netns exec camvpn ip link set lo up
  INSERT  0 tim@arch ~ $ sudo ip link add vpn0 type veth peer name vpn1
@@ -13,22 +13,22 @@
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
     inet 127.0.0.1/8 scope host lo
        valid_lft forever preferred_lft forever
-    inet6 ::1/128 scope host 
+    inet6 ::1/128 scope host
        valid_lft forever preferred_lft forever
 2: enp34s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
     link/ether 2c:f0:5d:27:87:95 brd ff:ff:ff:ff:ff:ff
     inet 192.168.1.75/24 brd 192.168.1.255 scope global dynamic noprefixroute enp34s0
        valid_lft 1801277sec preferred_lft 1801277sec
-    inet6 fe80::8c29:c306:914e:ee03/64 scope link noprefixroute 
+    inet6 fe80::8c29:c306:914e:ee03/64 scope link noprefixroute
        valid_lft forever preferred_lft forever
 4: vpn0@if3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
     link/ether 76:bb:cc:e6:6f:13 brd ff:ff:ff:ff:ff:ff link-netns camvpn
     inet 10.200.200.1/24 scope global vpn0
        valid_lft forever preferred_lft forever
-    inet6 fe80::74bb:ccff:fee6:6f13/64 scope link 
+    inet6 fe80::74bb:ccff:fee6:6f13/64 scope link
        valid_lft forever preferred_lft forever
  INSERT  0 tim@arch ~ $ sudo iptables -A INPUT \! -i vpn0 -s 10.200.200.0/24 -j DROP
- INSERT  0 tim@arch ~ $ sudo iptables -t nat -A POSTROUTING -s 10.200.200.0/24 -o en+ -j MASQUERADE 
+ INSERT  0 tim@arch ~ $ sudo iptables -t nat -A POSTROUTING -s 10.200.200.0/24 -o en+ -j MASQUERADE
  INSERT  0 tim@arch ~ $ sudo sysctl -q net.ipv4.ip_forward=1
  INSERT  0 tim@arch ~ $ sudo mkdir -p /etc/netns/camvpn
  INSERT  0 tim@arch ~ $ sudo echo 'nameserver 1.1.1.1' > /etc/netns/myvpn/resolv.conf
@@ -59,7 +59,7 @@ Packages (1) strongswan-5.9.3-1
 Total Download Size:   1.20 MiB
 Total Installed Size:  4.09 MiB
 
-:: Proceed with installation? [Y/n] 
+:: Proceed with installation? [Y/n]
 :: Retrieving packages...
  strongswan-5.9.3-1-x86_64                     1233.5 KiB  2.69 MiB/s 00:00 [##########################################] 100%
 (1/1) checking keys in keyring                                              [##########################################] 100%
@@ -116,6 +116,8 @@ conn %default
   keylife=20m
   rekeymargin=3m
   keyingtries=1
+  eap_identity=%any
+  reauth=no
 # The primary University VPN service.
 #
 conn CAM
@@ -171,15 +173,15 @@ HTTP request sent, awaiting response... 200 OK
 Length: 2495 (2.4K) [application/x-x509-ca-cert]
 Saving to: ‘/etc/ipsec.d/certs/vpn-server-cert.crt’
 
-/etc/ipsec.d/certs/vpn-server-c 100%[====================================================>]   2.44K  --.-KB/s    in 0s      
+/etc/ipsec.d/certs/vpn-server-c 100%[====================================================>]   2.44K  --.-KB/s    in 0s
 
 2021-09-27 16:57:03 (93.2 MB/s) - ‘/etc/ipsec.d/certs/vpn-server-cert.crt’ saved [2495/2495]
 
- INSERT  0 tim@arch ~ $ sudo ip netns exec camvpn ipsec up CAM 
+ INSERT  0 tim@arch ~ $ sudo ip netns exec camvpn ipsec up CAM
  INSERT  7 tim@arch ~ $ sudo ip netns exec camvpn ipsec restart
 Stopping strongSwan IPsec failed: starter is not running
 Starting strongSwan 5.9.3 IPsec [starter]...
- INSERT  0 tim@arch ~ $ sudo ip netns exec camvpn ipsec up CAM 
+ INSERT  0 tim@arch ~ $ sudo ip netns exec camvpn ipsec up CAM
 initiating IKE_SA CAM[1] to 131.111.2.3
 generating IKE_SA_INIT request 0 [ SA KE No N(NATD_S_IP) N(NATD_D_IP) N(FRAG_SUP) N(HASH_ALG) N(REDIR_SUP) ]
 sending packet: from 10.200.200.2[500] to 131.111.2.3[500] (1000 bytes)
@@ -214,7 +216,7 @@ EAP_MSCHAPV2 method failed
 generating INFORMATIONAL request 3 [ N(AUTH_FAILED) ]
 sending packet: from 10.200.200.2[4500] to 131.111.2.3[4500] (80 bytes)
 establishing connection 'CAM' failed
- INSERT  0 tim@arch ~ $ cat /etc/ipsec.secrets 
+ INSERT  0 tim@arch ~ $ cat /etc/ipsec.secrets
 cat: /etc/ipsec.secrets: Permission denied
  INSERT  1 tim@arch ~ $ sudo !!
  INSERT  1 tim@arch ~ $ sudo cat /etc/ipsec.secrets
@@ -328,7 +330,7 @@ establishing connection 'CAM' failed
  INSERT  0 tim@arch ~ $ sudo ip netns exec camvpn ipsec restart
 Stopping strongSwan IPsec...
 Starting strongSwan 5.9.3 IPsec [starter]...
- INSERT  0 tim@arch ~ $ sudo ip netns exec camvpn ipsec up CAM 
+ INSERT  0 tim@arch ~ $ sudo ip netns exec camvpn ipsec up CAM
 initiating IKE_SA CAM[1] to 131.111.2.3
 generating IKE_SA_INIT request 0 [ SA KE No N(NATD_S_IP) N(NATD_D_IP) N(FRAG_SUP) N(HASH_ALG) N(REDIR_SUP) ]
 sending packet: from 10.200.200.2[500] to 131.111.2.3[500] (1000 bytes)
@@ -384,3 +386,5 @@ selected proposal: ESP:AES_CBC_128/HMAC_SHA2_256_128/NO_EXT_SEQ
 CHILD_SA CAM{1} established with SPIs c65dd82f_i c01c0830_o and TS 172.16.36.251/32 === 0.0.0.0/0
 peer supports MOBIKE
 connection 'CAM' established successfully
+
+
